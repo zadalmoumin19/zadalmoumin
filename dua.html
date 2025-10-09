@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأدعية المأثورة - زاد المؤمن</title>
+    <style>
+        :root {
+            --primary: #0b6b4a;
+            --secondary: #ffd700;
+            --accent: #1a5f38;
+            --text: white;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: var(--text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* شريط البحث المتقدم */
+        .search-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--secondary);
+            transform: scale(1.02);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* شبكة الأدعية */
+        .dua-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .dua-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dua-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .dua-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dua-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .dua-text {
+            font-size: 1.3rem;
+            text-align: justify;
+            margin-bottom: 1.5rem;
+            line-height: 2;
+        }
+
+        .dua-reference {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .dua-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .copy-btn:hover {
+            background: #4CAF50;
+        }
+
+        .share-btn:hover {
+            background: #2196F3;
+        }
+
+        .favorite-btn:hover {
+            background: #FF4081;
+        }
+
+        /* مؤشر التحميل */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid var(--secondary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .dua-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn">← الرئيسية</a>
+        <div class="logo">🤲 الأدعية المأثورة</div>
+    </header>
+
+    <div class="container">
+        <!-- شريط البحث والتصفية -->
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 ابحث في الأدعية..." aria-label="بحث في الأدعية">
+                <button class="action-btn" onclick="clearSearch()">مسح</button>
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterDuas('all')">الكل</button>
+                <button class="filter-btn" onclick="filterDuas('quran')">من القرآن</button>
+                <button class="filter-btn" onclick="filterDuas('sunnah')">من السنة</button>
+                <button class="filter-btn" onclick="filterDuas('prophets')">أدعية الأنبياء</button>
+                <button class="filter-btn" onclick="filterDuas('daily')">يومية</button>
+            </div>
+        </section>
+
+        <!-- شبكة الأدعية -->
+        <div class="dua-grid" id="duaContainer">
+            <!-- سيتم تعبئة الأدعية بواسطة JavaScript -->
+        </div>
+
+        <!-- مؤشر التحميل -->
+        <div class="loading" id="loadingIndicator">
+            <div class="spinner"></div>
+            جاري تحميل الأدعية...
+        </div>
+    </div>
+
+    <script>
+        // بيانات الأدعية
+        const duas = [
+            {
+                id: 1,
+                text: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+                reference: "البقرة: 201",
+                category: "quran",
+                favorite: false
+            },
+            {
+                id: 2,
+                text: "رَبِّ اغْفِرْ لِي وَهَبْ لِي مُلْكًا لَّا يَنبَغِي لِأَحَدٍ مِّن بَعْدِي إِنَّكَ أَنتَ الْوَهَّابُ",
+                reference: "ص: 35",
+                category: "prophets",
+                favorite: false
+            },
+            {
+                id: 3,
+                text: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا",
+                reference: "رواه ابن ماجه",
+                category: "sunnah",
+                favorite: false
+            },
+            {
+                id: 4,
+                text: "اللَّهُمَّ أَصْلِحْ لِي دِينِي الَّذِي هُوَ عِصْمَةُ أَمْرِي، وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي",
+                reference: "رواه مسلم",
+                category: "daily",
+                favorite: false
+            },
+            {
+                id: 5,
+                text: "رَبِّ هَبْ لِي مِن لَّدُنكَ ذُرِّيَّةً طَيِّبَةً إِنَّكَ سَمِيعُ الدُّعَاءِ",
+                reference: "آل عمران: 38",
+                category: "prophets",
+                favorite: false
+            },
+            {
+                id: 6,
+                text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْجُبْنِ وَالْبُخْلِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ",
+                reference: "رواه البخاري",
+                category: "sunnah",
+                favorite: false
+            }
+        ];
+
+        // عناصر DOM
+        const duaContainer = document.getElementById('duaContainer');
+        const searchInput = document.getElementById('searchInput');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            displayDuas(duas);
+            simulateLoading();
+        });
+
+        // عرض الأدعية
+        function displayDuas(duasToShow) {
+            duaContainer.innerHTML = '';
+            
+            if (duasToShow.length === 0) {
+                duaContainer.innerHTML = '<div class="loading">لم يتم العثور على أدعية</div>';
+                return;
+            }
+
+            duasToShow.forEach(dua => {
+                const duaCard = document.createElement('div');
+                duaCard.className = 'dua-card';
+                duaCard.innerHTML = `
+                    <div class="dua-text">${dua.text}</div>
+                    <div class="dua-reference">${dua.reference}</div>
+                    <div class="dua-actions">
+                        <button class="action-btn copy-btn" onclick="copyToClipboard('${dua.text}')">
+                            📋 نسخ
+                        </button>
+                        <button class="action-btn share-btn" onclick="shareDua('${dua.text}', '${dua.reference}')">
+                            📤 مشاركة
+                        </button>
+                        <button class="action-btn favorite-btn ${dua.favorite ? 'active' : ''}" 
+                                onclick="toggleFavorite(${dua.id})">
+                            ${dua.favorite ? '❤️' : '🤍'} مفضلة
+                        </button>
+                    </div>
+                `;
+                duaContainer.appendChild(duaCard);
+            });
+        }
+
+        // محاكاة التحميل
+        function simulateLoading() {
+            setTimeout(() => {
+                loadingIndicator.style.display = 'none';
+            }, 1000);
+        }
+
+        // البحث في الأدعية
+        searchInput.addEventListener('input', function(e) {
+            currentSearch = e.target.value.toLowerCase();
+            filterAndSearch();
+        });
+
+        // تصفية الأدعية
+        function filterDuas(category) {
+            currentFilter = category;
+            
+            // تحديث أزرار التصفية
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            filterAndSearch();
+        }
+
+        // التصفية والبحث معاً
+        function filterAndSearch() {
+            let filteredDuas = duas;
+            
+            // التصفية حسب الفئة
+            if (currentFilter !== 'all') {
+                filteredDuas = filteredDuas.filter(dua => dua.category === currentFilter);
+            }
+            
+            // البحث في النص
+            if (currentSearch) {
+                filteredDuas = filteredDuas.filter(dua => 
+                    dua.text.toLowerCase().includes(currentSearch) ||
+                    dua.reference.toLowerCase().includes(currentSearch)
+                );
+            }
+            
+            displayDuas(filteredDuas);
+        }
+
+        // مسح البحث
+        function clearSearch() {
+            searchInput.value = '';
+            currentSearch = '';
+            filterAndSearch();
+        }
+
+        // نسخ النص
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('تم نسخ الدعاء: ' + text);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        // مشاركة الدعاء
+        function shareDua(text, reference) {
+            const shareText = `${text}\n\n${reference}\n\nمن موقع زاد المؤمن`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'دعاء مأثور - زاد المؤمن',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                copyToClipboard(shareText);
+                alert('تم نسخ الدعاء للمشاركة!');
+            }
+        }
+
+        // إضافة/إزالة من المفضلة
+        function toggleFavorite(duaId) {
+            const duaIndex = duas.findIndex(dua => dua.id === duaId);
+            if (duaIndex !== -1) {
+                duas[duaIndex].favorite = !duas[duaIndex].favorite;
+                filterAndSearch();
+            }
+        }
+    </script>
+</body>
+</html>
