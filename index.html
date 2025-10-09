@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زاد المؤمن - موسوعة إسلامية شاملة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0b6b4a, #0d8c5f);
+            color: white;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .slogan {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .clock-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .clock {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .hijri-date {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .prayer-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .section-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .live-stream {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .stream-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stream-placeholder {
+            background: rgba(0, 0, 0, 0.3);
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .clock {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الرأس -->
+    <header class="header">
+        <div class="logo">🌙 زاد المؤمن</div>
+        <div class="slogan">موسوعة إسلامية شاملة - منارة لكل مسلم</div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <!-- الساعة والتقويم -->
+        <section class="clock-section">
+            <h2>الوقت الحالي</h2>
+            <div class="clock" id="clock">--:--:--</div>
+            <div class="hijri-date" id="hijri-date">--/--/----</div>
+        </section>
+
+        <!-- أوقات الصلاة -->
+        <section class="prayer-times">
+            <div class="prayer-card">
+                <h3>الفجر</h3>
+                <div class="time" id="fajr">--:--</div>
+            </div>
+            <div class="prayer-card">
+                <h3>الظهر</h3>
+                <div class="time" id="dhuhr">--:--</div>
+            </div>
+            <div class="prayer-card">
+                <h3>العصر</h3>
+                <div class="time" id="asr">--:--</div>
+            </div>
+            <div class="prayer-card">
+                <h3>المغرب</h3>
+                <div class="time" id="maghrib">--:--</div>
+            </div>
+            <div class="prayer-card">
+                <h3>العشاء</h3>
+                <div class="time" id="isha">--:--</div>
+            </div>
+        </section>
+
+        <!-- البث المباشر -->
+        <section class="live-stream">
+            <h2>🔴 البث المباشر من الحرمين</h2>
+            <div class="stream-container">
+                <div class="stream-placeholder">
+                    🕋 البث المباشر من مكة
+                </div>
+                <div class="stream-placeholder">
+                    🕌 البث المباشر من المدينة
+                </div>
+            </div>
+        </section>
+
+        <!-- أقسام الموقع -->
+        <section class="sections-grid">
+            <a href="#" class="section-card">
+                <div class="section-icon">📖</div>
+                <h3>القرآن الكريم</h3>
+                <p>تلاوة واستماع وتفسير</p>
+            </a>
+            <a href="#" class="section-card">
+                <div class="section-icon">📜</div>
+                <h3>الأحاديث النبوية</h3>
+                <p>أحاديث صحيحة مصنفة</p>
+            </a>
+            <a href="#" class="section-card">
+                <div class="section-icon">📿</div>
+                <h3>الأذكار والتسابيح</h3>
+                <p>أذكار الصباح والمساء</p>
+            </a>
+            <a href="#" class="section-card">
+                <div class="section-icon">🕌</div>
+                <h3>سيرة الرسول ﷺ</h3>
+                <p>حياة النبي والصحابة</p>
+            </a>
+            <a href="#" class="section-card">
+                <div class="section-icon">🤲</div>
+                <h3>الأدعية المأثورة</h3>
+                <p>أدعية من القرآن والسنة</p>
+            </a>
+            <a href="#" class="section-card">
+                <div class="section-icon">🌅</div>
+                <h3>علامات الساعة</h3>
+                <p>علامات القيامة الصغرى والكبرى</p>
+            </a>
+        </section>
+    </div>
+
+    <script>
+        // الساعة الرقمية
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-EG');
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // التاريخ الهجري (تبسيطي)
+        function updateHijriDate() {
+            const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+            const today = new Date();
+            const hijriDate = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).format(today);
+            
+            document.getElementById('hijri-date').textContent = hijriDate;
+        }
+
+        // أوقات الصلاة (بيانات تجريبية)
+        function updatePrayerTimes() {
+            const prayers = {
+                fajr: '05:30',
+                dhuhr: '12:15',
+                asr: '15:45',
+                maghrib: '18:20',
+                isha: '19:45'
+            };
+
+            for (const [prayer, time] of Object.entries(prayers)) {
+                document.getElementById(prayer).textContent = time;
+            }
+        }
+
+        // تحديث كل ثانية
+        setInterval(updateClock, 1000);
+        updateClock();
+        updateHijriDate();
+        updatePrayerTimes();
+    </script>
+</body>
+</html>
