@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary: #0b6b4a;
-            --secondary: #ffd700;
+            --secondary: #d4af37;
             --accent: #1a5f38;
             --text: white;
             --card-bg: rgba(255, 255, 255, 0.1);
@@ -118,55 +118,37 @@
             text-align: justify;
         }
 
-        /* أقسام السيرة */
-        .sira-sections {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
+        /* معرض الصحابة */
+        .sahaba-section {
+            margin: 4rem 0;
         }
 
-        .sira-card {
+        .section-title {
+            text-align: center;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .sahaba-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sahaba-card {
             background: var(--card-bg);
             padding: 2rem;
             border-radius: 15px;
             text-align: center;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .sira-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .sira-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* معرض الصحابة */
-        .sahaba-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .sahaba-card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .sahaba-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
+            border-color: var(--secondary);
         }
 
         .sahaba-avatar {
@@ -179,6 +161,71 @@
             align-items: center;
             justify-content: center;
             font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .sahaba-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .sahaba-title {
+            font-style: italic;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .sahaba-bio {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* زوجات الرسول */
+        .wives-section {
+            margin: 4rem 0;
+        }
+
+        .wives-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .wife-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .wife-card:hover {
+            transform: translateY(-5px);
+            border: 1px solid var(--secondary);
+        }
+
+        .wife-name {
+            color: var(--secondary);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .wife-details {
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: var(--secondary);
         }
 
         @media (max-width: 768px) {
@@ -188,6 +235,10 @@
             
             .timeline-item {
                 margin-right: 40px;
+            }
+            
+            .container {
+                padding: 1rem;
             }
         }
     </style>
@@ -201,28 +252,9 @@
     <div class="container">
         <!-- مقدمة -->
         <section style="text-align: center; margin-bottom: 3rem;">
-            <h1 style="color: var(--secondary); margin-bottom: 1rem;">حياة الرسول محمد ﷺ</h1>
+            <h1 style="color: var(--secondary); margin-bottom: 1rem; font-size: 2.5rem;">حياة الرسول محمد ﷺ</h1>
             <p style="font-size: 1.2rem; opacity: 0.9;">رحلة نورية من المولد إلى الوفاة، نستلهم منها الدروس والعبر</p>
         </section>
-
-        <!-- أقسام السيرة -->
-        <div class="sira-sections">
-            <div class="sira-card" onclick="showSection('birth')">
-                <div class="sira-icon">👶</div>
-                <h3>المولد والنشأة</h3>
-                <p>من الولادة إلى البعثة</p>
-            </div>
-            <div class="sira-card" onclick="showSection('prophecy')">
-                <div class="sira-icon">📖</div>
-                <h3>البعثة النبوية</h3>
-                <p>بدء الوحي والدعوة</p>
-            </div>
-            <div class="sira-card" onclick="showSection('hijra')">
-                <div class="sira-icon">🕋</div>
-                <h3>الهجرة</h3>
-                <p>من مكة إلى المدينة</p>
-            </div>
-        </div>
 
         <!-- الخط الزمني -->
         <section class="timeline">
@@ -231,9 +263,9 @@
                 <div class="timeline-year">571 م</div>
                 <div class="timeline-content">
                     <h3>👶 مولد الرسول ﷺ</h3>
-                    <p>ولد النبي محمد ﷺ في مكة المكرمة في عام الفيل، يتيم الأب. ترعرع في بيت جده عبد المطلب ثم عمه أبي طالب.</p>
+                    <p>ولد النبي محمد ﷺ في مكة المكرمة في عام الفيل، يتيم الأب. ترعرع في بيت جده عبد المطلب ثم عمه أبي طالب. نشأ مشهوراً بالصدق والأمانة حتى لقب بـ "الصادق الأمين".</p>
                     <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                        <strong>💡 درس مستفاد:</strong> النبوة لا ترتبط بالغنى أو الجاه
+                        <strong>💡 درس مستفاد:</strong> النبوة لا ترتبط بالغنى أو الجاه، والصدق أساس الشخصية الإسلامية
                     </div>
                 </div>
             </div>
@@ -243,9 +275,9 @@
                 <div class="timeline-year">610 م</div>
                 <div class="timeline-content">
                     <h3>📖 البعثة النبوية</h3>
-                    <p>نزل الوحي على النبي ﷺ في غار حراء بـ "اقرأ باسم ربك الذي خلق". بدأت الدعوة سراً ثم جهراً.</p>
+                    <p>نزل الوحي على النبي ﷺ في غار حراء بـ "اقرأ باسم ربك الذي خلق". بدأت الدعوة سراً لمدة 3 سنوات، ثم جهراً. تحمل الرسول ﷺ وأصحابه أشد أنواع التعذيب والاضطهاد.</p>
                     <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                        <strong>💡 درس مستفاد:</strong> التدرج في الدعوة وأهمية الحكمة
+                        <strong>💡 درس مستفاد:</strong> التدرج في الدعوة وأهمية الحكمة والصبر على الأذى
                     </div>
                 </div>
             </div>
@@ -255,9 +287,9 @@
                 <div class="timeline-year">622 م</div>
                 <div class="timeline-content">
                     <h3>🕋 الهجرة إلى المدينة</h3>
-                    <p>هاجر الرسول ﷺ من مكة إلى المدينة المنورة، marking بداية التاريخ الهجري. أسس أول دولة إسلامية.</p>
+                    <p>هاجر الرسول ﷺ من مكة إلى المدينة المنورة، marking بداية التاريخ الهجري. أسس أول دولة إسلامية وبنى المسجد النبوي، وآخى بين المهاجرين والأنصار.</p>
                     <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                        <strong>💡 درس مستفاد:</strong> التضحية في سبيل الله
+                        <strong>💡 درس مستفاد:</strong> التضحية في سبيل الله والأخوة الإسلامية تتجاوز الروابط القبلية
                     </div>
                 </div>
             </div>
@@ -267,9 +299,21 @@
                 <div class="timeline-year">630 م</div>
                 <div class="timeline-content">
                     <h3>🏰 فتح مكة</h3>
-                    <p>دخل الرسول ﷺ مكة فاتحاً بدون قتال، وقال لقريش: "اذهبوا فأنتم الطلقاء". مثل أعلى للعفو والتسامح.</p>
+                    <p>دخل الرسول ﷺ مكة فاتحاً بدون قتال، وقال لقريش: "اذهبوا فأنتم الطلقاء". مثل أعلى للعفو والتسامح. ثم طهر الكعبة من الأصنام وأعادها لعبادة الله وحده.</p>
                     <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                        <strong>💡 درس مستفاد:</strong> العفو عند المقدرة
+                        <strong>💡 درس مستفاد:</strong> العفو عند المقدرة والتسامح مع الأعداء
+                    </div>
+                </div>
+            </div>
+
+            <!-- حجة الوداع -->
+            <div class="timeline-item">
+                <div class="timeline-year">632 م</div>
+                <div class="timeline-content">
+                    <h3>👑 حجة الوداع</h3>
+                    <p>ألقى الرسول ﷺ خطبة الوداع التي تضمنت مبادئ حقوق الإنسان والمساواة. قال: "لا فضل لعربي على عجمي إلا بالتقوى". وأكد على كمال الدين.</p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                        <strong>💡 درس مستفاد:</strong> المساواة بين البشر والتأكيد على مكارم الأخلاق
                     </div>
                 </div>
             </div>
@@ -279,53 +323,137 @@
                 <div class="timeline-year">632 م</div>
                 <div class="timeline-content">
                     <h3>☪️ وفاة الرسول ﷺ</h3>
-                    <p>توفي النبي ﷺ في المدينة المنورة بعد أن بلغ الرسالة وأكمل الله به الدين. ترك القرآن والسنة منهجاً للأمة.</p>
+                    <p>توفي النبي ﷺ في المدينة المنورة بعد أن بلغ الرسالة وأكمل الله به الدين. ترك القرآن والسنة منهجاً للأمة. قال في آخر أيامه: "الصلاة الصلاة وما ملكت أيمانكم".</p>
                     <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
-                        <strong>💡 درس مستفاد:</strong> الأمانة في تبليغ الرسالة
+                        <strong>💡 درس مستفاد:</strong> الأمانة في تبليغ الرسالة والاهتمام بأمور الأمة حتى آخر لحظة
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- معرض الصحابة -->
-        <section style="margin-top: 4rem;">
-            <h2 style="text-align: center; color: var(--secondary); margin-bottom: 2rem;">🌈 صحابة الرسول ﷺ</h2>
+        <!-- صحابة الرسول -->
+        <section class="sahaba-section">
+            <h2 class="section-title">صحابة الرسول ﷺ</h2>
             <div class="sahaba-gallery">
+                <!-- أبو بكر الصديق -->
                 <div class="sahaba-card">
                     <div class="sahaba-avatar">👴</div>
-                    <h3>أبو بكر الصديق</h3>
-                    <p>رفيق الدرب وأول الخلفاء</p>
+                    <div class="sahaba-name">أبو بكر الصديق</div>
+                    <div class="sahaba-title">الصديق والخليفة الأول</div>
+                    <div class="sahaba-bio">
+                        أول من آمن بالرسول من الرجال، رافقه في الهجرة، وكان أقرب الناس إليه. تولى الخلافة بعد وفاة الرسول وقاد حروب الردة.
+                    </div>
                 </div>
+
+                <!-- عمر بن الخطاب -->
                 <div class="sahaba-card">
                     <div class="sahaba-avatar">⚖️</div>
-                    <h3>عمر بن الخطاب</h3>
-                    <p>الفاروق العادل</p>
+                    <div class="sahaba-name">عمر بن الخطاب</div>
+                    <div class="sahaba-title">الفاروق العادل</div>
+                    <div class="sahaba-bio">
+                        أسلم بعد إسلام حمزة بيوم واحد، فقويت شوكة المسلمين. اشتهر بالعدل والحكمة، واتسعت الفتوحات الإسلامية في عهده.
+                    </div>
                 </div>
+
+                <!-- عثمان بن عفان -->
                 <div class="sahaba-card">
                     <div class="sahaba-avatar">💎</div>
-                    <h3>عثمان بن عفان</h3>
-                    <p>ذي النورين</p>
+                    <div class="sahaba-name">عثمان بن عفان</div>
+                    <div class="sahaba-title">ذي النورين</div>
+                    <div class="sahaba-bio">
+                        تزوج ابنتي الرسول ﷺ، جهز جيش العسرة، وجمع القرآن. استشهد وهو يقرأ القرآن في بيته.
+                    </div>
                 </div>
+
+                <!-- علي بن أبي طالب -->
                 <div class="sahaba-card">
                     <div class="sahaba-avatar">📚</div>
-                    <h3>علي بن أبي طالب</h3>
-                    <p>باب مدينة العلم</p>
+                    <div class="sahaba-name">علي بن أبي طالب</div>
+                    <div class="sahaba-title">باب مدينة العلم</div>
+                    <div class="sahaba-bio">
+                        أول من آمن من الصبيان، تربى في بيت الرسول، وكان شجاعاً وعالماً. تولى الخلافة بعد عثمان.
+                    </div>
+                </div>
+
+                <!-- خالد بن الوليد -->
+                <div class="sahaba-card">
+                    <div class="sahaba-avatar">⚔️</div>
+                    <div class="sahaba-name">خالد بن الوليد</div>
+                    <div class="sahaba-title">سيف الله المسلول</div>
+                    <div class="sahaba-bio">
+                        قائد عسكري فذ، لم يهزم في معركة قط. أسلم قبل فتح مكة وشارك في أهم الفتوحات الإسلامية.
+                    </div>
+                </div>
+
+                <!-- بلال بن رباح -->
+                <div class="sahaba-card">
+                    <div class="sahaba-avatar">🕌</div>
+                    <div class="sahaba-name">بلال بن رباح</div>
+                    <div class="sahaba-title">مؤذن الرسول</div>
+                    <div class="sahaba-bio">
+                        تعرض لأشد أنواع التعذيب فصبر، وكان أول مؤذن في الإسلام. صوته الشجي في الأذان يذكر بالتوحيد.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- زوجات الرسول -->
+        <section class="wives-section">
+            <h2 class="section-title">زوجات الرسول ﷺ</h2>
+            <div class="wives-gallery">
+                <!-- خديجة بنت خويلد -->
+                <div class="wife-card">
+                    <div class="wife-name">خديجة بنت خويلد</div>
+                    <div class="wife-details">
+                        <div class="detail-item">
+                            <span class="detail-label">مدة الزواج:</span>
+                            <span>25 سنة</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">الأبناء:</span>
+                            <span>القاسم، عبد الله، زينب، رقية، أم كلثوم، فاطمة</span>
+                        </div>
+                    </div>
+                    <p>أول من آمن بالرسول من النساء، وكانت سنداً له في بداية الدعوة. توفيت قبل الهجرة بثلاث سنوات.</p>
+                </div>
+
+                <!-- عائشة بنت أبي بكر -->
+                <div class="wife-card">
+                    <div class="wife-name">عائشة بنت أبي بكر</div>
+                    <div class="wife-details">
+                        <div class="detail-item">
+                            <span class="detail-label">مدة الزواج:</span>
+                            <span>9 سنوات</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">العبور:</span>
+                            <span>البكر الوحيدة التي تزوجها الرسول</span>
+                        </div>
+                    </div>
+                    <p>أكثر النساء رواية للحديث، وكانت من أفقه الصحابة. توفيت سنة 58 هـ.</p>
+                </div>
+
+                <!-- حفصة بنت عمر -->
+                <div class="wife-card">
+                    <div class="wife-name">حفصة بنت عمر</div>
+                    <div class="wife-details">
+                        <div class="detail-item">
+                            <span class="detail-label">الأب:</span>
+                            <span>عمر بن الخطاب</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">المميزات:</span>
+                            <span>حافظة القرآن</span>
+                        </div>
+                    </div>
+                    <p>اشتهرت بحفظ القرآن وعرفت بالتقوى والورع. كانت المصحف الأول محفوظاً عندها.</p>
                 </div>
             </div>
         </section>
     </div>
 
     <script>
-        function showSection(section) {
-            const sections = {
-                birth: 'المولد والنشأة',
-                prophecy: 'البعثة النبوية', 
-                hijra: 'الهجرة إلى المدينة'
-            };
-            alert('سيتم تطوير قسم ' + sections[section] + ' قريباً إن شاء الله!');
-        }
-
-        // تأثيرات تفاعلية
+        // تأثيرات تفاعلية للخط الزمني
         document.querySelectorAll('.timeline-item').forEach(item => {
             item.addEventListener('click', function() {
                 this.style.transform = 'translateX(-10px) scale(1.02)';
@@ -335,21 +463,26 @@
             });
         });
 
-        // تمرير سلس للخط الزمني
-        document.querySelectorAll('.timeline-item').forEach(item => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateX(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
+        // تأثيرات الظهور عند التمرير
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // تطبيق التأثير على جميع البطاقات
+        document.querySelectorAll('.timeline-item, .sahaba-card, .wife-card').forEach(item => {
             item.style.opacity = '0';
-            item.style.transform = 'translateX(-50px)';
+            item.style.transform = 'translateY(30px)';
             item.style.transition = 'all 0.6s ease';
-            
             observer.observe(item);
         });
     </script>
