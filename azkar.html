@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأذكار - زاد المؤمن</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a5f38, #0b6b4a);
+            color: white;
+            line-height: 1.8;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .azkar-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid #ffd700;
+        }
+
+        .azkar-list {
+            display: none;
+        }
+
+        .azkar-list.active {
+            display: block;
+        }
+
+        .zekr-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .zekr-text {
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            line-height: 2;
+        }
+
+        .counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .counter-btn {
+            background: #ffd700;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .azkar-tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn">← الرئيسية</a>
+        <div class="logo">📿 الأذكار والتسابيح</div>
+    </header>
+
+    <div class="container">
+        <div class="azkar-tabs">
+            <div class="tab active" onclick="showTab('morning')">أذكار الصباح</div>
+            <div class="tab" onclick="showTab('evening')">أذكار المساء</div>
+            <div class="tab" onclick="showTab('sleep')">أذكار النوم</div>
+            <div class="tab" onclick="showTab('prayer')">أذكار الصلاة</div>
+        </div>
+
+        <!-- أذكار الصباح -->
+        <div class="azkar-list active" id="morning">
+            <div class="zekr-card">
+                <div class="zekr-text">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="decrement(this)">-</button>
+                    <span class="count">3</span>
+                    <button class="counter-btn" onclick="increment(this)">+</button>
+                </div>
+            </div>
+            
+            <div class="zekr-card">
+                <div class="zekr-text">اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ النُّشُورُ</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="decrement(this)">-</button>
+                    <span class="count">1</span>
+                    <button class="counter-btn" onclick="increment(this)">+</button>
+                </div>
+            </div>
+
+            <div class="zekr-card">
+                <div class="zekr-text">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="decrement(this)">-</button>
+                    <span class="count">100</span>
+                    <button class="counter-btn" onclick="increment(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- أذكار المساء -->
+        <div class="azkar-list" id="evening">
+            <div class="zekr-card">
+                <div class="zekr-text">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="decrement(this)">-</button>
+                    <span class="count">3</span>
+                    <button class="counter-btn" onclick="increment(this)">+</button>
+                </div>
+            </div>
+            
+            <div class="zekr-card">
+                <div class="zekr-text">اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ، وَإِلَيْكَ الْمَصِيرُ</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="decrement(this)">-</button>
+                    <span class="count">1</span>
+                    <button class="counter-btn" onclick="increment(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- أذكار النوم -->
+        <div class="azkar-list" id="sleep">
+            <div class="zekr-card">
+                <div class="zekr-text">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="decrement(this)">-</button>
+                    <span class="count">1</span>
+                    <button class="counter-btn" onclick="increment(this)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- أذكار الصلاة -->
+        <div class="azkar-list" id="prayer">
+            <div class="zekr-card">
+                <div class="zekr-text">سُبْحَانَ رَبِّيَ الْعَظِيمِ</div>
+                <div class="counter">
+                    <button class="counter-btn" onclick="decrement(this)">-</button>
+                    <span class="count">3</span>
+                    <button class="counter-btn" onclick="increment(this)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // إخفاء جميع التبويبات
+            document.querySelectorAll('.azkar-list').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // إلغاء تنشيط جميع الأزرار
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // إظهار التبويب المطلوب
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function increment(button) {
+            const countElement = button.parentElement.querySelector('.count');
+            let count = parseInt(countElement.textContent);
+            countElement.textContent = count + 1;
+        }
+
+        function decrement(button) {
+            const countElement = button.parentElement.querySelector('.count');
+            let count = parseInt(countElement.textContent);
+            if (count > 0) {
+                countElement.textContent = count - 1;
+            }
+        }
+    </script>
+</body>
+</html>
