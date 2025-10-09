@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأحاديث النبوية - زاد المؤمن</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d5a2d, #1a5f38);
+            color: white;
+            line-height: 1.8;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+
+        .hadith-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .hadith-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border-right: 4px solid #ffd700;
+        }
+
+        .hadith-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .hadith-source {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .hadith-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn">← الرئيسية</a>
+        <div class="logo">📜 الأحاديث النبوية</div>
+    </header>
+
+    <div class="container">
+        <div class="search-box">
+            <input type="text" placeholder="🔍 ابحث في الأحاديث..." id="searchInput">
+        </div>
+
+        <div class="hadith-list" id="hadithList">
+            <!-- الحديث 1 -->
+            <div class="hadith-card">
+                <div class="hadith-text">
+                    "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله، فهجرته إلى الله ورسوله، ومن كانت هجرته لدنيا يصيبها أو امرأة ينكحها، فهجرته إلى ما هاجر إليه"
+                </div>
+                <div class="hadith-source">رواه البخاري ومسلم</div>
+                <div class="hadith-actions">
+                    <button class="action-btn" onclick="playAudio(this)">🔊 استمع</button>
+                    <button class="action-btn" onclick="shareHadith(this)">📤 شارك</button>
+                </div>
+            </div>
+
+            <!-- الحديث 2 -->
+            <div class="hadith-card">
+                <div class="hadith-text">
+                    "من حسن إسلام المرء تركه ما لا يعنيه"
+                </div>
+                <div class="hadith-source">رواه الترمذي</div>
+                <div class="hadith-actions">
+                    <button class="action-btn" onclick="playAudio(this)">🔊 استمع</button>
+                    <button class="action-btn" onclick="shareHadith(this)">📤 شارك</button>
+                </div>
+            </div>
+
+            <!-- الحديث 3 -->
+            <div class="hadith-card">
+                <div class="hadith-text">
+                    "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه"
+                </div>
+                <div class="hadith-source">رواه البخاري ومسلم</div>
+                <div class="hadith-actions">
+                    <button class="action-btn" onclick="playAudio(this)">🔊 استمع</button>
+                    <button class="action-btn" onclick="shareHadith(this)">📤 شارك</button>
+                </div>
+            </div>
+
+            <!-- الحديث 4 -->
+            <div class="hadith-card">
+                <div class="hadith-text">
+                    "الكلمة الطيبة صدقة"
+                </div>
+                <div class="hadith-source">رواه البخاري ومسلم</div>
+                <div class="hadith-actions">
+                    <button class="action-btn" onclick="playAudio(this)">🔊 استمع</button>
+                    <button class="action-btn" onclick="shareHadith(this)">📤 شارك</button>
+                </div>
+            </div>
+
+            <!-- الحديث 5 -->
+            <div class="hadith-card">
+                <div class="hadith-text">
+                    "اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن"
+                </div>
+                <div class="hadith-source">رواه الترمذي</div>
+                <div class="hadith-actions">
+                    <button class="action-btn" onclick="playAudio(this)">🔊 استمع</button>
+                    <button class="action-btn" onclick="shareHadith(this)">📤 شارك</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // البحث في الأحاديث
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const hadithCards = document.querySelectorAll('.hadith-card');
+            
+            hadithCards.forEach(card => {
+                const text = card.querySelector('.hadith-text').textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        function playAudio(button) {
+            const hadithText = button.parentElement.parentElement.querySelector('.hadith-text').textContent;
+            alert('سيتم إضافة خاصية الاستماع قريباً إن شاء الله!\n\n' + hadithText);
+        }
+
+        function shareHadith(button) {
+            const hadithText = button.parentElement.parentElement.querySelector('.hadith-text').textContent;
+            const source = button.parentElement.parentElement.querySelector('.hadith-source').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'حديث شريف - زاد المؤمن',
+                    text: hadithText + '\n\n' + source,
+                    url: window.location.href
+                });
+            } else {
+                alert('شارك الحديث:\n\n' + hadithText + '\n\n' + source);
+            }
+        }
+    </script>
+</body>
+</html>
