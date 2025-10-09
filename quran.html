@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القرآن الكريم - زاد المؤمن</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a5f38, #0b6b4a);
+            color: white;
+            line-height: 1.8;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .surah-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .surah-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .surah-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .surah-number {
+            background: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .surah-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .surah-details {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-top: 1rem;
+            border-radius: 25px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn">← الرئيسية</a>
+        <div class="logo">📖 القرآن الكريم</div>
+    </header>
+
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 2rem;">تلاوة واستماع</h2>
+        
+        <div class="surah-list">
+            <!-- سورة الفاتحة -->
+            <div class="surah-card" onclick="playSurah('الفاتحة')">
+                <div class="surah-number">1</div>
+                <div class="surah-name">سورة الفاتحة</div>
+                <div class="surah-details">مكية - 7 آيات</div>
+                <audio controls class="audio-player" id="audio-1">
+                    <source src="https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3" type="audio/mpeg">
+                    متصفحك لا يدعم تشغيل الصوت
+                </audio>
+            </div>
+
+            <!-- سورة البقرة -->
+            <div class="surah-card" onclick="playSurah('البقرة')">
+                <div class="surah-number">2</div>
+                <div class="surah-name">سورة البقرة</div>
+                <div class="surah-details">مدنية - 286 آية</div>
+                <div style="margin-top: 1rem; color: #ffd700;">🔊 اضغط للاستماع</div>
+            </div>
+
+            <!-- سورة يس -->
+            <div class="surah-card" onclick="playSurah('يس')">
+                <div class="surah-number">36</div>
+                <div class="surah-name">سورة يس</div>
+                <div class="surah-details">مكية - 83 آية</div>
+                <div style="margin-top: 1rem; color: #ffd700;">🔊 اضغط للاستماع</div>
+            </div>
+
+            <!-- سورة الملك -->
+            <div class="surah-card" onclick="playSurah('الملك')">
+                <div class="surah-number">67</div>
+                <div class="surah-name">سورة الملك</div>
+                <div class="surah-details">مكية - 30 آية</div>
+                <div style="margin-top: 1rem; color: #ffd700;">🔊 اضغط للاستماع</div>
+            </div>
+
+            <!-- سورة الرحمن -->
+            <div class="surah-card" onclick="playSurah('الرحمن')">
+                <div class="surah-number">55</div>
+                <div class="surah-name">سورة الرحمن</div>
+                <div class="surah-details">مدنية - 78 آية</div>
+                <div style="margin-top: 1rem; color: #ffd700;">🔊 اضغط للاستماع</div>
+            </div>
+
+            <!-- سورة الواقعة -->
+            <div class="surah-card" onclick="playSurah('الواقعة')">
+                <div class="surah-number">56</div>
+                <div class="surah-name">سورة الواقعة</div>
+                <div class="surah-details">مكية - 96 آية</div>
+                <div style="margin-top: 1rem; color: #ffd700;">🔊 اضغط للاستماع</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function playSurah(surahName) {
+            alert('سيتم إضافة تلاوة سورة ' + surahName + ' قريباً إن شاء الله!');
+        }
+
+        // تشغيل سورة الفاتحة تلقائياً
+        document.getElementById('audio-1').play().catch(e => {
+            console.log('التشغيل التلقائي غير مسموح');
+        });
+    </script>
+</body>
+</html>
