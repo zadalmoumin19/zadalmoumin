@@ -3,273 +3,712 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>زاد المؤمن - موسوعة إسلامية شاملة</title>
+    <title>زاد المؤمن - الموسوعة الإسلامية الشاملة 🌙</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #0d8c5f;
+            --secondary: #0b6b4a;
+            --accent: #d4af37;
+            --dark: #1a1f2e;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, #0d8c5f, #0b6b4a, #1a1f2e);
+            --gold-gradient: linear-gradient(135deg, #d4af37, #f7ef8a);
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --glow: 0 0 20px rgba(13, 140, 95, 0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0b6b4a, #0d8c5f);
-            color: white;
-            line-height: 1.6;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(13, 140, 95, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 20%);
         }
 
-        .header {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
+        /* النجوم المتحركة في الخلفية */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        /* الهيدر الرئيسي */
+        .main-header {
+            background: var(--gradient);
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
             text-align: center;
-            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
         }
 
         .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
+            font-size: 4rem;
+            font-weight: 900;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+            to { text-shadow: 0 0 30px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.6); }
         }
 
         .slogan {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             opacity: 0.9;
+            margin-bottom: 1rem;
         }
 
-        .container {
+        /* الساعة الإسلامية */
+        .islamic-clock-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem auto;
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
         }
 
-        .clock-section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
+        .islamic-clock-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gold-gradient);
+        }
+
+        .clock-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .digital-clock {
             text-align: center;
-            backdrop-filter: blur(10px);
         }
 
-        .clock {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 1rem 0;
+        .time {
+            font-size: 4rem;
+            font-weight: 300;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
         }
 
         .hijri-date {
-            font-size: 1.5rem;
-            opacity: 0.9;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
         }
 
+        .gregorian-date {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        /* أوقات الصلاة */
         .prayer-times {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1rem;
             margin: 2rem 0;
         }
 
         .prayer-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             padding: 1.5rem;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
         }
 
+        .prayer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .prayer-card:hover::before {
+            left: 100%;
+        }
+
+        .prayer-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--glow);
+        }
+
+        .prayer-card.active {
+            background: var(--gradient);
+            border-color: var(--accent);
+            box-shadow: var(--glow);
+        }
+
+        .prayer-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .prayer-time {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .prayer-card.active .prayer-name {
+            color: white;
+        }
+
+        /* الشبكة الرئيسية */
         .sections-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
         }
 
         .section-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
             text-align: center;
             text-decoration: none;
-            color: white;
-            transition: transform 0.3s ease;
-            backdrop-filter: blur(10px);
+            color: var(--light);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gold-gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
 
         .section-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow), var(--glow);
+            border-color: var(--accent);
+        }
+
+        .section-card:hover::before {
+            transform: scaleX(1);
         }
 
         .section-icon {
-            font-size: 3rem;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .section-card:hover .section-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            color: var(--accent);
         }
 
-        .live-stream {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            backdrop-filter: blur(10px);
+        .section-desc {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
         }
 
-        .stream-container {
+        /* قسم البث المباشر */
+        .live-broadcast {
+            background: var(--gradient);
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            max-width: 1400px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-broadcast::before {
+            content: '🔴 LIVE';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .broadcast-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .stream-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stream-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stream-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: var(--glow);
         }
 
         .stream-placeholder {
-            background: rgba(0, 0, 0, 0.3);
             height: 200px;
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
         }
 
+        .stream-placeholder::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* الفوتر */
+        .main-footer {
+            background: var(--dark);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-desc {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        /* التجاوب مع جميع الشاشات */
         @media (max-width: 768px) {
-            .clock {
-                font-size: 2rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
+            .logo { font-size: 2.8rem; }
+            .time { font-size: 2.8rem; }
+            .sections-grid { grid-template-columns: 1fr; }
+            .prayer-times { grid-template-columns: repeat(3, 1fr); }
+            .clock-container { grid-template-columns: 1fr; }
+            .islamic-clock-section { padding: 1.5rem; margin: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .prayer-times { grid-template-columns: repeat(2, 1fr); }
+            .time { font-size: 2.2rem; }
+            .section-card { padding: 1.5rem; }
+        }
+
+        /* تأثيرات إضافية */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0); }
+            100% { transform: translateY(-100vh) translateX(100px); }
         }
     </style>
 </head>
 <body>
-    <!-- الرأس -->
-    <header class="header">
-        <div class="logo">🌙 زاد المؤمن</div>
-        <div class="slogan">موسوعة إسلامية شاملة - منارة لكل مسلم</div>
+    <!-- النجوم المتحركة -->
+    <div class="stars" id="stars"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- الهيدر الرئيسي -->
+    <header class="main-header floating">
+        <div class="header-content">
+            <div class="logo">🕌 زاد المؤمن</div>
+            <div class="slogan">موسوعة إسلامية شاملة .. منارة العلم والإيمان 🌟</div>
+        </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        <!-- الساعة والتقويم -->
-        <section class="clock-section">
-            <h2>الوقت الحالي</h2>
-            <div class="clock" id="clock">--:--:--</div>
-            <div class="hijri-date" id="hijri-date">--/--/----</div>
-        </section>
-
-        <!-- أوقات الصلاة -->
-        <section class="prayer-times">
-            <div class="prayer-card">
-                <h3>الفجر</h3>
-                <div class="time" id="fajr">--:--</div>
+    <!-- الساعة الإسلامية -->
+    <section class="islamic-clock-section">
+        <div class="clock-container">
+            <div class="digital-clock">
+                <div class="time" id="clock">--:--:--</div>
+                <div class="hijri-date" id="hijri-date">--/--/----</div>
+                <div class="gregorian-date" id="gregorian-date">--/--/----</div>
             </div>
-            <div class="prayer-card">
-                <h3>الظهر</h3>
-                <div class="time" id="dhuhr">--:--</div>
-            </div>
-            <div class="prayer-card">
-                <h3>العصر</h3>
-                <div class="time" id="asr">--:--</div>
-            </div>
-            <div class="prayer-card">
-                <h3>المغرب</h3>
-                <div class="time" id="maghrib">--:--</div>
-            </div>
-            <div class="prayer-card">
-                <h3>العشاء</h3>
-                <div class="time" id="isha">--:--</div>
-            </div>
-        </section>
-
-        <!-- البث المباشر -->
-        <section class="live-stream">
-            <h2>🔴 البث المباشر من الحرمين</h2>
-            <div class="stream-container">
-                <div class="stream-placeholder">
-                    🕋 البث المباشر من مكة
+            
+            <div class="prayer-times">
+                <div class="prayer-card" id="fajr-card">
+                    <div class="prayer-name">الفجر</div>
+                    <div class="prayer-time" id="fajr-time">--:--</div>
                 </div>
-                <div class="stream-placeholder">
-                    🕌 البث المباشر من المدينة
+                <div class="prayer-card" id="dhuhr-card">
+                    <div class="prayer-name">الظهر</div>
+                    <div class="prayer-time" id="dhuhr-time">--:--</div>
+                </div>
+                <div class="prayer-card" id="asr-card">
+                    <div class="prayer-name">العصر</div>
+                    <div class="prayer-time" id="asr-time">--:--</div>
+                </div>
+                <div class="prayer-card" id="maghrib-card">
+                    <div class="prayer-name">المغرب</div>
+                    <div class="prayer-time" id="maghrib-time">--:--</div>
+                </div>
+                <div class="prayer-card" id="isha-card">
+                    <div class="prayer-name">العشاء</div>
+                    <div class="prayer-time" id="isha-time">--:--</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- أقسام الموقع -->
-        <section class="sections-grid">
-            <a href="quran.html" class="section-card">
-                <div class="section-icon">📖</div>
-                <h3>القرآن الكريم</h3>
-                <p>تلاوة واستماع وتفسير</p>
-            </a>
-            <a href="hadith.html" class="section-card">
-                <div class="section-icon">📜</div>
-                <h3>الأحاديث النبوية</h3>
-                <p>أحاديث صحيحة مصنفة</p>
-            </a>
-            <a href="azkar.html" class="section-card">
-                <div class="section-icon">📿</div>
-                <h3>الأذكار والتسابيح</h3>
-                <p>أذكار الصباح والمساء</p>
-            </a>
-            <a href="sira.html" class="section-card">
-                <div class="section-icon">🕌</div>
-                <h3>سيرة الرسول ﷺ</h3>
-                <p>حياة النبي والصحابة</p>
-            </a>
-            <a href="dua.html" class="section-card">
-                <div class="section-icon">🤲</div>
-                <h3>الأدعية المأثورة</h3>
-                <p>أدعية من القرآن والسنة</p>
-            </a>
-            <a href="signs.html" class="section-card">
-                <div class="section-icon">🌅</div>
-                <h3>علامات الساعة</h3>
-                <p>علامات القيامة الصغرى والكبرى</p>
-            </a>
-        </section>
+    <!-- الشبكة الرئيسية للأقسام -->
+    <div class="sections-grid">
+        <a href="#" class="section-card" onclick="showComingSoon('القرآن الكريم')">
+            <div class="section-icon">📖</div>
+            <h3 class="section-title">القرآن الكريم</h3>
+            <p class="section-desc">تلاوة كاملة مع التفسير والترجمة - استماع وتدبر</p>
+        </a>
+        
+        <a href="#" class="section-card" onclick="showComingSoon('الأحاديث النبوية')">
+            <div class="section-icon">💬</div>
+            <h3 class="section-title">الأحاديث النبوية</h3>
+            <p class="section-desc">أرشيف شامل للأحاديث الصحيحة مع التخريج والشرح</p>
+        </a>
+        
+        <a href="#" class="section-card" onclick="showComingSoon('الأذكار والتسابيح')">
+            <div class="section-icon">📿</div>
+            <h3 class="section-title">الأذكار والتسابيح</h3>
+            <p class="section-desc">أذكار الصباح والمساء مع عداد تسبيح تفاعلي</p>
+        </a>
+        
+        <a href="#" class="section-card" onclick="showComingSoon('الأدعية المأثورة')">
+            <div class="section-icon">🤲</div>
+            <h3 class="section-title">الأدعية المأثورة</h3>
+            <p class="section-desc">أدعية القرآن والسنة مصنفة ومفهرسة</p>
+        </a>
+        
+        <a href="#" class="section-card" onclick="showComingSoon('السيرة النبوية')">
+            <div class="section-icon">🕌</div>
+            <h3 class="section-title">السيرة النبوية</h3>
+            <p class="section-desc">رحلة كاملة من المولد إلى الوفاة مع التفاصيل</p>
+        </a>
+        
+        <a href="#" class="section-card" onclick="showComingSoon('علامات الساعة')">
+            <div class="section-icon">🌅</div>
+            <h3 class="section-title">علامات الساعة</h3>
+            <p class="section-desc">العلامات الصغرى والكبرى بالتفصيل والتحليل</p>
+        </a>
+        
+        <a href="#" class="section-card" onclick="showComingSoon('الفتاوى')">
+            <div class="section-icon">❓</div>
+            <h3 class="section-title">الفتاوى الشرعية</h3>
+            <p class="section-desc">فتاوى العلماء المعاصرين في مختلف القضايا</p>
+        </a>
+        
+        <a href="#" class="section-card" onclick="showComingSoon('الدروس والمحاضرات')">
+            <div class="section-icon">🎓</div>
+            <h3 class="section-title">الدروس والمحاضرات</h3>
+            <p class="section-desc">مكتبة شاملة للدروس الصوتية والمرئية</p>
+        </a>
     </div>
 
+    <!-- البث المباشر -->
+    <section class="live-broadcast">
+        <h2 class="broadcast-title">📡 البث المباشر من الحرمين الشريفين</h2>
+        <div class="stream-grid">
+            <div class="stream-card">
+                <div class="stream-placeholder">🕋 البث المباشر من المسجد الحرام</div>
+                <button class="feature-btn" onclick="showComingSoon('البث من مكة')">▶️ تشغيل البث</button>
+            </div>
+            <div class="stream-card">
+                <div class="stream-placeholder">🕌 البث المباشر من المسجد النبوي</div>
+                <button class="feature-btn" onclick="showComingSoon('البث من المدينة')">▶️ تشغيل البث</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">زاد المؤمن</div>
+            <p class="footer-desc">موسوعة إسلامية شاملة تهدف إلى تقديم محتوى إسلامي موثوق ومتكامل لجميع المسلمين حول العالم</p>
+            <p>© 2024 زاد المؤمن - جميع الحقوق محفوظة</p>
+        </div>
+    </footer>
+
     <script>
+        // إنشاء النجوم
+        function createStars() {
+            const stars = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 2 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                stars.appendChild(star);
+            }
+        }
+
+        // إنشاء الجسيمات
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
         // الساعة الرقمية
         function updateClock() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('ar-EG');
+            const timeString = now.toLocaleTimeString('ar-SA', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: true 
+            });
             document.getElementById('clock').textContent = timeString;
         }
 
-        // التاريخ الهجري (تبسيطي)
+        // التاريخ الهجري
         function updateHijriDate() {
-            const hijriMonths = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
-            const today = new Date();
-            const hijriDate = new Intl.DateTimeFormat('ar-TN-u-ca-islamic', {
+            const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
                 day: 'numeric',
-                month: 'long',
+                month: 'long', 
                 year: 'numeric'
-            }).format(today);
-            
-            document.getElementById('hijri-date').textContent = hijriDate;
+            }).format(new Date());
+            document.getElementById('hijri-date').textContent = hijri;
+        }
+
+        // التاريخ الميلادي
+        function updateGregorianDate() {
+            const gregorian = new Intl.DateTimeFormat('ar-SA', {
+                day: 'numeric',
+                month: 'long', 
+                year: 'numeric'
+            }).format(new Date());
+            document.getElementById('gregorian-date').textContent = gregorian;
         }
 
         // أوقات الصلاة (بيانات تجريبية)
         function updatePrayerTimes() {
             const prayers = {
-                fajr: '05:30',
-                dhuhr: '12:15',
-                asr: '15:45',
-                maghrib: '18:20',
-                isha: '19:45'
+                'fajr-time': '04:30',
+                'dhuhr-time': '12:15',
+                'asr-time': '15:45',
+                'maghrib-time': '18:20',
+                'isha-time': '19:45'
             };
 
-            for (const [prayer, time] of Object.entries(prayers)) {
-                document.getElementById(prayer).textContent = time;
+            Object.keys(prayers).forEach(id => {
+                document.getElementById(id).textContent = prayers[id];
+            });
+        }
+
+        // تحديد الصلاة الحالية
+        function highlightCurrentPrayer() {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            const prayerTimes = {
+                'fajr-card': 4 * 60 + 30,
+                'dhuhr-card': 12 * 60 + 15,
+                'asr-card': 15 * 60 + 45,
+                'maghrib-card': 18 * 60 + 20,
+                'isha-card': 19 * 60 + 45
+            };
+
+            // إزالة التمييز من جميع البطاقات
+            Object.keys(prayerTimes).forEach(card => {
+                document.getElementById(card).classList.remove('active');
+            });
+
+            // إضافة التمييز للصلاة الحالية
+            let currentPrayer = null;
+            Object.keys(prayerTimes).forEach(prayer => {
+                if (currentTime >= prayerTimes[prayer]) {
+                    currentPrayer = prayer;
+                }
+            });
+
+            if (currentPrayer) {
+                document.getElementById(currentPrayer).classList.add('active');
             }
         }
 
-        // تحديث كل ثانية
-        setInterval(updateClock, 1000);
-        updateClock();
-        updateHijriDate();
-        updatePrayerTimes();
+        // تنبيه "قريباً"
+        function showComingSoon(sectionName) {
+            alert(`🕌 قسم ${sectionName} قيد التطوير\nسيتم إضافته قريباً إن شاء الله 🌟`);
+            return false;
+        }
+
+        // تهيئة كل شيء عند تحميل الصفحة
+        function init() {
+            createStars();
+            createParticles();
+            updateClock();
+            updateHijriDate();
+            updateGregorianDate();
+            updatePrayerTimes();
+            highlightCurrentPrayer();
+            
+            setInterval(updateClock, 1000);
+            setInterval(highlightCurrentPrayer, 60000);
+        }
+
+        // بدء التشغيل
+        window.onload = init;
     </script>
 </body>
 </html>
