@@ -928,3 +928,461 @@ notificationStyles.textContent = `
 `;
 document.head.appendChild(notificationStyles);
 </script>
+<script>
+// استكمال سورة البقرة - الآيات 6 إلى 50
+const baqaraVerses = [
+    {
+        "number": 6,
+        "text": "إِنَّ الَّذِينَ كَفَرُوا سَوَاءٌ عَلَيْهِمْ أَأَنذَرْتَهُمْ أَمْ لَمْ تُنذِرْهُمْ لَا يُؤْمِنُونَ",
+        "hafs": "inna allatheena kafaroo sawaon ʿalayhim a-andhartahum am lam tundhirhum la yu'minoona",
+        "warsh": "inna allatheena kafaroo sawaon ʿalayhim a-andhartahum am lam tundhirhum la yu'minoona",
+        "sajdah": false
+    },
+    {
+        "number": 7,
+        "text": "خَتَمَ اللَّهُ عَلَىٰ قُلُوبِهِمْ وَعَلَىٰ سَمْعِهِمْ ۖ وَعَلَىٰ أَبْصَارِهِمْ غِشَاوَةٌ ۖ وَلَهُمْ عَذَابٌ عَظِيمٌ",
+        "hafs": "khatama allahu ʿala quloobihim waʿala samʿihim waʿala absarihim ghishawatun walahum ʿathabun ʿatheemun",
+        "warsh": "khatama allahu ʿala quloobihim waʿala samʿihim waʿala absarihim ghishawatun walahum ʿathabun ʿatheemun",
+        "sajdah": false
+    },
+    {
+        "number": 8,
+        "text": "وَمِنَ النَّاسِ مَن يَقُولُ آمَنَّا بِاللَّهِ وَبِالْيَوْمِ الْآخِرِ وَمَا هُم بِمُؤْمِنِينَ",
+        "hafs": "wamina alnnasi man yaqoolu amanna biallahi wabialyawmi al-akhiri wama hum bimu'mineena",
+        "warsh": "wamina alnnasi man yaqoolu amanna biallahi wabialyawmi al-akhiri wama hum bimu'mineena",
+        "sajdah": false
+    },
+    {
+        "number": 9,
+        "text": "يُخَادِعُونَ اللَّهَ وَالَّذِينَ آمَنُوا وَمَا يَخْدَعُونَ إِلَّا أَنفُسَهُمْ وَمَا يَشْعُرُونَ",
+        "hafs": "yukhadiʿoona allaha waallatheena amanoo wama yakhdaʿoona illa anfusahum wama yashʿuroona",
+        "warsh": "yukhadiʿoona allaha waallatheena amanoo wama yakhdaʿoona illa anfusahum wama yashʿuroona",
+        "sajdah": false
+    },
+    {
+        "number": 10,
+        "text": "فِي قُلُوبِهِم مَّرَضٌ فَزَادَهُمُ اللَّهُ مَرَضًا ۖ وَلَهُمْ عَذَابٌ أَلِيمٌ بِمَا كَانُوا يَكْذِبُونَ",
+        "hafs": "fee quloobihim maradun fazadahumu allahu maradan walahum ʿathabun aleemun bima kanoo yakthiboona",
+        "warsh": "fee quloobihim maradun fazadahumu allahu maradan walahum ʿathabun aleemun bima kanoo yakthiboona",
+        "sajdah": false
+    },
+    // الآيات 11-15
+    {
+        "number": 11,
+        "text": "وَإِذَا قِيلَ لَهُمْ لَا تُفْسِدُوا فِي الْأَرْضِ قَالُوا إِنَّمَا نَحْنُ مُصْلِحُونَ",
+        "hafs": "wa-itha qeela lahum la tufsidoo fee al-ardi qaloo innama nahnu muslihoona",
+        "warsh": "wa-itha qeela lahum la tufsidoo fee al-ardi qaloo innama nahnu muslihoona",
+        "sajdah": false
+    },
+    {
+        "number": 12,
+        "text": "أَلَا إِنَّهُمْ هُمُ الْمُفْسِدُونَ وَلَٰكِن لَّا يَشْعُرُونَ",
+        "hafs": "ala innahum humu almufsidoona walakin la yashʿuroona",
+        "warsh": "ala innahum humu almufsidoona walakin la yashʿuroona",
+        "sajdah": false
+    },
+    {
+        "number": 13,
+        "text": "وَإِذَا قِيلَ لَهُمْ آمِنُوا كَمَا آمَنَ النَّاسُ قَالُوا أَنُؤْمِنُ كَمَا آمَنَ السُّفَهَاءُ ۗ أَلَا إِنَّهُمْ هُمُ السُّفَهَاءُ وَلَٰكِن لَّا يَعْلَمُونَ",
+        "hafs": "wa-itha qeela lahum aminoo kama amana alnnasu qaloo anu/minu kama amana alssufahao ala innahum humu alssufahao walakin la yaʿlamoona",
+        "warsh": "wa-itha qeela lahum aminoo kama amana alnnasu qaloo anu/minu kama amana alssufahao ala innahum humu alssufahao walakin la yaʿlamoona",
+        "sajdah": false
+    },
+    {
+        "number": 14,
+        "text": "وَإِذَا لَقُوا الَّذِينَ آمَنُوا قَالُوا آمَنَّا وَإِذَا خَلَوْا إِلَىٰ شَيَاطِينِهِمْ قَالُوا إِنَّا مَعَكُمْ إِنَّمَا نَحْنُ مُسْتَهْزِئُونَ",
+        "hafs": "wa-itha laqoo allatheena amanoo qaloo amanna wa-itha khalawo ila shayateenihim qaloo inna maʿakum innama nahnu mustahzioona",
+        "warsh": "wa-itha laqoo allatheena amanoo qaloo amanna wa-itha khalawo ila shayateenihim qaloo inna maʿakum innama nahnu mustahzioona",
+        "sajdah": false
+    },
+    {
+        "number": 15,
+        "text": "اللَّهُ يَسْتَهْزِئُ بِهِمْ وَيَمُدُّهُمْ فِي طُغْيَانِهِمْ يَعْمَهُونَ",
+        "hafs": "allahu yastahzio bihim wayamudduhum fee tughyanihim yaʿmahoona",
+        "warsh": "allahu yastahzio bihim wayamudduhum fee tughyanihim yaʿmahoona",
+        "sajdah": false
+    },
+    // الآيات 16-20
+    {
+        "number": 16,
+        "text": "أُولَٰئِكَ الَّذِينَ اشْتَرَوُا الضَّلَالَةَ بِالْهُدَىٰ فَمَا رَبِحَت تِّجَارَتُهُمْ وَمَا كَانُوا مُهْتَدِينَ",
+        "hafs": "ola-ika allatheena ishtarawu alddalalata bialhuda fama rabihat tijaratuhum wama kanoo muhtadeena",
+        "warsh": "ola-ika allatheena ishtarawu alddalalata bialhuda fama rabihat tijaratuhum wama kanoo muhtadeena",
+        "sajdah": false
+    },
+    {
+        "number": 17,
+        "text": "مَثَلُهُمْ كَمَثَلِ الَّذِي اسْتَوْقَدَ نَارًا فَلَمَّا أَضَاءَتْ مَا حَوْلَهُ ذَهَبَ اللَّهُ بِنُورِهِمْ وَتَرَكَهُمْ فِي ظُلُمَاتٍ لَّا يُبْصِرُونَ",
+        "hafs": "mathaluhum kamathali allathee istawqada naran falamma adaat ma hawlahu thahaba allahu binoorihim watarakahum fee thulumatin la yubsiroona",
+        "warsh": "mathaluhum kamathali allathee istawqada naran falamma adaat ma hawlahu thahaba allahu binoorihim watarakahum fee thulumatin la yubsiroona",
+        "sajdah": false
+    },
+    {
+        "number": 18,
+        "text": "صُمٌّ بُكْمٌ عُمْيٌ فَهُمْ لَا يَرْجِعُونَ",
+        "hafs": "summun bukmun ʿumyun fahum la yarjiʿoona",
+        "warsh": "summun bukmun ʿumyun fahum la yarjiʿoona",
+        "sajdah": false
+    },
+    {
+        "number": 19,
+        "text": "أَوْ كَصَيِّبٍ مِّنَ السَّمَاءِ فِيهِ ظُلُمَاتٌ وَرَعْدٌ وَبَرْقٌ يَجْعَلُونَ أَصَابِعَهُمْ فِي آذَانِهِم مِّنَ الصَّوَاعِقِ حَذَرَ الْمَوْتِ ۚ وَاللَّهُ مُحِيطٌ بِالْكَافِرِينَ",
+        "hafs": "aw kassayyibin mina alssama-i feehi thulumatun warāʿdun wabarqun yajʿaloona asabiʿahum fee athanihim mina alssawaʿiqi hathara almawti waallahu muheetun bialkafireena",
+        "warsh": "aw kassayyibin mina alssama-i feehi thulumatun warāʿdun wabarqun yajʿaloona asabiʿahum fee athanihim mina alssawaʿiqi hathara almawti waallahu muheetun bialkafireena",
+        "sajdah": false
+    },
+    {
+        "number": 20,
+        "text": "يَكَادُ الْبَرْقُ يَخْطَفُ أَبْصَارَهُمْ ۖ كُلَّمَا أَضَاءَ لَهُم مَّشَوْا فِيهِ وَإِذَا أَظْلَمَ عَلَيْهِمْ قَامُوا ۚ وَلَوْ شَاءَ اللَّهُ لَذَهَبَ بِسَمْعِهِمْ وَأَبْصَارِهِمْ ۚ إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+        "hafs": "yakadu albarqu yakhtafu absarahum kullama adaa lahum mashaw feehi wa-itha athlama ʿalayhim qamoo walaw shaa allahu lathahaba bisamʿihim wa-absarihim inna allaha ʿala kulli shay-in qadeerun",
+        "warsh": "yakadu albarqu yakhtafu absarahum kullama adaa lahum mashaw feehi wa-itha athlama ʿalayhim qamoo walaw shaa allahu lathahaba bisamʿihim wa-absarihim inna allaha ʿala kulli shay-in qadeerun",
+        "sajdah": false
+    },
+    // الآيات 21-25
+    {
+        "number": 21,
+        "text": "يَا أَيُّهَا النَّاسُ اعْبُدُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ وَالَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ",
+        "hafs": "ya ayyuha alnnasu oʿbudoo rabbakumu allathee khalaqakum waallatheena min qablikum laʿallakum tattaqoona",
+        "warsh": "ya ayyuha alnnasu oʿbudoo rabbakumu allathee khalaqakum waallatheena min qablikum laʿallakum tattaqoona",
+        "sajdah": false
+    },
+    {
+        "number": 22,
+        "text": "الَّذِي جَعَلَ لَكُمُ الْأَرْضَ فِرَاشًا وَالسَّمَاءَ بِنَاءً وَأَنزَلَ مِنَ السَّمَاءِ مَاءً فَأَخْرَجَ بِهِ مِنَ الثَّمَرَاتِ رِزْقًا لَّكُمْ ۖ فَلَا تَجْعَلُوا لِلَّهِ أَندَادًا وَأَنتُمْ تَعْلَمُونَ",
+        "hafs": "allathee jaʿala lakumu al-arda firashan waalssamaa binaan wa-anzala mina alssama-i maan fa-akhraja bihi mina alththamarati rizqan lakum fala tajʿaloo lillahi andadan wa-antum taʿlamoona",
+        "warsh": "allathee jaʿala lakumu al-arda firashan waalssamaa binaan wa-anzala mina alssama-i maan fa-akhraja bihi mina alththamarati rizqan lakum fala tajʿaloo lillahi andadan wa-antum taʿlamoona",
+        "sajdah": false
+    },
+    {
+        "number": 23,
+        "text": "وَإِن كُنتُمْ فِي رَيْبٍ مِّمَّا نَزَّلْنَا عَلَىٰ عَبْدِنَا فَأْتُوا بِسُورَةٍ مِّن مِّثْلِهِ وَادْعُوا شُهَدَاءَكُم مِّن دُونِ اللَّهِ إِن كُنتُمْ صَادِقِينَ",
+        "hafs": "wa-in kuntum fee raybin mimma nazzalna ʿala ʿabdina fatoo bisooratin min mithlihi waidʿoo shuhadaakum min dooni allahi in kuntum sadiqeena",
+        "warsh": "wa-in kuntum fee raybin mimma nazzalna ʿala ʿabdina fatoo bisooratin min mithlihi waidʿoo shuhadaakum min dooni allahi in kuntum sadiqeena",
+        "sajdah": false
+    },
+    {
+        "number": 24,
+        "text": "فَإِن لَّمْ تَفْعَلُوا وَلَن تَفْعَلُوا فَاتَّقُوا النَّارَ الَّتِي وَقُودُهَا النَّاسُ وَالْحِجَارَةُ ۖ أُعِدَّتْ لِلْكَافِرِينَ",
+        "hafs": "fa-in lam tafʿaloo walan tafʿaloo faittaqoo alnnara allatee waqooduha alnnasu waalhijaratu oʿiddat lilkafireena",
+        "warsh": "fa-in lam tafʿaloo walan tafʿaloo faittaqoo alnnara allatee waqooduha alnnasu waalhijaratu oʿiddat lilkafireena",
+        "sajdah": false
+    },
+    {
+        "number": 25,
+        "text": "وَبَشِّرِ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أَنَّ لَهُمْ جَنَّاتٍ تَجْرِي مِن تَحْتِهَا الْأَنْهَارُ ۖ كُلَّمَا رُزِقُوا مِنْهَا مِن ثَمَرَةٍ رِّزْقًا قَالُوا هَٰذَا الَّذِي رُزِقْنَا مِن قَبْلُ ۖ وَأُتُوا بِهِ مُتَشَابِهًا ۖ وَلَهُمْ فِيهَا أَزْوَاجٌ مُّطَهَّرَةٌ ۖ وَهُمْ فِيهَا خَالِدُونَ",
+        "hafs": "wabashshiri allatheena amanoo waʿamiloo alssalihati anna lahum jannatin tajree min tahtiha al-annaharu kullama ruziqoo minha min thamaratin rizqan qaloo hatha allathee ruziqna min qablu wa-utoo bihi mutashabihan walahum feeha azwajun mutahharatun wahum feeha khalidoona",
+        "warsh": "wabashshiri allatheena amanoo waʿamiloo alssalihati anna lahum jannatin tajree min tahtiha al-annaharu kullama ruziqoo minha min thamaratin rizqan qaloo hatha allathee ruziqna min qablu wa-utoo bihi mutashabihan walahum feeha azwajun mutahharatun wahum feeha khalidoona",
+        "sajdah": false
+    },
+    // الآيات 26-30
+    {
+        "number": 26,
+        "text": "إِنَّ اللَّهَ لَا يَسْتَحْيِي أَن يَضْرِبَ مَثَلًا مَّا بَعُوضَةً فَمَا فَوْقَهَا ۚ فَأَمَّا الَّذِينَ آمَنُوا فَيَعْلَمُونَ أَنَّهُ الْحَقُّ مِن رَّبِّهِمْ ۖ وَأَمَّا الَّذِينَ كَفَرُوا فَيَقُولُونَ مَاذَا أَرَادَ اللَّهُ بِهَٰذَا مَثَلًا ۘ يُضِلُّ بِهِ كَثِيرًا وَيَهْدِي بِهِ كَثِيرًا ۚ وَمَا يُضِلُّ بِهِ إِلَّا الْفَاسِقِينَ",
+        "hafs": "inna allaha la yastahyee an yadriba mathalan ma baʿoodatan fama fawqaha fa-amma allatheena amanoo fayaʿlamoona annahu alhaqqu min rabbihim wa-amma allatheena kafaroo fayaqooloona matha arada allahu bihatha mathalan yudillu bihi katheeran wayahdee bihi katheeran wama yudillu bihi illa alfasikeena",
+        "warsh": "inna allaha la yastahyee an yadriba mathalan ma baʿoodatan fama fawqaha fa-amma allatheena amanoo fayaʿlamoona annahu alhaqqu min rabbihim wa-amma allatheena kafaroo fayaqooloona matha arada allahu bihatha mathalan yudillu bihi katheeran wayahdee bihi katheeran wama yudillu bihi illa alfasikeena",
+        "sajdah": false
+    },
+    {
+        "number": 27,
+        "text": "الَّذِينَ يَنقُضُونَ عَهْدَ اللَّهِ مِن بَعْدِ مِيثَاقِهِ وَيَقْطَعُونَ مَا أَمَرَ اللَّهُ بِهِ أَن يُوصَلَ وَيُفْسِدُونَ فِي الْأَرْضِ ۚ أُولَٰئِكَ هُمُ الْخَاسِرُونَ",
+        "hafs": "allatheena yanqudoona ʿahda allahi min baʿdi meethaqihi wayaqtaʿoona ma amara allahu bihi an yoosala wayufsidoona fee al-ardi ola-ika humu alkhasiroona",
+        "warsh": "allatheena yanqudoona ʿahda allahi min baʿdi meethaqihi wayaqtaʿoona ma amara allahu bihi an yoosala wayufsidoona fee al-ardi ola-ika humu alkhasiroona",
+        "sajdah": false
+    },
+    {
+        "number": 28,
+        "text": "كَيْفَ تَكْفُرُونَ بِاللَّهِ وَكُنتُمْ أَمْوَاتًا فَأَحْيَاكُمْ ۖ ثُمَّ يُمِيتُكُمْ ثُمَّ يُحْيِيكُمْ ثُمَّ إِلَيْهِ تُرْجَعُونَ",
+        "hafs": "kayfa takfuroona biallahi wakuntum amwatan fa-ahyakum thumma yumeetukum thumma yuhyeekum thumma ilayhi turjaʿoona",
+        "warsh": "kayfa takfuroona biallahi wakuntum amwatan fa-ahyakum thumma yumeetukum thumma yuhyeekum thumma ilayhi turjaʿoona",
+        "sajdah": false
+    },
+    {
+        "number": 29,
+        "text": "هُوَ الَّذِي خَلَقَ لَكُم مَّا فِي الْأَرْضِ جَمِيعًا ثُمَّ اسْتَوَىٰ إِلَى السَّمَاءِ فَسَوَّاهُنَّ سَبْعَ سَمَاوَاتٍ ۚ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ",
+        "hafs": "huwa allathee khalaqa lakum ma fee al-ardi jameeʿan thumma istawa ila alssama-i fasawwahunna sabʿa samawatin wahuwa bikulli shay-in ʿaleemun",
+        "warsh": "huwa allathee khalaqa lakum ma fee al-ardi jameeʿan thumma istawa ila alssama-i fasawwahunna sabʿa samawatin wahuwa bikulli shay-in ʿaleemun",
+        "sajdah": false
+    },
+    {
+        "number": 30,
+        "text": "وَإِذْ قَالَ رَبُّكَ لِلْمَلَائِكَةِ إِنِّي جَاعِلٌ فِي الْأَرْضِ خَلِيفَةً ۖ قَالُوا أَتَجْعَلُ فِيهَا مَن يُفْسِدُ فِيهَا وَيَسْفِكُ الدِّمَاءَ وَنَحْنُ نُسَبِّحُ بِحَمْدِكَ وَنُقَدِّسُ لَكَ ۖ قَالَ إِنِّي أَعْلَمُ مَا لَا تَعْلَمُونَ",
+        "hafs": "wa-ith qala rabbuka lilmala-ikati innee jaʿilun fee al-ardi khaleefatan qaloo atajʿalu feeha man yufsidu feeha wayasfiku alddimaa wanahnu nusabbihu bihamdika wanuqaddisu laka qala innee aʿlamu ma la taʿlamoona",
+        "warsh": "wa-ith qala rabbuka lilmala-ikati innee jaʿilun fee al-ardi khaleefatan qaloo atajʿalu feeha man yufsidu feeha wayasfiku alddimaa wanahnu nusabbihu bihamdika wanuqaddisu laka qala innee aʿlamu ma la taʿlamoona",
+        "sajdah": false
+    }
+    // سيتم إكمال باقي الآيات في الأجزاء التالية
+];
+
+// إضافة الآيات إلى سورة البقرة
+completeQuran.surahs[1].verses.push(...baqaraVerses);
+
+// نظام البحث الذكي المتقدم
+class QuranSearch {
+    constructor() {
+        this.index = this.buildSearchIndex();
+        this.searchResults = [];
+    }
+
+    buildSearchIndex() {
+        const index = [];
+        completeQuran.surahs.forEach(surah => {
+            surah.verses.forEach(verse => {
+                index.push({
+                    surahId: surah.id,
+                    surahName: surah.name,
+                    verseNumber: verse.number,
+                    text: verse.text,
+                    normalizedText: this.normalizeText(verse.text)
+                });
+            });
+        });
+        return index;
+    }
+
+    normalizeText(text) {
+        return text
+            .replace(/[َُِّّٰٓ]/g, '') // إزالة التشكيل
+            .replace(/[إأآ]/g, 'ا')   // توحيد أشكال الألف
+            .replace(/ة/g, 'ه')       // تحويل التاء المربوطة
+            .toLowerCase();
+    }
+
+    search(query, options = {}) {
+        const normalizedQuery = this.normalizeText(query);
+        const words = normalizedQuery.split(/\s+/).filter(word => word.length > 0);
+        
+        this.searchResults = this.index.filter(item => {
+            if (options.searchType === 'surah') {
+                return item.surahName.includes(query);
+            }
+            
+            if (options.searchType === 'exact') {
+                return item.normalizedText.includes(normalizedQuery);
+            }
+            
+            // البحث العادي - جميع الكلمات يجب أن تظهر
+            return words.every(word => item.normalizedText.includes(word));
+        });
+
+        return this.searchResults.slice(0, options.limit || 50);
+    }
+
+    searchByTopic(topic) {
+        const topics = {
+            'التوحيد': ['الله', 'رب', 'إله', 'وحدانية', 'توحيد'],
+            'الصلاة': ['صلاة', 'صلوا', 'المصلين', 'سجود', 'ركوع'],
+            'الزكاة': ['زكاة', 'صدقة', 'أنفقوا', 'الغني', 'الفقراء'],
+            'الصيام': ['صوم', 'صيام', 'رمضان', 'فطر', 'إفطار'],
+            'الحج': ['حج', 'بيت', 'كعبة', 'مناسك', 'طواف'],
+            'العدل': ['عدل', 'قسط', 'ظلم', 'حق', 'إنصاف'],
+            'الصبر': ['صبر', 'اصبروا', 'الصابرين', 'بلاء', 'ابتلاء'],
+            'التوبة': ['توبة', 'استغفار', 'غفران', 'ندم', 'أناب']
+        };
+
+        const topicKeywords = topics[topic] || [topic];
+        return this.search(topicKeywords.join(' '));
+    }
+
+    getSearchSuggestions(query) {
+        if (query.length < 2) return [];
+        
+        const suggestions = new Set();
+        const normalizedQuery = this.normalizeText(query);
+        
+        this.index.forEach(item => {
+            if (item.normalizedText.includes(normalizedQuery)) {
+                // إيجاد السياق حول الكلمة
+                const index = item.normalizedText.indexOf(normalizedQuery);
+                const start = Math.max(0, index - 10);
+                const end = Math.min(item.normalizedText.length, index + normalizedQuery.length + 30);
+                const context = item.text.substring(start, end);
+                
+                suggestions.add({
+                    text: context,
+                    surah: item.surahName,
+                    verse: item.verseNumber,
+                    fullVerse: item.text
+                });
+            }
+        });
+
+        return Array.from(suggestions).slice(0, 10);
+    }
+}
+
+// تهيئة نظام البحث
+const quranSearch = new QuranSearch();
+
+// تحسين واجهة البحث
+function initializeSearch() {
+    const searchInput = document.getElementById('searchInput');
+    const searchOptions = document.querySelectorAll('.search-option');
+    
+    let searchType = 'text';
+    
+    // تحديث نوع البحث
+    searchOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            searchOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            searchType = this.dataset.type;
+        });
+    });
+    
+    // البحث أثناء الكتابة
+    searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.trim();
+        
+        if (query.length === 0) {
+            hideSearchResults();
+            return;
+        }
+        
+        if (query.length < 2) return;
+        
+        let results;
+        if (searchType === 'topic') {
+            results = quranSearch.searchByTopic(query);
+        } else {
+            results = quranSearch.search(query, { 
+                searchType: searchType === 'surah' ? 'surah' : 'normal' 
+            });
+        }
+        
+        showSearchResults(results, query);
+    });
+    
+    // البحث عند الضغط على Enter
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+}
+
+function performSearch() {
+    const query = document.getElementById('searchInput').value.trim();
+    const searchType = document.querySelector('.search-option.active').dataset.type;
+    
+    if (query.length === 0) return;
+    
+    let results;
+    if (searchType === 'topic') {
+        results = quranSearch.searchByTopic(query);
+    } else {
+        results = quranSearch.search(query, { 
+            searchType: searchType === 'surah' ? 'surah' : 'normal' 
+        });
+    }
+    
+    showSearchResults(results, query);
+    hideSearchSuggestions();
+}
+
+function showSearchResults(results, query) {
+    // إخفاء المحتوى العادي
+    document.querySelector('.quran-container').style.display = 'none';
+    document.getElementById('progressSection').style.display = 'none';
+    
+    // إنشاء عرض النتائج
+    const resultsContainer = document.getElementById('searchResults') || createSearchResultsContainer();
+    resultsContainer.innerHTML = '';
+    
+    if (results.length === 0) {
+        resultsContainer.innerHTML = `
+            <div style="text-align: center; padding: 3rem; color: var(--gold);">
+                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <h3>لا توجد نتائج للبحث: "${query}"</h3>
+                <p>حاول استخدام كلمات أخرى أو البحث باسم السورة</p>
+            </div>
+        `;
+        return;
+    }
+    
+    const resultsHTML = `
+        <div style="margin-bottom: 2rem;">
+            <h3 style="color: var(--gold); text-align: center;">
+                <i class="fas fa-search"></i>
+                نتائج البحث: "${query}"
+                <small style="display: block; font-size: 1rem; margin-top: 0.5rem;">
+                    ${results.length} نتيجة
+                </small>
+            </h3>
+        </div>
+        ${results.map(result => `
+            <div class="search-result-item" 
+                 onclick="loadSurah(${result.surahId}, ${result.verseNumber})"
+                 style="background: rgba(30, 30, 30, 0.6); padding: 1.5rem; margin-bottom: 1rem; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; transition: all 0.3s ease;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                    <strong style="color: var(--gold);">${result.surahName} - الآية ${result.verseNumber}</strong>
+                    <button class="verse-btn" onclick="event.stopPropagation(); playVerse(${result.surahId}, ${result.verseNumber})">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+                <div style="font-size: 1.3rem; line-height: 1.8; text-align: right;">
+                    ${this.highlightText(result.text, query)}
+                </div>
+            </div>
+        `).join('')}
+    `;
+    
+    resultsContainer.innerHTML = resultsHTML;
+    resultsContainer.style.display = 'block';
+}
+
+function highlightText(text, query) {
+    const normalizedText = text.replace(/[َُِّّٰٓ]/g, '');
+    const normalizedQuery = query.replace(/[َُِّّٰٓ]/g, '');
+    
+    const index = normalizedText.indexOf(normalizedQuery);
+    if (index === -1) return text;
+    
+    const highlighted = text.substring(0, index) + 
+                       '<mark style="background: var(--gold); color: var(--primary); padding: 0.1rem 0.2rem; border-radius: 3px;">' +
+                       text.substring(index, index + query.length) + 
+                       '</mark>' + 
+                       text.substring(index + query.length);
+    
+    return highlighted;
+}
+
+function createSearchResultsContainer() {
+    const container = document.createElement('div');
+    container.id = 'searchResults';
+    container.style.cssText = `
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: none;
+    `;
+    
+    document.querySelector('.search-section').after(container);
+    return container;
+}
+
+function hideSearchResults() {
+    const resultsContainer = document.getElementById('searchResults');
+    if (resultsContainer) {
+        resultsContainer.style.display = 'none';
+    }
+    document.querySelector('.quran-container').style.display = 'grid';
+}
+
+function hideSearchSuggestions() {
+    const suggestions = document.getElementById('searchSuggestions');
+    if (suggestions) {
+        suggestions.remove();
+    }
+}
+
+// تحديث التهيئة لإضافة البحث
+document.addEventListener('DOMContentLoaded', function() {
+    createStars();
+    loadSurahList();
+    loadRecitationSelector();
+    loadReaderSelector();
+    loadSurah(1);
+    loadUserStats();
+    initializeSearch(); // تهيئة نظام البحث
+});
+</script>
