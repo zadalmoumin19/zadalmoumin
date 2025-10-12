@@ -1,101 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>زاد المؤمن - القرآن الكريم 🌙</title>
-    <link rel="stylesheet" href="quran.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <div id="app">
-        <div class="loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>جاري تحميل القرآن الكريم...</p>
-        </div>
-    </div>
-
-    <!-- ✅ ترتيب التحميل الصحيح -->
-    <script src="data.js"></script>
-    <script src="audio-system.js"></script>
-    <script src="quran.js"></script>
-
-    <script>
-        // كود التهيئة المبسطة
-        setTimeout(function() {
-            const loading = document.querySelector('.loading');
-            if (loading) loading.style.display = 'none';
-            
-            if (window.quranApp) {
-                window.quranApp.init();
-            } else {
-                document.getElementById('app').innerHTML = `
-                    <div class="error-page">
-                        <h1>🌙 القرآن الكريم</h1>
-                        <p>الواجهة الأساسية - جاري التطوير</p>
-                        <div class="basic-menu">
-                            <div class="menu-item" onclick="showBasicSurahs()">📚 تصفح السور</div>
-                            <div class="menu-item" onclick="showBasicAudio()">🎵 الاستماع</div>
-                        </div>
-                        <a href="index.html" class="back-link">العودة للرئيسية</a>
-                    </div>
-                `;
-            }
-        }, 1000);
-
-        // وظائف أساسية كبديل
-        function showBasicSurahs() {
-            const app = document.getElementById('app');
-            app.innerHTML = `
-                <div class="basic-surahs">
-                    <h2>📚 سور القرآن الكريم</h2>
-                    <div class="surah-list">
-                        <div class="surah-item" onclick="showSurah(1)">سورة الفاتحة</div>
-                        <div class="surah-item" onclick="showSurah(2)">سورة البقرة</div>
-                        <div class="surah-item" onclick="showSurah(36)">سورة يس</div>
-                        <div class="surah-item" onclick="showSurah(55)">سورة الرحمن</div>
-                        <div class="surah-item" onclick="showSurah(67)">سورة الملك</div>
-                        <div class="surah-item" onclick="showSurah(112)">سورة الإخلاص</div>
-                        <div class="surah-item" onclick="showSurah(113)">سورة الفلق</div>
-                        <div class="surah-item" onclick="showSurah(114)">سورة الناس</div>
-                    </div>
-                    <button onclick="location.reload()">العودة</button>
-                </div>
-            `;
-        }
-
-        function showSurah(number) {
-            const surahs = {
-                1: { name: "الفاتحة", ayahs: ["بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", "الرَّحْمَٰنِ الرَّحِيمِ", "مَالِكِ يَوْمِ الدِّينِ", "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ", "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"] },
-                112: { name: "الإخلاص", ayahs: ["قُلْ هُوَ اللَّهُ أَحَدٌ", "اللَّهُ الصَّمَدُ", "لَمْ يَلِدْ وَلَمْ يُولَدْ", "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ"] }
-            };
-            
-            const surah = surahs[number];
-            if (!surah) return;
-            
-            let versesHtml = '';
-            surah.ayahs.forEach((ayah, index) => {
-                versesHtml += `<div class="verse"><span class="verse-text">${ayah}</span><span class="verse-number">${index + 1}</span></div>`;
-            });
-            
-            document.getElementById('app').innerHTML = `
-                <div class="surah-view">
-                    <h2>سورة ${surah.name}</h2>
-                    <div class="verses">${versesHtml}</div>
-                    <button onclick="showBasicSurahs()">العودة للسور</button>
-                </div>
-            `;
-        }
-
-        function showBasicAudio() {
-            document.getElementById('app').innerHTML = `
-                <div class="audio-section">
-                    <h2>🎵 التلاوات</h2>
-                    <p>خاصية التلاوات قيد التطوير</p>
-                    <button onclick="location.reload()">العودة</button>
-                </div>
-            `;
-        }
-    </script>
-</body>
-</html>
