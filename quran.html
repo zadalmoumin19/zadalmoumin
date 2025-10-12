@@ -1386,3 +1386,435 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSearch(); // تهيئة نظام البحث
 });
 </script>
+<script>
+// استكمال سورة البقرة - الآيات 31 إلى 80
+const baqaraVersesPart2 = [
+    {
+        "number": 31,
+        "text": "وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا ثُمَّ عَرَضَهُمْ عَلَى الْمَلَائِكَةِ فَقَالَ أَنبِئُونِي بِأَسْمَاءِ هَٰؤُلَاءِ إِن كُنتُمْ صَادِقِينَ",
+        "hafs": "waʿallama adama al-asmāʾa kullahā thumma ʿaraḍahum ʿalā l-malāʾikati faqāla anbiʾūnī bi-asmāʾi hāʾulāʾi in kuntum ṣādiqīna",
+        "warsh": "waʿallama ādama al-asmāʾa kullahā thumma ʿaraḍahum ʿalā l-malāʾikati faqāla anbiʾūnī bi-asmāʾi hāʾulāʾi in kuntum ṣādiqīna",
+        "sajdah": false
+    },
+    {
+        "number": 32,
+        "text": "قَالُوا سُبْحَانَكَ لَا عِلْمَ لَنَا إِلَّا مَا عَلَّمْتَنَا ۖ إِنَّكَ أَنتَ الْعَلِيمُ الْحَكِيمُ",
+        "hafs": "qālū subḥānaka lā ʿilma lanā illā mā ʿallamtanā innaka anta l-ʿalīmu l-ḥakīmu",
+        "warsh": "qālū subḥānaka lā ʿilma lanā illā mā ʿallamtanā innaka anta l-ʿalīmu l-ḥakīmu",
+        "sajdah": false
+    },
+    {
+        "number": 33,
+        "text": "قَالَ يَا آدَمُ أَنبِئْهُم بِأَسْمَائِهِمْ ۖ فَلَمَّا أَنبَأَهُم بِأَسْمَائِهِمْ قَالَ أَلَمْ أَقُل لَّكُمْ إِنِّي أَعْلَمُ غَيْبَ السَّمَاوَاتِ وَالْأَرْضِ وَأَعْلَمُ مَا تُبْدُونَ وَمَا كُنتُمْ تَكْتُمُونَ",
+        "hafs": "qāla yā ādamu anbiʾhum bi-asmāʾihim falammā anbaʾahum bi-asmāʾihim qāla alam aqul lakum innī aʿlamu ghayba s-samāwāti wal-arḍi wa-aʿlamu mā tubdūna wa-mā kuntum taktumūna",
+        "warsh": "qāla yā ādamu anbiʾhum bi-asmāʾihim falammā anbaʾahum bi-asmāʾihim qāla alam aqul lakum innī aʿlamu ghayba s-samāwāti wal-arḍi wa-aʿlamu mā tubdūna wa-mā kuntum taktumūna",
+        "sajdah": false
+    },
+    {
+        "number": 34,
+        "text": "وَإِذْ قُلْنَا لِلْمَلَائِكَةِ اسْجُدُوا لِآدَمَ فَسَجَدُوا إِلَّا إِبْلِيسَ أَبَىٰ وَاسْتَكْبَرَ وَكَانَ مِنَ الْكَافِرِينَ",
+        "hafs": "wa-idh qulnā li-l-malāʾikati us'judū li-ādama fasajadū illā iblīsa abā wastakbara wa-kāna mina l-kāfirīna",
+        "warsh": "wa-idh qulnā li-l-malāʾikati us'judū li-ādama fasajadū illā iblīsa abā wastakbara wa-kāna mina l-kāfirīna",
+        "sajdah": false
+    },
+    {
+        "number": 35,
+        "text": "وَقُلْنَا يَا آدَمُ اسْكُنْ أَنتَ وَزَوْجُكَ الْجَنَّةَ وَكُلَا مِنْهَا رَغَدًا حَيْثُ شِئْتُمَا وَلَا تَقْرَبَا هَٰذِهِ الشَّجَرَةَ فَتَكُونَا مِنَ الظَّالِمِينَ",
+        "hafs": "wa-qulnā yā ādamu us'kun anta wa-zawjuka l-jannata wa-kulā minhā raghadan ḥaythu shiʾtumā wa-lā taqrabā hādhihi sh-shajarata fa-takūnā mina ẓ-ẓālimīna",
+        "warsh": "wa-qulnā yā ādamu us'kun anta wa-zawjuka l-jannata wa-kulā minhā raghadan ḥaythu shiʾtumā wa-lā taqrabā hādhihi sh-shajarata fa-takūnā mina ẓ-ẓālimīna",
+        "sajdah": false
+    },
+    // الآيات 36-40
+    {
+        "number": 36,
+        "text": "فَأَزَلَّهُمَا الشَّيْطَانُ عَنْهَا فَأَخْرَجَهُمَا مِمَّا كَانَا فِيهِ ۖ وَقُلْنَا اهْبِطُوا بَعْضُكُمْ لِبَعْضٍ عَدُوٌّ ۖ وَلَكُمْ فِي الْأَرْضِ مُسْتَقَرٌّ وَمَتَاعٌ إِلَىٰ حِينٍ",
+        "hafs": "fa-azallahumā sh-shayṭānu ʿanhā fa-akhrajahumā mimmā kānā fīhi wa-qulnā ihbiṭū baʿḍukum li-baʿḍin ʿaduwwun wa-lakum fī l-arḍi mustaqarrun wa-matāʿun ilā ḥīnin",
+        "warsh": "fa-azallahumā sh-shayṭānu ʿanhā fa-akhrajahumā mimmā kānā fīhi wa-qulnā ihbiṭū baʿḍukum li-baʿḍin ʿaduwwun wa-lakum fī l-arḍi mustaqarrun wa-matāʿun ilā ḥīnin",
+        "sajdah": false
+    },
+    {
+        "number": 37,
+        "text": "فَتَلَقَّىٰ آدَمُ مِن رَّبِّهِ كَلِمَاتٍ فَتَابَ عَلَيْهِ ۚ إِنَّهُ هُوَ التَّوَّابُ الرَّحِيمُ",
+        "hafs": "fa-talaqqā ādamu min rabbihi kalimātin fa-tāba ʿalayhi innahu huwa t-tawwābu r-raḥīmu",
+        "warsh": "fa-talaqqā ādamu min rabbihi kalimātin fa-tāba ʿalayhi innahu huwa t-tawwābu r-raḥīmu",
+        "sajdah": false
+    },
+    {
+        "number": 38,
+        "text": "قُلْنَا اهْبِطُوا مِنْهَا جَمِيعًا ۖ فَإِمَّا يَأْتِيَنَّكُم مِّنِّي هُدًى فَمَن تَبِعَ هُدَايَ فَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ",
+        "hafs": "qulnā ihbiṭū minhā jamīʿan fa-immā yaʾtiyannakum minnī hudan fa-man tabiʿa hudāya fa-lā khawfun ʿalayhim wa-lā hum yaḥzanūna",
+        "warsh": "qulnā ihbiṭū minhā jamīʿan fa-immā yaʾtiyannakum minnī hudan fa-man tabiʿa hudāya fa-lā khawfun ʿalayhim wa-lā hum yaḥzanūna",
+        "sajdah": false
+    },
+    {
+        "number": 39,
+        "text": "وَالَّذِينَ كَفَرُوا وَكَذَّبُوا بِآيَاتِنَا أُولَٰئِكَ أَصْحَابُ النَّارِ ۖ هُمْ فِيهَا خَالِدُونَ",
+        "hafs": "wa-lladhīna kafarū wa-kaḏḏabū bi-āyātinā ulāʾika aṣḥābu n-nāri hum fīhā khālidūna",
+        "warsh": "wa-lladhīna kafarū wa-kaḏḏabū bi-āyātinā ulāʾika aṣḥābu n-nāri hum fīhā khālidūna",
+        "sajdah": false
+    },
+    {
+        "number": 40,
+        "text": "يَا بَنِي إِسْرَائِيلَ اذْكُرُوا نِعْمَتِيَ الَّتِي أَنْعَمْتُ عَلَيْكُمْ وَأَوْفُوا بِعَهْدِي أُوفِ بِعَهْدِكُمْ وَإِيَّايَ فَارْهَبُونِ",
+        "hafs": "yā banī isrāʾīla udhkurū niʿmatiya allatī anʿamtu ʿalaykum wa-awfū bi-ʿahdī ūfi bi-ʿahdikum wa-iyyāya fa-rhabūni",
+        "warsh": "yā banī isrāʾīla udhkurū niʿmatiya allatī anʿamtu ʿalaykum wa-awfū bi-ʿahdī ūfi bi-ʿahdikum wa-iyyāya fa-rhabūni",
+        "sajdah": false
+    },
+    // الآيات 41-45
+    {
+        "number": 41,
+        "text": "وَآمِنُوا بِمَا أَنزَلْتُ مُصَدِّقًا لِّمَا مَعَكُمْ وَلَا تَكُونُوا أَوَّلَ كَافِرٍ بِهِ ۖ وَلَا تَشْتَرُوا بِآيَاتِي ثَمَنًا قَلِيلًا وَإِيَّايَ فَاتَّقُونِ",
+        "hafs": "wa-āminū bi-mā anzaltu muṣaddiqan li-mā maʿakum wa-lā takūnū awwala kāfirin bihi wa-lā tashtarū bi-āyātī thamanan qalīlan wa-iyyāya fa-ttaqūni",
+        "warsh": "wa-āminū bi-mā anzaltu muṣaddiqan li-mā maʿakum wa-lā takūnū awwala kāfirin bihi wa-lā tashtarū bi-āyātī thamanan qalīlan wa-iyyāya fa-ttaqūni",
+        "sajdah": false
+    },
+    {
+        "number": 42,
+        "text": "وَلَا تَلْبِسُوا الْحَقَّ بِالْبَاطِلِ وَتَكْتُمُوا الْحَقَّ وَأَنتُمْ تَعْلَمُونَ",
+        "hafs": "wa-lā talbisū l-ḥaqqa bi-l-bāṭili wa-taktumū l-ḥaqqa wa-antum taʿlamūna",
+        "warsh": "wa-lā talbisū l-ḥaqqa bi-l-bāṭili wa-taktumū l-ḥaqqa wa-antum taʿlamūna",
+        "sajdah": false
+    },
+    {
+        "number": 43,
+        "text": "وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ وَارْكَعُوا مَعَ الرَّاكِعِينَ",
+        "hafs": "wa-aqīmū ṣ-ṣalāta wa-ātū z-zakāta wa-rkaʿū maʿa r-rākiʿīna",
+        "warsh": "wa-aqīmū ṣ-ṣalāta wa-ātū z-zakāta wa-rkaʿū maʿa r-rākiʿīna",
+        "sajdah": false
+    },
+    {
+        "number": 44,
+        "text": "أَتَأْمُرُونَ النَّاسَ بِالْبِرِّ وَتَنسَوْنَ أَنفُسَكُمْ وَأَنتُمْ تَتْلُونَ الْكِتَابَ ۚ أَفَلَا تَعْقِلُونَ",
+        "hafs": "a-taʾmurūna n-nāsa bi-l-birri wa-tansawna anfusakum wa-antum tatlūna l-kitāba a-fa-lā taʿqilūna",
+        "warsh": "a-taʾmurūna n-nāsa bi-l-birri wa-tansawna anfusakum wa-antum tatlūna l-kitāba a-fa-lā taʿqilūna",
+        "sajdah": false
+    },
+    {
+        "number": 45,
+        "text": "وَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى الْخَاشِعِينَ",
+        "hafs": "wa-staʿīnū bi-ṣ-ṣabri wa-ṣ-ṣalāti wa-innahā la-kabīratun illā ʿalā l-khāshiʿīna",
+        "warsh": "wa-staʿīnū bi-ṣ-ṣabri wa-ṣ-ṣalāti wa-innahā la-kabīratun illā ʿalā l-khāshiʿīna",
+        "sajdah": false
+    },
+    // الآيات 46-50
+    {
+        "number": 46,
+        "text": "الَّذِينَ يَظُنُّونَ أَنَّهُم مُّلَاقُو رَبِّهِمْ وَأَنَّهُمْ إِلَيْهِ رَاجِعُونَ",
+        "hafs": "alladhīna yaẓunnūna annahum mulāqū rabbihim wa-annahum ilayhi rājiʿūna",
+        "warsh": "alladhīna yaẓunnūna annahum mulāqū rabbihim wa-annahum ilayhi rājiʿūna",
+        "sajdah": false
+    },
+    {
+        "number": 47,
+        "text": "يَا بَنِي إِسْرَائِيلَ اذْكُرُوا نِعْمَتِيَ الَّتِي أَنْعَمْتُ عَلَيْكُمْ وَأَنِّي فَضَّلْتُكُمْ عَلَى الْعَالَمِينَ",
+        "hafs": "yā banī isrāʾīla udhkurū niʿmatiya allatī anʿamtu ʿalaykum wa-innī faḍḍaltukum ʿalā l-ʿālamīna",
+        "warsh": "yā banī isrāʾīla udhkurū niʿmatiya allatī anʿamtu ʿalaykum wa-innī faḍḍaltukum ʿalā l-ʿālamīna",
+        "sajdah": false
+    },
+    {
+        "number": 48,
+        "text": "وَاتَّقُوا يَوْمًا لَّا تَجْزِي نَفْسٌ عَن نَّفْسٍ شَيْئًا وَلَا يُقْبَلُ مِنْهَا شَفَاعَةٌ وَلَا يُؤْخَذُ مِنْهَا عَدْلٌ وَلَا هُمْ يُنصَرُونَ",
+        "hafs": "wa-ttaqū yawman lā tajzī nafsun ʿan nafsin shayan wa-lā yuqbalu minhā shafāʿatun wa-lā yuʾkhadhu minhā ʿadlun wa-lā hum yunṣarūna",
+        "warsh": "wa-ttaqū yawman lā tajzī nafsun ʿan nafsin shayan wa-lā yuqbalu minhā shafāʿatun wa-lā yuʾkhadhu minhā ʿadlun wa-lā hum yunṣarūna",
+        "sajdah": false
+    },
+    {
+        "number": 49,
+        "text": "وَإِذْ نَجَّيْنَاكُم مِّنْ آلِ فِرْعَوْنَ يَسُومُونَكُمْ سُوءَ الْعَذَابِ يُذَبِّحُونَ أَبْنَاءَكُمْ وَيَسْتَحْيُونَ نِسَاءَكُمْ ۚ وَفِي ذَٰلِكُم بَلَاءٌ مِّن رَّبِّكُمْ عَظِيمٌ",
+        "hafs": "wa-idh najjaynākum min āli firʿawna yasūmūnakum sūʾa l-ʿadhābi yuḏabbiḥūna abnāʾakum wa-yastaḥyūna nisāʾakum wa-fī dhālikum balāʾun min rabbikum ʿaẓīmun",
+        "warsh": "wa-idh najjaynākum min āli firʿawna yasūmūnakum sūʾa l-ʿadhābi yuḏabbiḥūna abnāʾakum wa-yastaḥyūna nisāʾakum wa-fī dhālikum balāʾun min rabbikum ʿaẓīmun",
+        "sajdah": false
+    },
+    {
+        "number": 50,
+        "text": "وَإِذْ فَرَقْنَا بِكُمُ الْبَحْرَ فَأَنجَيْنَاكُمْ وَأَغْرَقْنَا آلَ فِرْعَوْنَ وَأَنتُمْ تَنظُرُونَ",
+        "hafs": "wa-idh faraqnā bikum al-baḥra fa-anjaynākum wa-aghraqnā āla firʿawna wa-antum tanẓurūna",
+        "warsh": "wa-idh faraqnā bikum al-baḥra fa-anjaynākum wa-aghraqnā āla firʿawna wa-antum tanẓurūna",
+        "sajdah": false
+    }
+    // سيتم إكمال باقي الآيات في الأجزاء التالية
+];
+
+// إضافة الآيات إلى سورة البقرة
+completeQuran.surahs[1].verses.push(...baqaraVersesPart2);
+
+// نظام التفسير المفصل من ابن كثير
+const detailedTafsir = {
+    "1": {
+        "ibn_kathir": `سورة الفاتحة سميت بذلك لأنها تفتتح القرآن العظيم، وهي أول ما يكتبه الكاتب من المصحف، وأول ما يتلوه القارئ في الصلاة. وهي مكية باتفاق، وآياتها سبع بالإجماع. وتسمى: أم الكتاب، والسبع المثاني، والشافية، والوافية، والكافية، والأساس، والحمد.
+
+وقد ورد في فضلها أحاديث كثيرة، منها ما رواه الإمام أحمد عن أبي سعيد بن المعلى قال: "كنت أصلي في المسجد فدعاني رسول الله صلى الله عليه وسلم فلم أجبه، فقلت: يا رسول الله، إني كنت أصلي، فقال: ألم يقل الله: {استجيبوا لله وللرسول إذا دعاكم} ثم قال: لأعلمنك أعظم سورة في القرآن قبل أن تخرج من المسجد". قال: فأخذ بيدي، فلما أردنا أن نخرج قلت: يا رسول الله، إنك قلت لأعلمنك أعظم سورة في القرآن. قال: "الحمد لله رب العالمين، هي السبع المثاني والقرآن العظيم الذي أوتيته".`
+    },
+    "2": {
+        "ibn_kathir": `سورة البقرة مدنية، وهي أول ما نزل بالمدينة، إلا قوله تعالى: {واتقوا يوماً ترجعون فيه إلى الله} فإنها آخر آية نزلت من السماء، ونزلت يوم النحر في حجة الوداع بمنى، وآيات الربا أيضا فإنها آخر ما نزل من القرآن.
+
+وهي أعظم سورة في القرآن، فيها ألف أمر، وألف نهي، وألف حكم، وألف خبر. وقد اشتملت على أحكام العقائد، والعبادات، والمعاملات، والأخلاق، والآداب، والقصص، والمواعظ.
+
+ومن فضائلها ما رواه مسلم عن أبي أمامة الباهلي قال: سمعت رسول الله صلى الله عليه وسلم يقول: "اقرؤوا سورة البقرة، فإن أخذها بركة، وتركها حسرة، ولا تستطيعها البطلة".`
+    }
+};
+
+// نظام التفسير الآية بالآية
+const verseByVerseTafsir = {
+    "1:1": `{بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ} ابتدأ الله تعالى كتابه بهذه الآية تعليماً لعباده أن يبدؤوا بأسمه تعالى، وهي آية من الفاتحة عند الشافعي، واجبة القراءة في الصلاة، ومن كل سورة سوى براءة.`,
+    
+    "1:2": `{الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ} الثناء على الله بصفاته التي كلها أوصاف كمال، وبنعمه الظاهرة والباطنة، الدينية والدنيوية.`,
+    
+    "1:3": `{الرَّحْمَٰنِ الرَّحِيمِ} وصف نفسه تعالى بعد الحمد بالرحمن الرحيم ليعلَم العباد أنه تعالى رحيم بهم، فيحمَدوه على رحمته العامة والخاصة.`,
+    
+    "1:4": `{مَالِكِ يَوْمِ الدِّينِ} أي يوم الجزاء والحساب، وهو يوم القيامة. وخَصَّه بالذكر لأنه اليوم الذي يظهر فيه كمال عدله تعالى.`,
+    
+    "1:5": `{إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ} هذا إقرار بالعبودية، وتفويض إلى الربوبية، ففيه إثبات الألوهية له تعالى، ونفيها عما سواه.`,
+    
+    "1:6": `{اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ} أي أرشدنا إلى الطريق الواضح الذي لا اعوجاج فيه، وهو الإسلام.`,
+    
+    "1:7": `{صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ} أي طريق الذين أنعمت عليهم من النبيين والصديقين والشهداء والصالحين، غير طريق المغضوب عليهم وهم اليهود، ولا الضالين وهم النصارى.`,
+    
+    "2:1": `{الم} هذه الحروف وغيرها من الحروف المقطعة في أوائل السور فيها إشارة إلى إعجاز القرآن، فقد وقع به تحدي المشركين، فعجزوا عن معارضته، وهو مركب من هذه الحروف التي تتكون منها لغتهم.`,
+    
+    "2:2": `{ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ} أي هذا الكتاب -القرآن- لا شك فيه أنه من عند الله، وهو هدى للمتقين الذين يخافون الله ويتبعون أوامره.`,
+    
+    "2:3": `{الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ} صفات المتقين: الإيمان بالغيب كالجنّة والنار والبعث، وإقامة الصلاة بشروطها، والإنفاق من الرزق الذي أعطاهم الله.`
+};
+
+// نظام التفسير التفاعلي المحسن
+function loadDetailedTafsir(surahId, verseNumber = null) {
+    const tafsirContent = document.getElementById('tafsirContent');
+    
+    if (verseNumber) {
+        // تفسير آية محددة
+        const tafsirKey = `${surahId}:${verseNumber}`;
+        const verseTafsir = verseByVerseTafsir[tafsirKey] || "تفسير هذه الآية قيد الإضافة...";
+        
+        tafsirContent.innerHTML = `
+            <div class="tafsir-header" style="background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border-right: 4px solid var(--gold);">
+                <h4 style="color: var(--gold); margin: 0;">
+                    تفسير الآية ${verseNumber} من سورة ${completeQuran.surahs.find(s => s.id === surahId).name}
+                </h4>
+            </div>
+            <div class="tafsir-text" style="line-height: 1.8; font-size: 1.1rem;">
+                ${verseTafsir}
+            </div>
+            <div class="tafsir-source" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--light-gold);">
+                <small><i class="fas fa-book"></i> تفسير ابن كثير - مصدر سني موثوق</small>
+            </div>
+        `;
+    } else {
+        // تفسير السورة كاملة
+        const surahTafsir = detailedTafsir[surahId]?.ibn_kathir || "تفسير هذه السورة قيد الإضافة...";
+        
+        tafsirContent.innerHTML = `
+            <div class="tafsir-header" style="background: rgba(212, 175, 55, 0.1); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; border-right: 4px solid var(--gold);">
+                <h4 style="color: var(--gold); margin: 0;">
+                    تفسير سورة ${completeQuran.surahs.find(s => s.id === surahId).name}
+                </h4>
+            </div>
+            <div class="tafsir-text" style="line-height: 1.8; font-size: 1.1rem;">
+                ${surahTafsir}
+            </div>
+            <div class="tafsir-features" style="margin-top: 2rem;">
+                <h5 style="color: var(--gold); margin-bottom: 1rem;">مميزات السورة:</h5>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="background: rgba(30, 30, 30, 0.6); padding: 1rem; border-radius: 8px; text-align: center;">
+                        <div style="color: var(--gold); font-weight: bold;">عدد الآيات</div>
+                        <div>${completeQuran.surahs.find(s => s.id === surahId).ayahs}</div>
+                    </div>
+                    <div style="background: rgba(30, 30, 30, 0.6); padding: 1rem; border-radius: 8px; text-align: center;">
+                        <div style="color: var(--gold); font-weight: bold;">نوع السورة</div>
+                        <div>${completeQuran.surahs.find(s => s.id === surahId).type}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tafsir-source" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--light-gold);">
+                <small><i class="fas fa-book"></i> تفسير ابن كثير - مصدر سني موثوق</small>
+            </div>
+        `;
+    }
+}
+
+// نظام الأدعية المأثورة
+const quranDuas = {
+    "sajdah": [
+        {
+            "text": "سَجَدَ وَجْهِي لِلَّذِي خَلَقَهُ وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ فَتَبَارَكَ اللَّهُ أَحْسَنُ الْخَالِقِينَ",
+            "source": "رواه الترمذي وقال: حديث حسن"
+        },
+        {
+            "text": "اللَّهُمَّ اكْتُبْ لِي بِهَا عِنْدَكَ أَجْرًا، وَضَعْ عَنِّي بِهَا وِزْرًا، وَاجْعَلْهَا لِي عِنْدَكَ ذُخْرًا، وَتَقَبَّلْهَا مِنِّي كَمَا تَقَبَّلْتَهَا مِنْ عَبْدِكَ دَاوُدَ",
+            "source": "رواه الترمذي"
+        }
+    ],
+    "khatm": [
+        {
+            "text": "اللَّهُمَّ ارْحَمْنِي بِالْقُرْآنِ وَاجْعَلْهُ لِي إِمَامًا وَنُورًا وَهُدًى وَرَحْمَةً، اللَّهُمَّ ذَكِّرْنِي مِنْهُ مَا نَسِيتُ وَعَلِّمْنِي مِنْهُ مَا جَهِلْتُ وَارْزُقْنِي تِلَاوَتَهُ آنَاءَ اللَّيْلِ وَأَطْرَافَ النَّهَارِ وَاجْعَلْهُ لِي حُجَّةً يَا رَبَّ الْعَالَمِينَ",
+            "source": "رواه الترمذي"
+        },
+        {
+            "text": "اللَّهُمَّ أَخْتِمْ بِالْقُرْآنِ عُمْرِي، وَاجْعَلْ الْقُرْآنَ شَفِيعِي، وَبِالْقُرْآنِ الْقِيلَ الْجَنَّةَ، وَبِحُبِّ الْقُرْآنِ أَدْخِلْنِي الْجَنَّةَ",
+            "source": "دعاء مأثور"
+        }
+    ],
+    "general": [
+        {
+            "text": "رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ",
+            "source": "سورة البقرة: 127"
+        },
+        {
+            "text": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+            "source": "سورة البقرة: 201"
+        }
+    ]
+};
+
+// عرض الأدعية في واجهة خاصة
+function showDuasSection() {
+    const duasContainer = document.createElement('div');
+    duasContainer.id = 'duasSection';
+    duasContainer.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--dark-bg);
+        border: 3px solid var(--gold);
+        border-radius: 20px;
+        padding: 2rem;
+        z-index: 10000;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    `;
+    
+    duasContainer.innerHTML = `
+        <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="color: var(--gold); margin: 0;">📖 الأدعية المأثورة</h3>
+            <button onclick="closeDuasSection()" style="background: none; border: none; color: var(--gold); font-size: 1.5rem; cursor: pointer;">×</button>
+        </div>
+        
+        <div class="duas-tabs" style="margin-bottom: 2rem;">
+            <button class="dua-tab-btn active" data-type="sajdah">دعاء السجود</button>
+            <button class="dua-tab-btn" data-type="khatm">دعاء الختم</button>
+            <button class="dua-tab-btn" data-type="general">أدعية عامة</button>
+        </div>
+        
+        <div id="duasContent">
+            ${renderDuasByType('sajdah')}
+        </div>
+    `;
+    
+    document.body.appendChild(duasContainer);
+    
+    // إضافة أحداث لأزرار التبويب
+    document.querySelectorAll('.dua-tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.dua-tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById('duasContent').innerHTML = renderDuasByType(this.dataset.type);
+        });
+    });
+}
+
+function renderDuasByType(type) {
+    return quranDuas[type].map(dua => `
+        <div class="dua-card" style="background: rgba(26, 71, 47, 0.8); padding: 1.5rem; margin-bottom: 1rem; border-radius: 10px; border: 1px solid var(--border);">
+            <div class="dua-text" style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 1rem; text-align: center;">
+                "${dua.text}"
+            </div>
+            <div class="dua-source" style="color: var(--light-gold); text-align: left; font-size: 0.9rem;">
+                <i class="fas fa-book"></i> ${dua.source}
+            </div>
+            <button onclick="copyDuaToClipboard('${dua.text}')" class="verse-btn" style="margin-top: 0.5rem;">
+                <i class="fas fa-copy"></i> نسخ الدعاء
+            </button>
+        </div>
+    `).join('');
+}
+
+function closeDuasSection() {
+    const duasSection = document.getElementById('duasSection');
+    if (duasSection) {
+        duasSection.remove();
+    }
+}
+
+function copyDuaToClipboard(duaText) {
+    navigator.clipboard.writeText(duaText).then(() => {
+        showNotification('تم نسخ الدعاء إلى الحافظة', 'success');
+    });
+}
+
+// تحسين وظيفة تحميل السورة لإضافة التفسير التفاعلي
+function enhancedLoadSurah(surahId) {
+    const surah = completeQuran.surahs.find(s => s.id === surahId);
+    if (!surah) return;
+
+    // تحديث القائمة النشطة
+    document.querySelectorAll('.surah-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelectorAll('.surah-item')[surahId - 1].classList.add('active');
+
+    // عرض آيات السورة مع إضافة أحداث للنقر للتفسير
+    const verseContainer = document.getElementById('verseContainer');
+    verseContainer.innerHTML = '';
+
+    surah.verses.forEach(verse => {
+        const verseElement = document.createElement('div');
+        verseElement.className = 'verse';
+        verseElement.innerHTML = `
+            <div class="verse-content" onclick="loadDetailedTafsir(${surahId}, ${verse.number})" style="cursor: pointer;">
+                <span class="verse-text">${verse.text}</span>
+                <span class="verse-number">${verse.number}</span>
+            </div>
+            <div class="verse-controls">
+                <button class="verse-btn" onclick="playVerse(${surahId}, ${verse.number})">
+                    <i class="fas fa-play"></i> تشغيل
+                </button>
+                <button class="verse-btn" onclick="toggleBookmark(${surahId}, ${verse.number})">
+                    <i class="far fa-bookmark"></i> إشارة
+                </button>
+                <button class="verse-btn" onclick="markAsMemorized(${surahId}, ${verse.number})">
+                    <i class="fas fa-brain"></i> حفظ
+                </button>
+                ${verse.sajdah ? `
+                <button class="verse-btn" onclick="showSajdahDua(${surahId}, ${verse.number})">
+                    <i class="fas fa-prostrate"></i> سجدة
+                </button>
+                ` : ''}
+            </div>
+        `;
+        verseContainer.appendChild(verseElement);
+    });
+
+    // تحميل التفسير العام للسورة
+    loadDetailedTafsir(surahId);
+    
+    // تحديث الإحصائيات
+    userStats.lastRead = { surah: surahId, verse: 1 };
+    saveUserStats();
+}
+
+// إضافة زر الأدعية إلى واجهة التحكم
+function addDuasButton() {
+    const headerControls = document.querySelector('.header-controls');
+    const duasButton = document.createElement('button');
+    duasButton.className = 'control-btn';
+    duasButton.innerHTML = '<i class="fas fa-hands-praying"></i> الأدعية';
+    duasButton.onclick = showDuasSection;
+    headerControls.appendChild(duasButton);
+}
+
+// تحديث التهيئة النهائية
+document.addEventListener('DOMContentLoaded', function() {
+    createStars();
+    loadSurahList();
+    loadRecitationSelector();
+    loadReaderSelector();
+    enhancedLoadSurah(1); // استخدام الوظيفة المحسنة
+    loadUserStats();
+    initializeSearch();
+    addDuasButton(); // إضافة زر الأدعية
+});
+</script>
