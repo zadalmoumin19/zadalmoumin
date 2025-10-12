@@ -528,3 +528,403 @@
     </script>
 </body>
   </html>
+<script>
+// بيانات القرآن الكريم الكاملة - الجزء الأول
+const completeQuran = {
+    "surahs": [
+        {
+            "id": 1,
+            "name": "الفاتحة",
+            "englishName": "Al-Fatiha",
+            "ayahs": 7,
+            "type": "مكية",
+            "verses": [
+                {
+                    "number": 1,
+                    "text": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+                    "hafs": "bismi allahi alrrahmani alrraheemi",
+                    "warsh": "bismi allahi alrrahmani alrraheemi",
+                    "sajdah": false
+                },
+                {
+                    "number": 2,
+                    "text": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+                    "hafs": "alhamdu lillahi rabbi alʿalameena",
+                    "warsh": "alhamdu lillahi rabbi alʿalameena",
+                    "sajdah": false
+                },
+                {
+                    "number": 3,
+                    "text": "الرَّحْمَٰنِ الرَّحِيمِ",
+                    "hafs": "alrrahmani alrraheemi",
+                    "warsh": "alrrahmani alrraheemi",
+                    "sajdah": false
+                },
+                {
+                    "number": 4,
+                    "text": "مَالِكِ يَوْمِ الدِّينِ",
+                    "hafs": "maliki yawmi alddeeni",
+                    "warsh": "maliki yawmi alddeeni",
+                    "sajdah": false
+                },
+                {
+                    "number": 5,
+                    "text": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+                    "hafs": "iyyaka naʿbudu wa-iyyaka nastaʿeenu",
+                    "warsh": "iyyaka naʿbudu wa-iyyaka nastaʿeenu",
+                    "sajdah": false
+                },
+                {
+                    "number": 6,
+                    "text": "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+                    "hafs": "ihdina alssirata almustaqeema",
+                    "warsh": "ihdina alssirata almustaqeema",
+                    "sajdah": false
+                },
+                {
+                    "number": 7,
+                    "text": "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+                    "hafs": "sirata allatheena anʿamta ʿalayhim ghayri almaghdoobi ʿalayhim wala alddalleena",
+                    "warsh": "sirata allatheena anʿamta ʿalayhim ghayri almaghdoobi ʿalayhim wala alddalleena",
+                    "sajdah": false
+                }
+            ],
+            "tafsir": {
+                "ibn_kathir": "هذه السورة الكريمة مكية، وآياتها سبع بالإجماع، وتسمى: الفاتحة، وأم الكتاب، والسبع المثاني، والشافية، والوافية، والكافية، والأساس، والحمد. وقد وردت أحاديث كثيرة في فضلها."
+            }
+        },
+        {
+            "id": 2,
+            "name": "البقرة",
+            "englishName": "Al-Baqara",
+            "ayahs": 286,
+            "type": "مدنية",
+            "verses": [
+                {
+                    "number": 1,
+                    "text": "الم",
+                    "hafs": "alif-lam-meem",
+                    "warsh": "alif-lam-meem",
+                    "sajdah": false
+                },
+                {
+                    "number": 2,
+                    "text": "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ",
+                    "hafs": "thalika alkitabu la rayba feehi hudan lilmuttaqeena",
+                    "warsh": "thalika alkitabu la rayba feehi hudan lilmuttaqeena",
+                    "sajdah": false
+                },
+                {
+                    "number": 3,
+                    "text": "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ",
+                    "hafs": "allatheena yu'minoona bialghaybi wayuqeemoona alssalata wamimma razaqnahum yunfiqoona",
+                    "warsh": "allatheena yu'minoona bialghaybi wayuqeemoona alssalata wamimma razaqnahum yunfiqoona",
+                    "sajdah": false
+                },
+                {
+                    "number": 4,
+                    "text": "وَالَّذِينَ يُؤْمِنُونَ بِمَا أُنزِلَ إِلَيْكَ وَمَا أُنزِلَ مِن قَبْلِكَ وَبِالْآخِرَةِ هُمْ يُوقِنُونَ",
+                    "hafs": "waallatheena yu'minoona bima onzila ilayka wama onzila min qablika wabial-akhirati hum yooqinoona",
+                    "warsh": "waallatheena yu'minoona bima onzila ilayka wama onzila min qablika wabial-akhirati hum yooqinoona",
+                    "sajdah": false
+                },
+                {
+                    "number": 5,
+                    "text": "أُولَٰئِكَ عَلَىٰ هُدًى مِّن رَّبِّهِمْ ۖ وَأُولَٰئِكَ هُمُ الْمُفْلِحُونَ",
+                    "hafs": "ola-ika ʿala hudan min rabbihim waola-ika humu almuflihoona",
+                    "warsh": "ola-ika ʿala hudan min rabbihim waola-ika humu almuflihoona",
+                    "sajdah": false
+                }
+                // سيتم إكمال باقي الآيات في الأجزاء التالية
+            ],
+            "tafsir": {
+                "ibn_kathir": "سورة البقرة مدنية، وهي أول ما نزل بالمدينة، إلا قوله تعالى: {واتقوا يوماً ترجعون فيه إلى الله} فإنها آخر آية نزلت من السماء، ونزلت يوم النحر في حجة الوداع بمنى، وآيات الربا أيضا فإنها آخر ما نزل من القرآن. وأما قوله: {يا أيها الناس اتقوا ربكم} فإنها مكية في قول جماعة من العلماء."
+            }
+        }
+        // سيتم إضافة باقي السور في الأجزاء التالية
+    ]
+};
+
+// نظام التلاوات الصوتية
+const audioSources = {
+    "hafs": {
+        "mishari_alafasy": "https://everyayah.com/data/Mishari_Alafasy_128kbps/{surah}_{verse}.mp3",
+        "abdul_basit": "https://everyayah.com/data/Abdul_Basit_Murattal_128kbps/{surah}_{verse}.mp3",
+        "saood_ash-shuraim": "https://everyayah.com/data/Saood_ash-Shuraim_128kbps/{surah}_{verse}.mp3"
+    },
+    "warsh": {
+        "abubakr_al-shatri": "https://everyayah.com/data/Abu_Bakr_Al-Shatri_128kbps/{surah}_{verse}.mp3"
+    }
+};
+
+// نظام الإحصائيات الشخصية
+let userStats = {
+    readVerses: 0,
+    memorizedVerses: 0,
+    readingTime: 0, // بالدقائق
+    bookmarks: [],
+    memorizationProgress: {},
+    lastRead: {
+        surah: 1,
+        verse: 1
+    }
+};
+
+// تحميل إحصائيات المستخدم من التخزين المحلي
+function loadUserStats() {
+    const savedStats = localStorage.getItem('quranUserStats');
+    if (savedStats) {
+        userStats = {...userStats, ...JSON.parse(savedStats)};
+    }
+    updateStatsDisplay();
+}
+
+// حفظ إحصائيات المستخدم
+function saveUserStats() {
+    localStorage.setItem('quranUserStats', JSON.stringify(userStats));
+}
+
+// تحديث عرض الإحصائيات
+function updateStatsDisplay() {
+    document.getElementById('readVerses').textContent = userStats.readVerses.toLocaleString();
+    document.getElementById('memorizedVerses').textContent = userStats.memorizedVerses.toLocaleString();
+    document.getElementById('readingTime').textContent = userStats.readingTime.toLocaleString();
+    
+    const totalVerses = 6236; // إجمالي آيات القرآن
+    const completionPercent = ((userStats.readVerses / totalVerses) * 100).toFixed(1);
+    document.getElementById('completionPercent').textContent = completionPercent + '%';
+}
+
+// تحميل سورة معينة
+function loadSurah(surahId) {
+    const surah = completeQuran.surahs.find(s => s.id === surahId);
+    if (!surah) return;
+
+    // تحديث القائمة النشطة
+    document.querySelectorAll('.surah-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelectorAll('.surah-item')[surahId - 1].classList.add('active');
+
+    // عرض آيات السورة
+    const verseContainer = document.getElementById('verseContainer');
+    verseContainer.innerHTML = '';
+
+    surah.verses.forEach(verse => {
+        const verseElement = document.createElement('div');
+        verseElement.className = 'verse';
+        verseElement.innerHTML = `
+            <span class="verse-text">${verse.text}</span>
+            <span class="verse-number">${verse.number}</span>
+            <div class="verse-controls">
+                <button class="verse-btn" onclick="playVerse(${surahId}, ${verse.number})">
+                    <i class="fas fa-play"></i> تشغيل
+                </button>
+                <button class="verse-btn" onclick="toggleBookmark(${surahId}, ${verse.number})">
+                    <i class="far fa-bookmark"></i> إشارة
+                </button>
+                <button class="verse-btn" onclick="markAsMemorized(${surahId}, ${verse.number})">
+                    <i class="fas fa-brain"></i> حفظ
+                </button>
+                ${verse.sajdah ? `
+                <button class="verse-btn" onclick="showSajdahDua(${surahId}, ${verse.number})">
+                    <i class="fas fa-prostrate"></i> سجدة
+                </button>
+                ` : ''}
+            </div>
+        `;
+        verseContainer.appendChild(verseElement);
+    });
+
+    // تحميل التفسير
+    loadTafsir(surahId);
+    
+    // تحديث الإحصائيات
+    userStats.lastRead = { surah: surahId, verse: 1 };
+    saveUserStats();
+}
+
+// تحميل التفسير
+function loadTafsir(surahId) {
+    const surah = completeQuran.surahs.find(s => s.id === surahId);
+    if (!surah) return;
+
+    document.getElementById('tafsirContent').innerHTML = `
+        <div style="color: var(--light-gold); margin-bottom: 1rem;">
+            <strong>سورة ${surah.name}</strong> - ${surah.type} - ${surah.ayahs} آية
+        </div>
+        <div style="line-height: 1.8;">
+            ${surah.tafsir.ibn_kathir}
+        </div>
+    `;
+}
+
+// تشغيل الآية
+function playVerse(surahId, verseNumber) {
+    const currentRecitation = document.querySelector('.recitation-btn.active')?.dataset?.recitation || 'hafs';
+    const currentReader = document.querySelector('.reader-btn.active')?.dataset?.reader || 'mishari_alafasy';
+    
+    const audioUrl = audioSources[currentRecitation][currentReader]
+        .replace('{surah}', surahId.toString().padStart(3, '0'))
+        .replace('{verse}', verseNumber.toString().padStart(3, '0'));
+    
+    const audio = new Audio(audioUrl);
+    audio.play();
+    
+    // تحديث الإحصائيات
+    userStats.readVerses++;
+    userStats.readingTime += 0.5; // تقدير وقت الاستماع
+    saveUserStats();
+    updateStatsDisplay();
+}
+
+// إدارة الإشارات المرجعية
+function toggleBookmark(surahId, verseNumber) {
+    const bookmarkKey = `${surahId}:${verseNumber}`;
+    const index = userStats.bookmarks.indexOf(bookmarkKey);
+    
+    if (index > -1) {
+        userStats.bookmarks.splice(index, 1);
+    } else {
+        userStats.bookmarks.push(bookmarkKey);
+    }
+    
+    saveUserStats();
+    showNotification('تم تحديث الإشارات المرجعية');
+}
+
+// وضع الحفظ
+function markAsMemorized(surahId, verseNumber) {
+    const memorizationKey = `${surahId}:${verseNumber}`;
+    userStats.memorizationProgress[memorizationKey] = true;
+    userStats.memorizedVerses = Object.keys(userStats.memorizationProgress).length;
+    
+    saveUserStats();
+    updateStatsDisplay();
+    showNotification('تم تسجيل الآية كمحفوظة');
+}
+
+// عرض دعاء السجود
+function showSajdahDua(surahId, verseNumber) {
+    const sajdahDuas = [
+        "سَجَدَ وَجْهِي لِلَّذِي خَلَقَهُ وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ",
+        "اللَّهُمَّ اكْتُبْ لِي بِهَا عِنْدَكَ أَجْرًا، وَضَعْ عَنِّي بِهَا وِزْرًا، وَاجْعَلْهَا لِي عِنْدَكَ ذُخْرًا، وَتَقَبَّلْهَا مِنِّي كَمَا تَقَبَّلْتَهَا مِنْ عَبْدِكَ دَاوُدَ"
+    ];
+    
+    const randomDua = sajdahDuas[Math.floor(Math.random() * sajdahDuas.length)];
+    
+    showNotification(`دعاء السجود: ${randomDua}`, 'success');
+}
+
+// نظام الإشعارات
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? 'var(--green)' : 'var(--accent)'};
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        border: 2px solid var(--gold);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+    `;
+    
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// تحديث وظيفة التهيئة
+document.addEventListener('DOMContentLoaded', function() {
+    createStars();
+    loadSurahList();
+    loadRecitationSelector();
+    loadReaderSelector();
+    loadSurah(1);
+    loadUserStats();
+});
+
+// إضافة نظام اختيار القارئ
+function loadReaderSelector() {
+    const selector = document.createElement('div');
+    selector.className = 'recitation-selector';
+    selector.innerHTML = '<h4 style=\"color: var(--gold); margin-bottom: 1rem;\">اختر القارئ:</h4>';
+    
+    const readers = [
+        { id: 'mishari_alafasy', name: 'مشاري العفاسي' },
+        { id: 'abdul_basit', name: 'عبد الباسط عبد الصمد' },
+        { id: 'saood_ash-shuraim', name: 'سعود الشريم' }
+    ];
+    
+    readers.forEach(reader => {
+        const btn = document.createElement('button');
+        btn.className = 'recitation-btn reader-btn';
+        btn.textContent = reader.name;
+        btn.dataset.reader = reader.id;
+        btn.onclick = () => {
+            document.querySelectorAll('.reader-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        };
+        selector.appendChild(btn);
+    });
+    
+    document.querySelector('.surah-content').insertBefore(selector, document.querySelector('.verse-container'));
+    
+    // تفعيل أول قارئ افتراضي
+    document.querySelector('.reader-btn').classList.add('active');
+}
+
+// إضافة أنماط CSS للإشعارات
+const notificationStyles = document.createElement('style');
+notificationStyles.textContent = `
+    @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .verse-controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .verse-btn {
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    
+    .verse-btn:hover {
+        background: var(--gold);
+        color: var(--primary);
+    }
+    
+    .verse-number {
+        background: var(--gold);
+        color: var(--primary);
+        padding: 0.2rem 0.5rem;
+        border-radius: 50%;
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+        display: inline-block;
+        min-width: 25px;
+        text-align: center;
+    }
+`;
+document.head.appendChild(notificationStyles);
+</script>
