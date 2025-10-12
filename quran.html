@@ -3061,8 +3061,741 @@ mushafStyles.textContent = `
         .tafsir-panel {
             width: 100%;
             left: -100%;
+            <script>
+// استكمال سورة البقرة - الآيات 81 إلى 150
+const baqaraVersesPart4 = [
+    {
+        "number": 81,
+        "text": "بَلَىٰ مَن كَسَبَ سَيِّئَةً وَأَحَاطَتْ بِهِ خَطِيئَتُهُ فَأُولَٰئِكَ أَصْحَابُ النَّارِ ۖ هُمْ فِيهَا خَالِدُونَ",
+        "hafs": "balā man kasaba sayyiatan wa-aḥāṭat bihi khaṭīatuhu fa-ulāika aṣḥābu n-nāri hum fīhā khālidūna",
+        "warsh": "balā man kasaba sayyiatan wa-aḥāṭat bihi khaṭīatuhu fa-ulāika aṣḥābu n-nāri hum fīhā khālidūna",
+        "sajdah": false
+    },
+    {
+        "number": 82,
+        "text": "وَالَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أُولَٰئِكَ أَصْحَابُ الْجَنَّةِ ۖ هُمْ فِيهَا خَالِدُونَ",
+        "hafs": "wa-lladhīna āmanū wa-ʿamilū ṣ-ṣāliḥāti ulāika aṣḥābu l-jannati hum fīhā khālidūna",
+        "warsh": "wa-lladhīna āmanū wa-ʿamilū ṣ-ṣāliḥāti ulāika aṣḥābu l-jannati hum fīhā khālidūna",
+        "sajdah": false
+    },
+    {
+        "number": 83,
+        "text": "وَإِذْ أَخَذْنَا مِيثَاقَ بَنِي إِسْرَائِيلَ لَا تَعْبُدُونَ إِلَّا اللَّهَ وَبِالْوَالِدَيْنِ إِحْسَانًا وَذِي الْقُرْبَىٰ وَالْيَتَامَىٰ وَالْمَسَاكِينِ وَقُولُوا لِلنَّاسِ حُسْنًا وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ ثُمَّ تَوَلَّيْتُمْ إِلَّا قَلِيلًا مِّنكُمْ وَأَنتُم مُّعْرِضُونَ",
+        "hafs": "wa-idh akhadhnā mīthāqa banī isrāīla lā taʿbudūna illā llāha wa-bi-l-wālidayni iḥsānan wa-dhī l-qurbā wa-l-yatāmā wa-l-masākīni wa-qūlū li-n-nāsi ḥusnan wa-aqīmū ṣ-ṣalāta wa-ātū z-zakāta thumma tawallaytum illā qalīlan minkum wa-antum muʿ'riḍūna",
+        "warsh": "wa-idh akhadhnā mīthāqa banī isrāīla lā taʿbudūna illā llāha wa-bi-l-wālidayni iḥsānan wa-dhī l-qurbā wa-l-yatāmā wa-l-masākīni wa-qūlū li-n-nāsi ḥusnan wa-aqīmū ṣ-ṣalāta wa-ātū z-zakāta thumma tawallaytum illā qalīlan minkum wa-antum muʿ'riḍūna",
+        "sajdah": false
+    },
+    // الآيات 84-90
+    {
+        "number": 84,
+        "text": "وَإِذْ أَخَذْنَا مِيثَاقَكُمْ لَا تَسْفِكُونَ دِمَاءَكُمْ وَلَا تُخْرِجُونَ أَنفُسَكُم مِّن دِيَارِكُمْ ثُمَّ أَقْرَرْتُمْ وَأَنتُمْ تَشْهَدُونَ",
+        "hafs": "wa-idh akhadhnā mīthāqakum lā tasfikūna dimāakum wa-lā tukhrijūna anfusakum min diyārikum thumma aqrartum wa-antum tashhadūna",
+        "warsh": "wa-idh akhadhnā mīthāqakum lā tasfikūna dimāakum wa-lā tukhrijūna anfusakum min diyārikum thumma aqrartum wa-antum tashhadūna",
+        "sajdah": false
+    },
+    {
+        "number": 85,
+        "text": "ثُمَّ أَنتُمْ هَٰؤُلَاءِ تَقْتُلُونَ أَنفُسَكُمْ وَتُخْرِجُونَ فَرِيقًا مِّنكُم مِّن دِيَارِهِمْ تَظَاهَرُونَ عَلَيْهِم بِالْإِثْمِ وَالْعُدْوَانِ وَإِن يَأْتُوكُمْ أُسَارَىٰ تُفَادُوهُمْ وَهُوَ مُحَرَّمٌ عَلَيْكُمْ إِخْرَاجُهُمْ ۚ أَفَتُؤْمِنُونَ بِبَعْضِ الْكِتَابِ وَتَكْفُرُونَ بِبَعْضٍ ۚ فَمَا جَزَاءُ مَن يَفْعَلُ ذَٰلِكَ مِنكُمْ إِلَّا خِزْيٌ فِي الْحَيَاةِ الدُّنْيَا ۖ وَيَوْمَ الْقِيَامَةِ يُرَدُّونَ إِلَىٰ أَشَدِّ الْعَذَابِ ۗ وَمَا اللَّهُ بِغَافِلٍ عَمَّا تَعْمَلُونَ",
+        "hafs": "thumma antum hāulāi taqtulūna anfusakum wa-tukhrijūna farīqan minkum min diyārihim taẓāharūna ʿalayhim bi-l-ith'mi wa-l-ʿudwāni wa-in ya'tūkum usārā tufādūhum wa-huwa muḥarramun ʿalaykum ikhrājuhum a-fatu'minūna bi-baʿḍi l-kitābi wa-takfurūna bi-baʿḍin fa-mā jazāu man yafʿalu dhālika minkum illā khiz'yun fī l-ḥayati d-dunyā wa-yawma l-qiyāmati yuraddūna ilā ashaddi l-ʿadhābi wa-mā llāhu bi-ghāfilin ʿammā taʿmalūna",
+        "warsh": "thumma antum hāulāi taqtulūna anfusakum wa-tukhrijūna farīqan minkum min diyārihim taẓāharūna ʿalayhim bi-l-ith'mi wa-l-ʿudwāni wa-in ya'tūkum usārā tufādūhum wa-huwa muḥarramun ʿalaykum ikhrājuhum a-fatu'minūna bi-baʿḍi l-kitābi wa-takfurūna bi-baʿḍin fa-mā jazāu man yafʿalu dhālika minkum illā khiz'yun fī l-ḥayati d-dunyā wa-yawma l-qiyāmati yuraddūna ilā ashaddi l-ʿadhābi wa-mā llāhu bi-ghāfilin ʿammā taʿmalūna",
+        "sajdah": false
+    },
+    // ... (سيتم إضافة باقي الآيات بشكل مشابه)
+];
+
+// إضافة الآيات إلى سورة البقرة
+completeQuran.surahs[1].verses.push(...baqaraVersesPart4);
+
+// نظام التحسينات المتقدمة للعرض المصحفي
+class AdvancedMushafFeatures {
+    constructor() {
+        this.currentLayout = 'double'; // 'double' أو 'single'
+        this.pageMargins = 20; // هوامش الصفحة
+        this.lineSpacing = 2.5; // تباعد الأسطر
+        this.theme = 'default'; // 'default', 'sepia', 'dark'
+        this.showTajweed = false; // تلوين التجويد
+        this.showTranslation = false; // عرض الترجمة
+    }
+
+    // تحسينات واجهة العرض المصحفي
+    enhanceMushafInterface() {
+        this.addAdvancedControls();
+        this.setupThemes();
+        this.setupTajweedColors();
+        this.setupTranslationPanel();
+        this.setupBookmarks();
+    }
+
+    addAdvancedControls() {
+        const controlsContainer = document.querySelector('.controls-right');
+        
+        const advancedControls = `
+            <!-- تحكم في الهوامش -->
+            <div class="margin-control" style="display: flex; gap: 0.5rem; align-items: center;">
+                <button onclick="advancedMushaf.decreaseMargins()" class="control-btn">
+                    <i class="fas fa-compress"></i>
+                </button>
+                <span style="color: var(--gold); font-size: 0.9rem;">الهوامش</span>
+                <button onclick="advancedMushaf.increaseMargins()" class="control-btn">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+
+            <!-- تحكم في تباعد الأسطر -->
+            <div class="spacing-control" style="display: flex; gap: 0.5rem; align-items: center;">
+                <button onclick="advancedMushaf.decreaseSpacing()" class="control-btn">
+                    <i class="fas fa-text-height"></i>-
+                </button>
+                <span style="color: var(--gold); font-size: 0.9rem;">التباعد</span>
+                <button onclick="advancedMushaf.increaseSpacing()" class="control-btn">
+                    <i class="fas fa-text-height"></i>+
+                </button>
+            </div>
+
+            <!-- تبديل الثيمات -->
+            <select id="themeSelect" onchange="advancedMushaf.changeTheme(this.value)" 
+                    style="background: rgba(212,175,55,0.2); border: 2px solid var(--gold); 
+                           color: var(--gold); padding: 0.5rem; border-radius: 8px;">
+                <option value="default">ثيم افتراضي</option>
+                <option value="sepia">ثيم سيبيا</option>
+                <option value="dark">ثيم داكن</option>
+            </select>
+
+            <!-- تفعيل تجويد -->
+            <button onclick="advancedMushaf.toggleTajweed()" class="control-btn" id="tajweedBtn">
+                <i class="fas fa-palette"></i> تجويد
+            </button>
+
+            <!-- عرض الترجمة -->
+            <button onclick="advancedMushaf.toggleTranslation()" class="control-btn" id="translationBtn">
+                <i class="fas fa-language"></i> ترجمة
+            </button>
+        `;
+
+        controlsContainer.insertAdjacentHTML('beforeend', advancedControls);
+    }
+
+    setupThemes() {
+        const themes = {
+            default: {
+                background: '#fef9e7',
+                text: '#2c5530',
+                pageBg: 'white',
+                border: '#d4af37'
+            },
+            sepia: {
+                background: '#f8f0e0',
+                text: '#5d4037',
+                pageBg: '#f5e8d0',
+                border: '#b08d57'
+            },
+            dark: {
+                background: '#1a1a1a',
+                text: '#e0e0e0',
+                pageBg: '#2d2d2d',
+                border: '#d4af37'
+            }
+        };
+
+        this.themes = themes;
+    }
+
+    changeTheme(themeName) {
+        this.theme = themeName;
+        const theme = this.themes[themeName];
+        
+        const mushafViewer = document.getElementById('mushafViewer');
+        const pages = document.querySelectorAll('.mushaf-page, .single-page');
+        
+        mushafViewer.style.background = `linear-gradient(135deg, ${theme.background}, ${theme.background})`;
+        
+        pages.forEach(page => {
+            page.style.background = theme.pageBg;
+            page.style.borderColor = theme.border;
+        });
+        
+        const pageContents = document.querySelectorAll('.page-content, .single-page-content');
+        pageContents.forEach(content => {
+            content.style.color = theme.text;
+        });
+    }
+
+    increaseMargins() {
+        this.pageMargins = Math.min(50, this.pageMargins + 5);
+        this.updatePageLayout();
+    }
+
+    decreaseMargins() {
+        this.pageMargins = Math.max(10, this.pageMargins - 5);
+        this.updatePageLayout();
+    }
+
+    increaseSpacing() {
+        this.lineSpacing = Math.min(4, this.lineSpacing + 0.1);
+        this.updatePageLayout();
+    }
+
+    decreaseSpacing() {
+        this.lineSpacing = Math.max(1.5, this.lineSpacing - 0.1);
+        this.updatePageLayout();
+    }
+
+    updatePageLayout() {
+        const pages = document.querySelectorAll('.mushaf-page, .single-page');
+        const contents = document.querySelectorAll('.page-content, .single-page-content');
+        
+        pages.forEach(page => {
+            page.style.padding = `${this.pageMargins}px`;
+        });
+        
+        contents.forEach(content => {
+            content.style.lineHeight = this.lineSpacing.toString();
+        });
+    }
+
+    setupTajweedColors() {
+        this.tajweedRules = {
+            'ghunnah': { color: '#ff6b6b', description: 'غنة' },
+            'qalqalah': { color: '#4ecdc4', description: 'قلقلة' },
+            'madd': { color: '#45b7d1', description: 'مد' },
+            'ikhfa': { color: '#96ceb4', description: 'إخفاء' },
+            'idgham': { color: '#feca57', description: 'إدغام' }
+        };
+    }
+
+    toggleTajweed() {
+        this.showTajweed = !this.showTajweed;
+        const btn = document.getElementById('tajweedBtn');
+        
+        if (this.showTajweed) {
+            btn.style.background = 'var(--gold)';
+            btn.style.color = 'var(--primary)';
+            this.applyTajweedColors();
+        } else {
+            btn.style.background = '';
+            btn.style.color = '';
+            this.removeTajweedColors();
+        }
+    }
+
+    applyTajweedColors() {
+        // في التطبيق الحقيقي، سيتم تطبيق ألوان التجويد بناءً على قواعد التجويد
+        const verses = document.querySelectorAll('.verse-text');
+        
+        verses.forEach(verse => {
+            // محاكاة تطبيق ألوان التجويد
+            const text = verse.textContent;
+            let coloredText = text;
+            
+            // تطبيق ألوان عشوائية للعرض التوضيحي
+            Object.keys(this.tajweedRules).forEach(rule => {
+                const regex = new RegExp(`[${this.getRandomArabicChars()}]`, 'g');
+                coloredText = coloredText.replace(regex, 
+                    `<span style="color: ${this.tajweedRules[rule].color}; font-weight: bold;" 
+                          title="${this.tajweedRules[rule].description}">$&</span>`);
+            });
+            
+            verse.innerHTML = coloredText;
+        });
+    }
+
+    getRandomArabicChars() {
+        // إرجاع بعض الحروف العربية للعرض التوضيحي
+        return 'ق ط ب ج د';
+    }
+
+    removeTajweedColors() {
+        const verses = document.querySelectorAll('.verse-text');
+        verses.forEach(verse => {
+            verse.innerHTML = verse.textContent;
+        });
+    }
+
+    setupTranslationPanel() {
+        // إنشاء لوحة الترجمة
+        const translationPanel = document.createElement('div');
+        translationPanel.id = 'translationPanel';
+        translationPanel.style.cssText = `
+            position: fixed;
+            bottom: -300px;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: white;
+            border-top: 3px solid var(--gold);
+            transition: bottom 0.3s ease;
+            z-index: 10002;
+            padding: 1rem;
+            overflow-y: auto;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+        `;
+
+        translationPanel.innerHTML = `
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+                <h4 style="color: var(--primary); margin: 0;">الترجمة</h4>
+                <button onclick="advancedMushaf.hideTranslation()" style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="translationContent" style="line-height: 1.6; color: #333;">
+                <!-- محتوى الترجمة -->
+            </div>
+        `;
+
+        document.body.appendChild(translationPanel);
+    }
+
+    toggleTranslation() {
+        this.showTranslation = !this.showTranslation;
+        const btn = document.getElementById('translationBtn');
+        const panel = document.getElementById('translationPanel');
+        
+        if (this.showTranslation) {
+            btn.style.background = 'var(--gold)';
+            btn.style.color = 'var(--primary)';
+            panel.style.bottom = '0';
+            this.loadTranslation();
+        } else {
+            btn.style.background = '';
+            btn.style.color = '';
+            panel.style.bottom = '-300px';
+        }
+    }
+
+    hideTranslation() {
+        this.showTranslation = false;
+        const btn = document.getElementById('translationBtn');
+        const panel = document.getElementById('translationPanel');
+        
+        btn.style.background = '';
+        btn.style.color = '';
+        panel.style.bottom = '-300px';
+    }
+
+    loadTranslation() {
+        // في التطبيق الحقيقي، سيتم تحميل الترجمة من مصدر موثوق
+        const translationContent = `
+            <div style="margin-bottom: 1.5rem;">
+                <h5 style="color: var(--accent); margin-bottom: 0.5rem;">ترجمة معاني القرآن الكريم</h5>
+                <p style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-right: 3px solid var(--gold);">
+                    <strong>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</strong><br>
+                    In the name of Allah, the Entirely Merciful, the Especially Merciful.
+                </p>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <p style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border-right: 3px solid var(--gold);">
+                    <strong>الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ</strong><br>
+                    [All] praise is [due] to Allah, Lord of the worlds.
+                </p>
+            </div>
+            <div style="font-size: 0.9rem; color: #666; text-align: center;">
+                <i class="fas fa-info-circle"></i> ترجمة معاني القرآن الكريم - النسخة الإنجليزية
+            </div>
+        `;
+
+        document.getElementById('translationContent').innerHTML = translationContent;
+    }
+
+    setupBookmarks() {
+        this.bookmarks = JSON.parse(localStorage.getItem('mushafBookmarks')) || [];
+        this.addBookmarksButton();
+    }
+
+    addBookmarksButton() {
+        const controls = document.querySelector('.controls-left');
+        const bookmarkBtn = document.createElement('button');
+        bookmarkBtn.className = 'control-btn';
+        bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i> الإشارات';
+        bookmarkBtn.onclick = () => this.showBookmarks();
+        controls.appendChild(bookmarkBtn);
+    }
+
+    addBookmark(pageNumber, verseNumber) {
+        const bookmark = {
+            id: Date.now(),
+            pageNumber,
+            verseNumber,
+            timestamp: new Date(),
+            note: ''
+        };
+
+        this.bookmarks.push(bookmark);
+        this.saveBookmarks();
+        this.showBookmarkNotification();
+    }
+
+    saveBookmarks() {
+        localStorage.setItem('mushafBookmarks', JSON.stringify(this.bookmarks));
+    }
+
+    showBookmarkNotification() {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            border: 2px solid var(--gold);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        `;
+        notification.textContent = 'تم إضافة إشارة مرجعية';
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+    showBookmarks() {
+        const bookmarksModal = document.createElement('div');
+        bookmarksModal.id = 'bookmarksModal';
+        bookmarksModal.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 2rem;
+            z-index: 10003;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        `;
+
+        const bookmarksList = this.bookmarks.map(bookmark => `
+            <div class="bookmark-item" style="
+                background: #f8f9fa;
+                padding: 1rem;
+                margin-bottom: 0.5rem;
+                border-radius: 8px;
+                border-right: 3px solid var(--gold);
+                display: flex;
+                justify-content: between;
+                align-items: center;
+            ">
+                <div>
+                    <strong>الصفحة ${bookmark.pageNumber} - الآية ${bookmark.verseNumber}</strong>
+                    <div style="font-size: 0.9rem; color: #666;">
+                        ${bookmark.timestamp.toLocaleString('ar-EG')}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button onclick="advancedMushaf.goToBookmark(${bookmark.pageNumber}, ${bookmark.verseNumber})" 
+                            class="verse-btn" style="font-size: 0.8rem;">
+                        <i class="fas fa-arrow-left"></i> انتقل
+                    </button>
+                    <button onclick="advancedMushaf.removeBookmark(${bookmark.id})" 
+                            class="verse-btn" style="font-size: 0.8rem; background: #c53030;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        bookmarksModal.innerHTML = `
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="color: var(--primary); margin: 0;">الإشارات المرجعية</h3>
+                <button onclick="advancedMushaf.closeBookmarks()" style="background: none; border: none; color: var(--primary); cursor: pointer; font-size: 1.5rem;">
+                    ×
+                </button>
+            </div>
+            ${this.bookmarks.length > 0 ? bookmarksList : `
+                <div style="text-align: center; padding: 2rem; color: #666;">
+                    <i class="far fa-bookmark" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <p>لا توجد إشارات مرجعية</p>
+                </div>
+            `}
+        `;
+
+        document.body.appendChild(bookmarksModal);
+    }
+
+    closeBookmarks() {
+        const modal = document.getElementById('bookmarksModal');
+        if (modal) {
+            modal.remove();
+        }
+    }
+
+    goToBookmark(pageNumber, verseNumber) {
+        mushafViewer.loadPage(pageNumber);
+        this.closeBookmarks();
+        
+        // تمييز الآية المحددة
+        setTimeout(() => {
+            this.highlightVerse(verseNumber);
+        }, 500);
+    }
+
+    highlightVerse(verseNumber) {
+        const verses = document.querySelectorAll('.verse');
+        verses.forEach((verse, index) => {
+            if (index + 1 === verseNumber) {
+                verse.style.background = 'var(--gold)';
+                verse.style.color = 'white';
+                verse.scrollIntoView({ behavior: 'smooth', block: 'center' })
         }
     }
 `;
 document.head.appendChild(mushafStyles);
+</script>
+}
+        });
+    }
+
+    removeBookmark(bookmarkId) {
+        this.bookmarks = this.bookmarks.filter(b => b.id !== bookmarkId);
+        this.saveBookmarks();
+        this.closeBookmarks();
+        this.showBookmarks(); // إعادة فتح القائمة المحدثة
+    }
+}
+
+// نظام التفسير الآية بالآية المحسن
+class EnhancedTafsirSystem {
+    constructor() {
+        this.tafsirSources = {
+            'ibn_kathir': 'تفسير ابن كثير',
+            'jalalayn': 'تفسير الجلالين',
+            'saadi': 'تفسير السعدي',
+            'qurtubi': 'تفسير القرطبي'
+        };
+        this.currentTafsirSource = 'ibn_kathir';
+    }
+
+    loadTafsirForVerse(surahId, verseNumber) {
+        // في التطبيق الحقيقي، سيتم جلب التفسير من قاعدة البيانات
+        const tafsirContent = this.generateTafsirContent(surahId, verseNumber);
+        
+        return {
+            verse: this.getVerseText(surahId, verseNumber),
+            tafsirs: tafsirContent,
+            sources: this.getTafsirSources()
+        };
+    }
+
+    generateTafsirContent(surahId, verseNumber) {
+        // محتوى تفسير تجريبي
+        return {
+            ibn_kathir: `
+                <div class="tafsir-source">
+                    <h6 style="color: var(--accent); margin-bottom: 0.5rem;">تفسير ابن كثير:</h6>
+                    <p>هذا تفسير مفصل للآية الكريمة من تفسير الإمام ابن كثير. يشمل التفسير شرح المفردات، سبب النزول إن وجد، والربط بالآيات الأخرى والأحاديث النبوية.</p>
+                    <p>قال ابن كثير في تفسيره: "هذه الآية الكريمة تدل على كذا وكذا..."</p>
+                </div>
+            `,
+            jalalayn: `
+                <div class="tafsir-source">
+                    <h6 style="color: var(--accent); margin-bottom: 0.5rem;">تفسير الجلالين:</h6>
+                    <p>تفسير مختصر للآية يشمل المعنى الإجمالي والمفردات الأساسية.</p>
+                </div>
+            `,
+            saadi: `
+                <div class="tafsir-source">
+                    <h6 style="color: var(--accent); margin-bottom: 0.5rem;">تفسير السعدي:</h6>
+                    <p>تفسير ميسر يناسب عامة القراء مع بيان الحكم والمواعظ.</p>
+                </div>
+            `
+        };
+    }
+
+    getTafsirSources() {
+        return Object.entries(this.tafsirSources).map(([key, name]) => ({
+            id: key,
+            name: name,
+            active: key === this.currentTafsirSource
+        }));
+    }
+
+    changeTafsirSource(sourceId) {
+        this.currentTafsirSource = sourceId;
+        // إعادة تحميل التفسير عند تغيير المصدر
+        if (mushafViewer.currentTafsirVerse) {
+            mushafViewer.showTafsir(
+                mushafViewer.currentTafsirVerse.pageNumber,
+                mushafViewer.currentTafsirVerse.verseNumber
+            );
+        }
+    }
+
+    getVerseText(surahId, verseNumber) {
+        // دالة مساعدة للحصول على نص الآية
+        const surah = completeQuran.surahs.find(s => s.id === surahId);
+        if (surah) {
+            const verse = surah.verses.find(v => v.number === verseNumber);
+            return verse ? verse.text : 'الآية غير موجودة';
+        }
+        return 'السورة غير موجودة';
+    }
+}
+
+// تهيئة الأنظمة المحسنة
+const advancedMushaf = new AdvancedMushafFeatures();
+const enhancedTafsir = new EnhancedTafsirSystem();
+
+// تحديث نظام العرض المصحفي ليدعم الميزات الجديدة
+function enhanceMushafViewer() {
+    // إضافة زر الإشارات المرجعية للآيات
+    const addBookmarkButton = () => {
+        const tafsirPanel = document.getElementById('tafsirPanel');
+        if (tafsirPanel) {
+            const bookmarkBtn = document.createElement('button');
+            bookmarkBtn.className = 'control-btn';
+            bookmarkBtn.innerHTML = '<i class="far fa-bookmark"></i> إضافة إشارة';
+            bookmarkBtn.onclick = () => {
+                if (mushafViewer.currentTafsirVerse) {
+                    advancedMushaf.addBookmark(
+                        mushafViewer.currentTafsirVerse.pageNumber,
+                        mushafViewer.currentTafsirVerse.verseNumber
+                    );
+                }
+            };
+            tafsirPanel.querySelector('#tafsirContent').appendChild(bookmarkBtn);
+        }
+    };
+
+    // تحسين واجهة التفسير
+    const enhanceTafsirPanel = () => {
+        const originalShowTafsir = mushafViewer.showTafsir;
+        mushafViewer.showTafsir = function(pageNumber, verseNumber) {
+            originalShowTafsir.call(this, pageNumber, verseNumber);
+            
+            // إضافة خيارات مصادر التفسير
+            const tafsirContent = document.getElementById('tafsirContent');
+            const sourcesHTML = `
+                <div style="margin-bottom: 1rem;">
+                    <label style="color: var(--primary); font-weight: bold;">اختر مصدر التفسير:</label>
+                    <select onchange="enhancedTafsir.changeTafsirSource(this.value)" 
+                            style="margin-right: 0.5rem; padding: 0.3rem; border: 1px solid var(--gold); border-radius: 5px;">
+                        ${Object.entries(enhancedTafsir.tafsirSources).map(([key, name]) => `
+                            <option value="${key}" ${key === enhancedTafsir.currentTafsirSource ? 'selected' : ''}>
+                                ${name}
+                            </option>
+                        `).join('')}
+                    </select>
+                </div>
+            `;
+            
+            tafsirContent.insertAdjacentHTML('afterbegin', sourcesHTML);
+            addBookmarkButton();
+        };
+    };
+
+    // تطبيق التحسينات
+    advancedMushaf.enhanceMushafInterface();
+    enhanceTafsirPanel();
+}
+
+// تحديث التهيئة النهائية
+document.addEventListener('DOMContentLoaded', function() {
+    createStars();
+    loadSurahList();
+    loadRecitationSelector();
+    loadReaderSelector();
+    enhancedLoadSurah(1);
+    loadUserStats();
+    initializeSearch();
+    addDuasButton();
+    addMemorizationButton();
+    addMushafButton();
+    
+    // تحسين نظام العرض المصحفي بعد التهيئة
+    setTimeout(() => {
+        enhanceMushafViewer();
+    }, 1000);
+});
+
+// إضافة أنماط CSS للتحسينات
+const enhancedStyles = document.createElement('style');
+enhancedStyles.textContent = `
+    .verse-highlighted {
+        background: linear-gradient(135deg, var(--gold), #f4e4a9) !important;
+        color: var(--primary) !important;
+        transform: scale(1.02);
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+    
+    .bookmark-indicator {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        color: var(--gold);
+        font-size: 0.8rem;
+    }
+    
+    .tajweed-tooltip {
+        position: relative;
+        cursor: help;
+    }
+    
+    .tajweed-tooltip:hover::after {
+        content: attr(title);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary);
+        color: white;
+        padding: 0.5rem;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        z-index: 1000;
+    }
+    
+    @keyframes pulseHighlight {
+        0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+    }
+    
+    .pulse-animation {
+        animation: pulseHighlight 2s infinite;
+    }
+    
+    /* تحسينات للشاشات الصغيرة */
+    @media (max-width: 768px) {
+        .mushaf-controls .controls-right {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .margin-control,
+        .spacing-control {
+            display: none !important;
+        }
+    }
+    
+    /* ثيم سيبيا */
+    .theme-sepia {
+        background: #f8f0e0 !important;
+        color: #5d4037 !important;
+    }
+    
+    .theme-sepia .mushaf-page {
+        background: #f5e8d0 !important;
+        border-color: #b08d57 !important;
+    }
+    
+    /* ثيم داكن */
+    .theme-dark {
+        background: #1a1a1a !important;
+        color: #e0e0e0 !important;
+    }
+    
+    .theme-dark .mushaf-page {
+        background: #2d2d2d !important;
+        border-color: var(--gold) !important;
+    }
+`;
+document.head.appendChild(enhancedStyles);
 </script>
