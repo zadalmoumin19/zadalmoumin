@@ -1818,3 +1818,631 @@ document.addEventListener('DOMContentLoaded', function() {
     addDuasButton(); // إضافة زر الأدعية
 });
 </script>
+<script>
+// استكمال سورة البقرة - الآيات 51 إلى 100
+const baqaraVersesPart3 = [
+    {
+        "number": 51,
+        "text": "وَإِذْ وَاعَدْنَا مُوسَىٰ أَرْبَعِينَ لَيْلَةً ثُمَّ اتَّخَذْتُمُ الْعِجْلَ مِن بَعْدِهِ وَأَنتُمْ ظَالِمُونَ",
+        "hafs": "wa-idh wāʿadnā mūsā arbaʿīna laylatan thumma ittakhadhtumu l-ʿijla min baʿdihi wa-antum ẓālimūna",
+        "warsh": "wa-idh wāʿadnā mūsā arbaʿīna laylatan thumma ittakhadhtumu l-ʿijla min baʿdihi wa-antum ẓālimūna",
+        "sajdah": false
+    },
+    {
+        "number": 52,
+        "text": "ثُمَّ عَفَوْنَا عَنكُم مِّن بَعْدِ ذَٰلِكَ لَعَلَّكُمْ تَشْكُرُونَ",
+        "hafs": "thumma ʿafawnā ʿankum min baʿdi dhālika laʿallakum tashkurūna",
+        "warsh": "thumma ʿafawnā ʿankum min baʿdi dhālika laʿallakum tashkurūna",
+        "sajdah": false
+    },
+    {
+        "number": 53,
+        "text": "وَإِذْ آتَيْنَا مُوسَى الْكِتَابَ وَالْفُرْقَانَ لَعَلَّكُمْ تَهْتَدُونَ",
+        "hafs": "wa-idh ātaynā mūsā l-kitāba wa-l-furqāna laʿallakum tahtadūna",
+        "warsh": "wa-idh ātaynā mūsā l-kitāba wa-l-furqāna laʿallakum tahtadūna",
+        "sajdah": false
+    },
+    {
+        "number": 54,
+        "text": "وَإِذْ قَالَ مُوسَىٰ لِقَوْمِهِ يَا قَوْمِ إِنَّكُمْ ظَلَمْتُمْ أَنفُسَكُم بِاتِّخَاذِكُمُ الْعِجْلَ فَتُوبُوا إِلَىٰ بَارِئِكُمْ فَاقْتُلُوا أَنفُسَكُمْ ذَٰلِكُمْ خَيْرٌ لَّكُمْ عِنْدَ بَارِئِكُمْ فَتَابَ عَلَيْكُمْ ۚ إِنَّهُ هُوَ التَّوَّابُ الرَّحِيمُ",
+        "hafs": "wa-idh qāla mūsā li-qawmihi yā qawmi innakum ẓalamtum anfusakum bi-ittikhādhikumu l-ʿijla fatūbū ilā bāriʾikum fa-uqtulū anfusakum dhālikum khayrun lakum ʿinda bāriʾikum fa-tāba ʿalaykum innahu huwa t-tawwābu r-raḥīmu",
+        "warsh": "wa-idh qāla mūsā li-qawmihi yā qawmi innakum ẓalamtum anfusakum bi-ittikhādhikumu l-ʿijla fatūbū ilā bāriʾikum fa-uqtulū anfusakum dhālikum khayrun lakum ʿinda bāriʾikum fa-tāba ʿalaykum innahu huwa t-tawwābu r-raḥīmu",
+        "sajdah": false
+    },
+    {
+        "number": 55,
+        "text": "وَإِذْ قُلْتُمْ يَا مُوسَىٰ لَن نُّؤْمِنَ لَكَ حَتَّىٰ نَرَى اللَّهَ جَهْرَةً فَأَخَذَتْكُمُ الصَّاعِقَةُ وَأَنتُمْ تَنظُرُونَ",
+        "hafs": "wa-idh qultum yā mūsā lan nuʾmina laka ḥattā narā allaha jahratan fa-akhadhatkumu ṣ-ṣāʿiqatu wa-antum tanẓurūna",
+        "warsh": "wa-idh qultum yā mūsā lan nuʾmina laka ḥattā narā allaha jahratan fa-akhadhatkumu ṣ-ṣāʿiqatu wa-antum tanẓurūna",
+        "sajdah": false
+    },
+    // الآيات 56-60
+    {
+        "number": 56,
+        "text": "ثُمَّ بَعَثْنَاكُم مِّن بَعْدِ مَوْتِكُمْ لَعَلَّكُمْ تَشْكُرُونَ",
+        "hafs": "thumma baʿathnākum min baʿdi mawtikum laʿallakum tashkurūna",
+        "warsh": "thumma baʿathnākum min baʿdi mawtikum laʿallakum tashkurūna",
+        "sajdah": false
+    },
+    {
+        "number": 57,
+        "text": "وَظَلَّلْنَا عَلَيْكُمُ الْغَمَامَ وَأَنزَلْنَا عَلَيْكُمُ الْمَنَّ وَالسَّلْوَىٰ ۖ كُلُوا مِن طَيِّبَاتِ مَا رَزَقْنَاكُمْ ۖ وَمَا ظَلَمُونَا وَلَٰكِن كَانُوا أَنفُسَهُمْ يَظْلِمُونَ",
+        "hafs": "wa-ẓallalnā ʿalaykumu l-ghamāma wa-anzalnā ʿalaykumu l-manna wa-s-salwā kulū min ṭayyibāti mā razaqnākum wa-mā ẓalamūnā wa-lākin kānū anfusahum yaẓlimūna",
+        "warsh": "wa-ẓallalnā ʿalaykumu l-ghamāma wa-anzalnā ʿalaykumu l-manna wa-s-salwā kulū min ṭayyibāti mā razaqnākum wa-mā ẓalamūnā wa-lākin kānū anfusahum yaẓlimūna",
+        "sajdah": false
+    },
+    {
+        "number": 58,
+        "text": "وَإِذْ قُلْنَا ادْخُلُوا هَٰذِهِ الْقَرْيَةَ فَكُلُوا مِنْهَا حَيْثُ شِئْتُمْ رَغَدًا وَادْخُلُوا الْبَابَ سُجَّدًا وَقُولُوا حِطَّةٌ نَّغْفِرْ لَكُمْ خَطَايَاكُمْ ۚ وَسَنَزِيدُ الْمُحْسِنِينَ",
+        "hafs": "wa-idh qulnā udhkhulū hādhihi l-qaryata fa-kulū minhā ḥaythu shiʾtum raghadan wa-udhkhulū l-bāba sujjadan wa-qūlū ḥiṭṭatun naghfir lakum khaṭāyākum wa-sanazīdu l-muḥ'sinīna",
+        "warsh": "wa-idh qulnā udhkhulū hādhihi l-qaryata fa-kulū minhā ḥaythu shiʾtum raghadan wa-udhkhulū l-bāba sujjadan wa-qūlū ḥiṭṭatun naghfir lakum khaṭāyākum wa-sanazīdu l-muḥ'sinīna",
+        "sajdah": false
+    },
+    {
+        "number": 59,
+        "text": "فَبَدَّلَ الَّذِينَ ظَلَمُوا قَوْلًا غَيْرَ الَّذِي قِيلَ لَهُمْ فَأَنزَلْنَا عَلَى الَّذِينَ ظَلَمُوا رِجْزًا مِّنَ السَّمَاءِ بِمَا كَانُوا يَفْsqسقُونَ",
+        "hafs": "fa-baddala lladhīna ẓalamū qawlan ghayra lladhī qīla lahum fa-anzalnā ʿalā lladhīna ẓalamū rijzan mina s-samāʾi bi-mā kānū yafsuqūna",
+        "warsh": "fa-baddala lladhīna ẓalamū qawlan ghayra lladhī qīla lahum fa-anzalnā ʿalā lladhīna ẓalamū rijzan mina s-samāʾi bi-mā kānū yafsuqūna",
+        "sajdah": false
+    },
+    {
+        "number": 60,
+        "text": "وَإِذِ اسْتَسْقَىٰ مُوسَىٰ لِقَوْمِهِ فَقُلْنَا اضْرِب بِّعَصَاكَ الْحَجَرَ ۖ فَانفَجَرَتْ مِنْهُ اثْنَتَا عَشْرَةَ عَيْنًا ۖ قَدْ عَلِمَ كُلُّ أُنَاسٍ مَّشْرَبَهُمْ ۖ كُلُوا وَاشْرَبُوا مِن رِّزْقِ اللَّهِ وَلَا تَعْثَوْا فِي الْأَرْضِ مُفْسِدِينَ",
+        "hafs": "wa-idi stasqā mūsā li-qawmihi fa-qulnā iḍ'rib bi-ʿaṣāka l-ḥajara fa-nfajarat min'hu thnatā ʿashrata ʿaynan qad ʿalima kullu unāsin mashrabahum kulū wa-shrabū min riz'qi llāhi wa-lā taʿthaw fī l-arḍi muf'sidīna",
+        "warsh": "wa-idi stasqā mūsā li-qawmihi fa-qulnā iḍ'rib bi-ʿaṣāka l-ḥajara fa-nfajarat min'hu thnatā ʿashrata ʿaynan qad ʿalima kullu unāsin mashrabahum kulū wa-shrabū min riz'qi llāhi wa-lā taʿthaw fī l-arḍi muf'sidīna",
+        "sajdah": false
+    },
+    // الآيات 61-65
+    {
+        "number": 61,
+        "text": "وَإِذْ قُلْتُمْ يَا مُوسَىٰ لَن نَّصْبِرَ عَلَىٰ طَعَامٍ وَاحِدٍ فَادْعُ لَنَا رَبَّكَ يُخْرِجْ لَنَا مِمَّا تُنبِتُ الْأَرْضُ مِن بَقْلِهَا وَقِثَّائِهَا وَفُومِهَا وَعَدَسِهَا وَبَصَلِهَا ۖ قَالَ أَتَسْتَبْدِلُونَ الَّذِي هُوَ أَدْنَىٰ بِالَّذِي هُوَ خَيْرٌ ۚ اهْبِطُوا مِصْرًا فَإِنَّ لَكُم مَّا سَأَلْتُمْ ۗ وَضُرِبَتْ عَلَيْهِمُ الذِّلَّةُ وَالْمَسْكَنَةُ وَبَاءُوا بِغَضَبٍ مِّنَ اللَّهِ ۗ ذَٰلِكَ بِأَنَّهُمْ كَانُوا يَكْفُرُونَ بِآيَاتِ اللَّهِ وَيَقْتُلُونَ النَّبِيِّينَ بِغَيْرِ الْحَقِّ ۗ ذَٰلِكَ بِمَا عَصَوا وَّكَانُوا يَعْتَدُونَ",
+        "hafs": "wa-idh qultum yā mūsā lan naṣbira ʿalā ṭaʿāmin wāḥidin fa-dʿu lanā rabbaka yukh'rij lanā mimmā tunbitu l-arḍu min baqlihā wa-qiththāʾihā wa-fūmihā wa-ʿadasihā wa-baṣalihā qāla a-tastabdilūna lladhī huwa adnā bi-lladhī huwa khayrun ihbiṭū miṣran fa-inna lakum mā sa-altum wa-ḍuribat ʿalayhimu dh-dhillatu wa-l-maskanatu wa-bāʾū bi-ghaḍabin mina llāhi dhālika bi-annahum kānū yakfurūna bi-āyāti llāhi wa-yaqtulūna n-nabiyyīna bi-ghayri l-ḥaqqi dhālika bi-mā ʿaṣaw wa-kānū yaʿtadūna",
+        "warsh": "wa-idh qultum yā mūsā lan naṣbira ʿalā ṭaʿāmin wāḥidin fa-dʿu lanā rabbaka yukh'rij lanā mimmā tunbitu l-arḍu min baqlihā wa-qiththāʾihā wa-fūmihā wa-ʿadasihā wa-baṣalihā qāla a-tastabdilūna lladhī huwa adnā bi-lladhī huwa khayrun ihbiṭū miṣran fa-inna lakum mā sa-altum wa-ḍuribat ʿalayhimu dh-dhillatu wa-l-maskanatu wa-bāʾū bi-ghaḍabin mina llāhi dhālika bi-annahum kānū yakfurūna bi-āyāti llāhi wa-yaqtulūna n-nabiyyīna bi-ghayri l-ḥaqqi dhālika bi-mā ʿaṣaw wa-kānū yaʿtadūna",
+        "sajdah": false
+    },
+    {
+        "number": 62,
+        "text": "إِنَّ الَّذِينَ آمَنُوا وَالَّذِينَ هَادُوا وَالنَّصَارَىٰ وَالصَّابِئِينَ مَنْ آمَنَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ وَعَمِلَ صَالِحًا فَلَهُمْ أَجْرُهُمْ عِنْدَ رَبِّهِمْ وَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ",
+        "hafs": "inna lladhīna āmanū wa-lladhīna hādū wa-n-naṣārā wa-ṣ-ṣābiʾīna man āmana bi-llāhi wa-l-yawmi l-ākhiri wa-ʿamila ṣāliḥan fa-lahum ajruhum ʿinda rabbihim wa-lā khawfun ʿalayhim wa-lā hum yaḥzanūna",
+        "warsh": "inna lladhīna āmanū wa-lladhīna hādū wa-n-naṣārā wa-ṣ-ṣābiʾīna man āmana bi-llāhi wa-l-yawmi l-ākhiri wa-ʿamila ṣāliḥan fa-lahum ajruhum ʿinda rabbihim wa-lā khawfun ʿalayhim wa-lā hum yaḥzanūna",
+        "sajdah": false
+    },
+    {
+        "number": 63,
+        "text": "وَإِذْ أَخَذْنَا مِيثَاقَكُمْ وَرَفَعْنَا فَوْقَكُمُ الطُّورَ خُذُوا مَا آتَيْنَاكُم بِقُوَّةٍ وَاذْكُرُوا مَا فِيهِ لَعَلَّكُمْ تَتَّقُونَ",
+        "hafs": "wa-idh akhadhnā mīthāqakum wa-rafaʿnā fawqakumu ṭ-ṭūra khudhū mā ātaynākum bi-quwwatin wa-udh'kurū mā fīhi laʿallakum tattaqūna",
+        "warsh": "wa-idh akhadhnā mīthāqakum wa-rafaʿnā fawqakumu ṭ-ṭūra khudhū mā ātaynākum bi-quwwatin wa-udh'kurū mā fīhi laʿallakum tattaqūna",
+        "sajdah": false
+    },
+    {
+        "number": 64,
+        "text": "ثُمَّ تَوَلَّيْتُم مِّن بَعْدِ ذَٰلِكَ ۖ فَلَوْلَا فَضْلُ اللَّهِ عَلَيْكُمْ وَرَحْمَتُهُ لَكُنتُم مِّنَ الْخَاسِرِينَ",
+        "hafs": "thumma tawallaytum min baʿdi dhālika fa-lawlā faḍlu llāhi ʿalaykum wa-raḥmatuhu la-kuntum mina l-khāsirīna",
+        "warsh": "thumma tawallaytum min baʿdi dhālika fa-lawlā faḍlu llāhi ʿalaykum wa-raḥmatuhu la-kuntum mina l-khāsirīna",
+        "sajdah": false
+    },
+    {
+        "number": 65,
+        "text": "وَلَقَدْ عَلِمْتُمُ الَّذِينَ اعْتَدَوْا مِنكُمْ فِي السَّبْتِ فَقُلْنَا لَهُمْ كُونُوا قِرَدَةً خَاسِئِينَ",
+        "hafs": "wa-la-qad ʿalim'tumu lladhīna iʿ'tadaw minkum fī s-sabti fa-qulnā lahum kūnū qiradatan khāsiʾīna",
+        "warsh": "wa-la-qad ʿalim'tumu lladhīna iʿ'tadaw minkum fī s-sabti fa-qulnā lahum kūnū qiradatan khāsiʾīna",
+        "sajdah": false
+    },
+    // الآيات 66-70
+    {
+        "number": 66,
+        "text": "فَجَعَلْنَاهَا نَكَالًا لِّمَا بَيْنَ يَدَيْهَا وَمَا خَلْفَهَا وَمَوْعِظَةً لِّلْمُتَّقِينَ",
+        "hafs": "fa-jaʿalnāhā nakālan li-mā bayna yadayhā wa-mā khalfahā wa-mawʿiẓatan li-l-muttaqīna",
+        "warsh": "fa-jaʿalnāhā nakālan li-mā bayna yadayhā wa-mā khalfahā wa-mawʿiẓatan li-l-muttaqīna",
+        "sajdah": false
+    },
+    {
+        "number": 67,
+        "text": "وَإِذْ قَالَ مُوسَىٰ لِقَوْمِهِ إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تَذْبَحُوا بَقَرَةً ۖ قَالُوا أَتَتَّخِذُنَا هُزُوًا ۖ قَالَ أَعُوذُ بِاللَّهِ أَنْ أَكُونَ مِنَ الْجَاهِلِينَ",
+        "hafs": "wa-idh qāla mūsā li-qawmihi inna llāha yaʾmurukum an tadhbaḥū baqaratan qālū a-tattakhidhunā huzuwan qāla aʿūdhu bi-llāhi an akūna mina l-jāhilīna",
+        "warsh": "wa-idh qāla mūsā li-qawmihi inna llāha yaʾmurukum an tadhbaḥū baqaratan qālū a-tattakhidhunā huzuwan qāla aʿūdhu bi-llāhi an akūna mina l-jāhilīna",
+        "sajdah": false
+    },
+    {
+        "number": 68,
+        "text": "قَالُوا ادْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا هِيَ ۚ قَالَ إِنَّهُ يَقُولُ إِنَّهَا بَقَرَةٌ لَّا فَارِضٌ وَلَا بِكْرٌ عَوَانٌ بَيْنَ ذَٰلِكَ ۖ فَافْعَلُوا مَا تُؤْمَرُونَ",
+        "hafs": "qālū udʿu lanā rabbaka yubayyin lanā mā hiya qāla innahu yaqūlu innahā baqaratun lā fāriḍun wa-lā bikrun ʿawānun bayna dhālika fa-fʿalū mā tuʾmarūna",
+        "warsh": "qālū udʿu lanā rabbaka yubayyin lanā mā hiya qāla innahu yaqūlu innahā baqaratun lā fāriḍun wa-lā bikrun ʿawānun bayna dhālika fa-fʿalū mā tuʾmarūna",
+        "sajdah": false
+    },
+    {
+        "number": 69,
+        "text": "قَالُوا ادْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا لَوْنُهَا ۚ قَالَ إِنَّهُ يَقُولُ إِنَّهَا بَقَرَةٌ صَفْرَاءُ فَاقِعٌ لَّوْنُهَا تَسُرُّ النَّاظِرِينَ",
+        "hafs": "qālū udʿu lanā rabbaka yubayyin lanā mā lawnuhā qāla innahu yaqūlu innahā baqaratun ṣafrāʾu fāqiʿun lawnuhā tasurru n-nāẓirīna",
+        "warsh": "qālū udʿu lanā rabbaka yubayyin lanā mā lawnuhā qāla innahu yaqūlu innahā baqaratun ṣafrāʾu fāqiʿun lawnuhā tasurru n-nāẓirīna",
+        "sajdah": false
+    },
+    {
+        "number": 70,
+        "text": "قَالُوا ادْعُ لَنَا رَبَّكَ يُبَيِّن لَّنَا مَا هِيَ إِنَّ الْبَقَرَ تَشَابَهَ عَلَيْنَا وَإِنَّا إِن شَاءَ اللَّهُ لَمُهْتَدُونَ",
+        "hafs": "qālū udʿu lanā rabbaka yubayyin lanā mā hiya inna l-baqara tashābaha ʿalaynā wa-innā in shāʾa llāhu la-muhtadūna",
+        "warsh": "qālū udʿu lanā rabbaka yubayyin lanā mā hiya inna l-baqara tashābaha ʿalaynā wa-innā in shāʾa llāhu la-muhtadūna",
+        "sajdah": false
+    },
+    // الآيات 71-75
+    {
+        "number": 71,
+        "text": "قَالَ إِنَّهُ يَقُولُ إِنَّهَا بَقَرَةٌ لَّا ذَلُولٌ تُثِيرُ الْأَرْضَ وَلَا تَسْقِي الْحَرْثَ مُسَلَّمَةٌ لَّا شِيَةَ فِيهَا ۚ قَالُوا الْآنَ جِئْتَ بِالْحَقِّ ۚ فَذَبَحُوهَا وَمَا كَادُوا يَفْعَلُونَ",
+        "hafs": "qāla innahu yaqūlu innahā baqaratun lā dhalūlun tuthīru l-arḍa wa-lā tasqī l-ḥartha musallamatun lā shiyata fīhā qālū l-āna jiʾta bi-l-ḥaqqi fa-dhabaḥūhā wa-mā kādū yafʿalūna",
+        "warsh": "qāla innahu yaqūlu innahā baqaratun lā dhalūlun tuthīru l-arḍa wa-lā tasqī l-ḥartha musallamatun lā shiyata fīhā qālū l-āna jiʾta bi-l-ḥaqqi fa-dhabaḥūhā wa-mā kādū yafʿalūna",
+        "sajdah": false
+    },
+    {
+        "number": 72,
+        "text": "وَإِذْ قَتَلْتُمْ نَفْسًا فَادَّارَأْتُمْ فِيهَا ۖ وَاللَّهُ مُخْرِجٌ مَّا كُنتُمْ تَكْتُمُونَ",
+        "hafs": "wa-idh qataltum nafsan fa-iddāraʾtum fīhā wa-llāhu mukh'rijun mā kuntum taktumūna",
+        "warsh": "wa-idh qataltum nafsan fa-iddāraʾtum fīhā wa-llāhu mukh'rijun mā kuntum taktumūna",
+        "sajdah": false
+    },
+    {
+        "number": 73,
+        "text": "فَقُلْنَا اضْرِبُوهُ بِبَعْضِهَا ۚ كَذَٰلِكَ يُحْيِي اللَّهُ الْمَوْتَىٰ وَيُرِيكُمْ آيَاتِهِ لَعَلَّكُمْ تَعْقِلُونَ",
+        "hafs": "fa-qulnā iḍ'ribūhu bi-baʿḍihā kadhālika yuḥ'yī llāhu l-mawtā wa-yurīkum āyātihi laʿallakum taʿqilūna",
+        "warsh": "fa-qulnā iḍ'ribūhu bi-baʿḍihā kadhālika yuḥ'yī llāhu l-mawtā wa-yurīkum āyātihi laʿallakum taʿqilūna",
+        "sajdah": false
+    },
+    {
+        "number": 74,
+        "text": "ثُمَّ قَسَتْ قُلُوبُكُم مِّن بَعْدِ ذَٰلِكَ فَهِيَ كَالْحِجَارَةِ أَوْ أَشَدُّ قَسْوَةً ۚ وَإِنَّ مِنَ الْحِجَارَةِ لَمَا يَتَفَجَّرُ مِنْهُ الْأَنْهَارُ ۚ وَإِنَّ مِنْهَا لَمَا يَشَّقَّقُ فَيَخْرُجُ مِنْهُ الْمَاءُ ۚ وَإِنَّ مِنْهَا لَمَا يَهْبِطُ مِنْ خَشْيَةِ اللَّهِ ۗ وَمَا اللَّهُ بِغَافِلٍ عَمَّا تَعْمَلُونَ",
+        "hafs": "thumma qasat qulūbukum min baʿdi dhālika fa-hiya ka-l-ḥijārati aw ashaddu qaswatan wa-inna mina l-ḥijārati la-mā yatafajjaru min'hu l-anhāru wa-innā min'hā la-mā yashaqqaqu fa-yakhruju min'hu l-māʾu wa-innā min'hā la-mā yahbiṭu min khashyati llāhi wa-mā llāhu bi-ghāfilin ʿammā taʿmalūna",
+        "warsh": "thumma qasat qulūbukum min baʿdi dhālika fa-hiya ka-l-ḥijārati aw ashaddu qaswatan wa-inna mina l-ḥijārati la-mā yatafajjaru min'hu l-anhāru wa-innā min'hā la-mā yashaqqaqu fa-yakhruju min'hu l-māʾu wa-innā min'hā la-mā yahbiṭu min khashyati llāhi wa-mā llāhu bi-ghāfilin ʿammā taʿmalūna",
+        "sajdah": false
+    },
+    {
+        "number": 75,
+        "text": "أَفَتَطْمَعُونَ أَن يُؤْمِنُوا لَكُمْ وَقَدْ كَانَ فَرِيقٌ مِّنْهُمْ يَسْمَعُونَ كَلَامَ اللَّهِ ثُمَّ يُحَرِّفُونَهُ مِن بَعْدِ مَا عَقَلُوهُ وَهُمْ يَعْلَمُونَ",
+        "hafs": "a-faṭmaʿūna an yuʾminū lakum wa-qad kāna farīqun min'hum yasmaʿūna kalāma llāhi thumma yuḥarrifūnahu min baʿdi mā ʿaqalūhu wa-hum yaʿlamūna",
+        "warsh": "a-faṭmaʿūna an yuʾminū lakum wa-qad kāna farīqun min'hum yasmaʿūna kalāma llāhi thumma yuḥarrifūnahu min baʿdi mā ʿaqalūhu wa-hum yaʿlamūna",
+        "sajdah": false
+    },
+    // الآيات 76-80
+    {
+        "number": 76,
+        "text": "وَإِذَا لَقُوا الَّذِينَ آمَنُوا قَالُوا آمَنَّا وَإِذَا خَلَا بَعْضُهُمْ إِلَىٰ بَعْضٍ قَالُوا أَتُحَدِّثُونَهُم بِمَا فَتَحَ اللَّهُ عَلَيْكُمْ لِيُحَاجُّوكُم بِهِ عِندَ رَبِّكُمْ ۚ أَفَلَا تَعْقِلُونَ",
+        "hafs": "wa-idhā laqū lladhīna āmanū qālū āmannā wa-idhā khalā baʿḍuhum ilā baʿḍin qālū a-tuḥaddithūnahum bi-mā fataḥa llāhu ʿalaykum li-yuḥājjūkum bihi ʿinda rabbikum a-fa-lā taʿqilūna",
+        "warsh": "wa-idhā laqū lladhīna āmanū qālū āmannā wa-idhā khalā baʿḍuhum ilā baʿḍin qālū a-tuḥaddithūnahum bi-mā fataḥa llāhu ʿalaykum li-yuḥājjūkum bihi ʿinda rabbikum a-fa-lā taʿqilūna",
+        "sajdah": false
+    },
+    {
+        "number": 77,
+        "text": "أَوَلَا يَعْلَمُونَ أَنَّ اللَّهَ يَعْلَمُ مَا يُسِرُّونَ وَمَا يُعْلِنُونَ",
+        "hafs": "a-wa-lā yaʿlamūna anna llāha yaʿlamu mā yusirrūna wa-mā yuʿlinūna",
+        "warsh": "a-wa-lā yaʿlamūna anna llāha yaʿlamu mā yusirrūna wa-mā yuʿlinūna",
+        "sajdah": false
+    },
+    {
+        "number": 78,
+        "text": "وَمِنْهُمْ أُمِّيُّونَ لَا يَعْلَمُونَ الْكِتَابَ إِلَّا أَمَانِيَّ وَإِنْ هُمْ إِلَّا يَظُنُُّونَ",
+        "hafs": "wa-min'hum ummiyyūna lā yaʿlamūna l-kitāba illā amāniyya wa-in hum illā yaẓunnūna",
+        "warsh": "wa-min'hum ummiyyūna lā yaʿlamūna l-kitāba illā amāniyya wa-in hum illā yaẓunnūna",
+        "sajdah": false
+    },
+    {
+        "number": 79,
+        "text": "فَوَيْلٌ لِّلَّذِينَ يَكْتُبُونَ الْكِتَابَ بِأَيْدِيهِمْ ثُمَّ يَقُولُونَ هَٰذَا مِنْ عِندِ اللَّهِ لِيَشْتَرُوا بِهِ ثَمَنًا قَلِيلًا ۖ فَوَيْلٌ لَّهُم مِّمَّا كَتَبَتْ أَيْدِيهِمْ وَوَيْلٌ لَّهُم مِّمَّا يَكْسِبُونَ",
+        "hafs": "fa-waylun li-lladhīna yaktubūna l-kitāba bi-aydīhim thumma yaqūlūna hādhā min ʿindi llāhi li-yashtarū bihi thamanan qalīlan fa-waylun lahum mimmā katabat aydīhim wa-waylun lahum mimmā yaksibūna",
+        "warsh": "fa-waylun li-lladhīna yaktubūna l-kitāba bi-aydīhim thumma yaqūlūna hādhā min ʿindi llāhi li-yashtarū bihi thamanan qalīlan fa-waylun lahum mimmā katabat aydīhim wa-waylun lahum mimmā yaksibūna",
+        "sajdah": false
+    },
+    {
+        "number": 80,
+        "text": "وَقَالُوا لَن تَمَسَّنَا النَّارُ إِلَّا أَيَّامًا مَّعْدُودَةً ۚ قُلْ أَتَّخَذْتُمْ عِندَ اللَّهِ عَهْدًا فَلَن يُخْلِفَ اللَّهُ عَهْدَهُ ۖ أَمْ تَقُولُونَ عَلَى اللَّهِ مَا لَا تَعْلَمُونَ",
+        "hafs": "wa-qālū lan tamassanā n-nāru illā ayyāman maʿdūdatan qul a-ttakhadhtum ʿinda llāhi ʿahdan fa-lan yukhlifa llāhu ʿahdahu am taqūlūna ʿalā llāhi mā lā taʿlamūna",
+        "warsh": "wa-qālū lan tamassanā n-nāru illā ayyāman maʿdūdatan qul a-ttakhadhtum ʿinda llāhi ʿahdan fa-lan yukhlifa llāhu ʿahdahu am taqūlūna ʿalā llāhi mā lā taʿlamūna",
+        "sajdah": false
+    }
+];
+
+// إضافة الآيات إلى سورة البقرة
+completeQuran.surahs[1].verses.push(...baqaraVersesPart3);
+
+// نظام الحفظ المتقدم
+class AdvancedMemorizationSystem {
+    constructor() {
+        this.currentSession = null;
+        this.memorizationPlans = {};
+        this.reviewSchedule = {};
+    }
+
+    createMemorizationPlan(planName, targetVerses, dailyGoal) {
+        this.memorizationPlans[planName] = {
+            targetVerses: targetVerses,
+            dailyGoal: dailyGoal,
+            progress: {},
+            startDate: new Date(),
+            completed: false
+        };
+        return this.memorizationPlans[planName];
+    }
+
+    startMemorizationSession(planName) {
+        const plan = this.memorizationPlans[planName];
+        if (!plan) return null;
+
+        this.currentSession = {
+            planName: planName,
+            startTime: new Date(),
+            currentVerseIndex: 0,
+            correctAttempts: 0,
+            totalAttempts: 0,
+            sessionVerses: this.getSessionVerses(plan)
+        };
+
+        return this.currentSession;
+    }
+
+    getSessionVerses(plan) {
+        // الحصول على الآيات التي تحتاج مراجعة أو جديدة
+        const versesNeedingReview = Object.entries(plan.progress)
+            .filter(([_, progress]) => progress.strength < 0.7)
+            .map(([verseKey]) => verseKey);
+
+        const newVerses = plan.targetVerses
+            .filter(verse => !plan.progress[`${verse.surah}:${verse.verse}`])
+            .slice(0, plan.dailyGoal - versesNeedingReview.length);
+
+        return [...versesNeedingReview, ...newVerses.map(v => `${v.surah}:${v.verse}`)];
+    }
+
+    recordAttempt(verseKey, isCorrect) {
+        if (!this.currentSession) return;
+
+        const plan = this.memorizationPlans[this.currentSession.planName];
+        if (!plan.progress[verseKey]) {
+            plan.progress[verseKey] = {
+                strength: 0.5,
+                lastReviewed: new Date(),
+                reviewCount: 0
+            };
+        }
+
+        const progress = plan.progress[verseKey];
+        progress.reviewCount++;
+        progress.lastReviewed = new Date();
+
+        if (isCorrect) {
+            progress.strength = Math.min(1, progress.strength + 0.1);
+            this.currentSession.correctAttempts++;
+        } else {
+            progress.strength = Math.max(0.1, progress.strength - 0.2);
+        }
+
+        this.currentSession.totalAttempts++;
+
+        // تحديث إحصائيات المستخدم
+        if (isCorrect) {
+            userStats.memorizedVerses = Object.keys(plan.progress).length;
+            saveUserStats();
+            updateStatsDisplay();
+        }
+    }
+
+    getNextReviewDate(verseKey) {
+        const progress = this.currentSession?.planName ? 
+            this.memorizationPlans[this.currentSession.planName].progress[verseKey] : null;
+        
+        if (!progress) return new Date();
+
+        // خوارزمية التكرار المتباعد
+        const intervals = [1, 3, 7, 14, 30, 60, 120]; // أيام
+        const intervalIndex = Math.min(Math.floor(progress.strength * 10), intervals.length - 1);
+        const daysToAdd = intervals[intervalIndex];
+
+        const nextReview = new Date(progress.lastReviewed);
+        nextReview.setDate(nextReview.getDate() + daysToAdd);
+        return nextReview;
+    }
+
+    generateProgressReport(planName) {
+        const plan = this.memorizationPlans[planName];
+        if (!plan) return null;
+
+        const totalVerses = plan.targetVerses.length;
+        const memorizedVerses = Object.keys(plan.progress).length;
+        const averageStrength = Object.values(plan.progress).reduce((sum, p) => sum + p.strength, 0) / memorizedVerses || 0;
+
+        return {
+            planName,
+            totalVerses,
+            memorizedVerses,
+            completionPercentage: (memorizedVerses / totalVerses) * 100,
+            averageStrength: (averageStrength * 100).toFixed(1),
+            nextReviewDate: this.getNextReviewDateForPlan(plan),
+            dailyProgress: this.calculateDailyProgress(plan)
+        };
+    }
+
+    getNextReviewDateForPlan(plan) {
+        const nextReviews = Object.keys(plan.progress).map(verseKey => this.getNextReviewDate(verseKey));
+        return nextReviews.length > 0 ? new Date(Math.min(...nextReviews.map(d => d.getTime()))) : null;
+    }
+
+    calculateDailyProgress(plan) {
+        // حساب التقدم اليومي بناءً على نشاط المستخدم
+        const today = new Date().toDateString();
+        const todayProgress = Object.values(plan.progress).filter(p => 
+            p.lastReviewed.toDateString() === today
+        ).length;
+
+        return {
+            today: todayProgress,
+            goal: plan.dailyGoal,
+            onTrack: todayProgress >= plan.dailyGoal
+        };
+    }
+}
+
+// تهيئة نظام الحفظ
+const memorizationSystem = new AdvancedMemorizationSystem();
+
+// واجهة الحفظ المتقدمة
+function showMemorizationInterface() {
+    const memoInterface = document.createElement('div');
+    memoInterface.id = 'memorizationInterface';
+    memoInterface.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--dark-bg);
+        border: 3px solid var(--gold);
+        border-radius: 20px;
+        padding: 2rem;
+        z-index: 10000;
+        max-width: 800px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    `;
+
+    memoInterface.innerHTML = `
+        <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+            <h3 style="color: var(--gold); margin: 0;">🧠 نظام الحفظ المتقدم</h3>
+            <button onclick="closeMemorizationInterface()" style="background: none; border: none; color: var(--gold); font-size: 1.5rem; cursor: pointer;">×</button>
+        </div>
+
+        <div class="memo-tabs" style="margin-bottom: 2rem;">
+            <button class="memo-tab-btn active" data-tab="plans">خطط الحفظ</button>
+            <button class="memo-tab-btn" data-tab="session">جلسة الحفظ</button>
+            <button class="memo-tab-btn" data-tab="progress">التقدم</button>
+        </div>
+
+        <div id="memoContent">
+            ${renderMemorizationPlans()}
+        </div>
+    `;
+
+    document.body.appendChild(memoInterface);
+
+    // أحداث أزرار التبويب
+    document.querySelectorAll('.memo-tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.memo-tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            switch(this.dataset.tab) {
+                case 'plans':
+                    document.getElementById('memoContent').innerHTML = renderMemorizationPlans();
+                    break;
+                case 'session':
+                    document.getElementById('memoContent').innerHTML = renderMemorizationSession();
+                    break;
+                case 'progress':
+                    document.getElementById('memoContent').innerHTML = renderMemorizationProgress();
+                    break;
+            }
+        });
+    });
+}
+
+function renderMemorizationPlans() {
+    const plans = memorizationSystem.memorizationPlans;
+    const plansList = Object.keys(plans).map(planName => {
+        const plan = plans[planName];
+        const report = memorizationSystem.generateProgressReport(planName);
+        
+        return `
+            <div class="plan-card" style="background: rgba(26, 71, 47, 0.8); padding: 1.5rem; margin-bottom: 1rem; border-radius: 10px; border: 1px solid var(--border);">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+                    <h4 style="color: var(--gold); margin: 0;">${planName}</h4>
+                    <button onclick="startMemorizationPlan('${planName}')" class="verse-btn">
+                        <i class="fas fa-play"></i> بدء الجلسة
+                    </button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div style="text-align: center;">
+                        <div style="color: var(--gold); font-weight: bold;">${report.completionPercentage.toFixed(1)}%</div>
+                        <div style="font-size: 0.9rem;">الإنجاز</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="color: var(--gold); font-weight: bold;">${report.memorizedVerses}/${report.totalVerses}</div>
+                        <div style="font-size: 0.9rem;">الآيات</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="color: var(--gold); font-weight: bold;">${report.averageStrength}%</div>
+                        <div style="font-size: 0.9rem;">القوة</div>
+                    </div>
+                </div>
+                <div style="background: rgba(30, 30, 30, 0.6); padding: 1rem; border-radius: 8px;">
+                    <div style="display: flex; justify-content: between; margin-bottom: 0.5rem;">
+                        <span>التقدم اليومي:</span>
+                        <span>${report.dailyProgress.today}/${report.dailyProgress.goal}</span>
+                    </div>
+                    <div style="background: var(--border); height: 10px; border-radius: 5px; overflow: hidden;">
+                        <div style="background: var(--gold); height: 100%; width: ${(report.dailyProgress.today / report.dailyProgress.goal) * 100}%;"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div>
+            <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+                <h4 style="color: var(--gold); margin: 0;">خطط الحفظ</h4>
+                <button onclick="showCreatePlanModal()" class="control-btn">
+                    <i class="fas fa-plus"></i> خطة جديدة
+                </button>
+            </div>
+            ${plansList.length > 0 ? plansList : `
+                <div style="text-align: center; padding: 3rem; color: var(--gold);">
+                    <i class="fas fa-brain" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h4>لا توجد خطط حفظ</h4>
+                    <p>أنشئ خطة حفظ جديدة لتبدأ رحلة حفظ القرآن</p>
+                    <button onclick="showCreatePlanModal()" class="control-btn" style="margin-top: 1rem;">
+                        <i class="fas fa-plus"></i> إنشاء خطة حفظ
+                    </button>
+                </div>
+            `}
+        </div>
+    `;
+}
+
+function renderMemorizationSession() {
+    const session = memorizationSystem.currentSession;
+    
+    if (!session) {
+        return `
+            <div style="text-align: center; padding: 3rem; color: var(--gold);">
+                <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <h4>لا توجد جلسة حفظ نشطة</h4>
+                <p>إبدأ جلسة حفظ من قسم "خطط الحفظ"</p>
+            </div>
+        `;
+    }
+
+    const currentVerseKey = session.sessionVerses[session.currentVerseIndex];
+    const [surahId, verseNumber] = currentVerseKey.split(':');
+    const verse = completeQuran.surahs.find(s => s.id == surahId).verses.find(v => v.number == verseNumber);
+
+    return `
+        <div style="text-align: center;">
+            <div style="background: rgba(212, 175, 55, 0.1); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem; border: 2px solid var(--gold);">
+                <h4 style="color: var(--gold); margin-bottom: 1rem;">جلسة الحفظ</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                    <div>
+                        <div style="color: var(--gold); font-weight: bold;">${session.currentVerseIndex + 1}/${session.sessionVerses.length}</div>
+                        <div style="font-size: 0.9rem;">الآيات</div>
+                    </div>
+                    <div>
+                        <div style="color: var(--gold); font-weight: bold;">${session.correctAttempts}</div>
+                        <div style="font-size: 0.9rem;">صحيحة</div>
+                    </div>
+                    <div>
+                        <div style="color: var(--gold); font-weight: bold;">${Math.round((session.correctAttempts / session.totalAttempts) * 100) || 0}%</div>
+                        <div style="font-size: 0.9rem;">الدقة</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: rgba(26, 71, 47, 0.8); padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                <div style="font-size: 1.5rem; line-height: 2; margin-bottom: 2rem; text-align: right;">
+                    ${verse.text}
+                </div>
+                <div style="color: var(--light-gold); margin-bottom: 2rem;">
+                    سورة ${completeQuran.surahs.find(s => s.id == surahId).name} - الآية ${verse.number}
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="handleMemorizationAttempt(true, '${currentVerseKey}')" class="control-btn" style="background: var(--green);">
+                        <i class="fas fa-check"></i> متقن
+                    </button>
+                    <button onclick="handleMemorizationAttempt(false, '${currentVerseKey}')" class="control-btn" style="background: #c53030;">
+                        <i class="fas fa-times"></i> يحتاج مراجعة
+                    </button>
+                    <button onclick="playVerse(${surahId}, ${verse.number})" class="control-btn">
+                        <i class="fas fa-play"></i> سماع الآية
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button onclick="endMemorizationSession()" class="control-btn" style="background: #c53030;">
+                    <i class="fas fa-stop"></i> إنهاء الجلسة
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function handleMemorizationAttempt(isCorrect, verseKey) {
+    memorizationSystem.recordAttempt(verseKey, isCorrect);
+    
+    const session = memorizationSystem.currentSession;
+    session.currentVerseIndex++;
+
+    if (session.currentVerseIndex >= session.sessionVerses.length) {
+        showNotification('🎉 تم إكمال جلسة الحفظ بنجاح!', 'success');
+        endMemorizationSession();
+    } else {
+        // تحديث واجهة الجلسة
+        document.getElementById('memoContent').innerHTML = renderMemorizationSession();
+    }
+}
+
+function startMemorizationPlan(planName) {
+    memorizationSystem.startMemorizationSession(planName);
+    document.querySelector('.memo-tab-btn[data-tab="session"]').click();
+    showNotification('بدأت جلسة الحفظ بنجاح', 'success');
+}
+
+function endMemorizationSession() {
+    const session = memorizationSystem.currentSession;
+    if (session) {
+        const plan = memorizationSystem.memorizationPlans[session.planName];
+        const report = memorizationSystem.generateProgressReport(session.planName);
+        
+        showNotification(`أنهيت الجلسة: ${session.correctAttempts} من ${session.totalAttempts} صحيحة`, 'success');
+    }
+    
+    memorizationSystem.currentSession = null;
+    document.querySelector('.memo-tab-btn[data-tab="plans"]').click();
+}
+
+function closeMemorizationInterface() {
+    const interface = document.getElementById('memorizationInterface');
+    if (interface) {
+        interface.remove();
+    }
+}
+
+// إضافة زر نظام الحفظ إلى واجهة التحكم
+function addMemorizationButton() {
+    const headerControls = document.querySelector('.header-controls');
+    const memoButton = document.createElement('button');
+    memoButton.className = 'control-btn';
+    memoButton.innerHTML = '<i class="fas fa-brain"></i> نظام الحفظ';
+    memoButton.onclick = showMemorizationInterface;
+    headerControls.appendChild(memoButton);
+}
+
+// تحديث التهيئة النهائية
+document.addEventListener('DOMContentLoaded', function() {
+    createStars();
+    loadSurahList();
+    loadRecitationSelector();
+    loadReaderSelector();
+    enhancedLoadSurah(1);
+    loadUserStats();
+    initializeSearch();
+    addDuasButton();
+    addMemorizationButton(); // إضافة زر نظام الحفظ
+});
+
+// إنشاء خطة حفظ افتراضية للمثال
+const samplePlan = memorizationSystem.createMemorizationPlan(
+    "حفظ الجزء الأول",
+    [
+        { surah: 1, verse: 1 }, { surah: 1, verse: 2 }, { surah: 1, verse: 3 },
+        { surah: 1, verse: 4 }, { surah: 1, verse: 5 }, { surah: 1, verse: 6 },
+        { surah: 1, verse: 7 }, { surah: 2, verse: 1 }, { surah: 2, verse: 2 }
+    ],
+    3 // 3 آيات يومياً
+);
+</script>
