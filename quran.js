@@ -1,4 +1,233 @@
-// Quran Masterpiece - JavaScript الرئيسي
+// Quran App - زاد المؤمن
+// التأكد من تحميل جميع التبعيات
+
+// انتظار تحميل DOM والملفات
+document.addEventListener('DOMContentLoaded', function() {
+    // الانتظار لضمان تحميل جميع الملفات
+    setTimeout(initQuranApp, 100);
+});
+
+function initQuranApp() {
+    // ✅ التأكد من تحميل البيانات
+    if (typeof quranData === 'undefined') {
+        console.error('❌ بيانات القرآن غير محملة');
+        showError('بيانات القرآن غير متوفرة');
+        return;
+    }
+    
+    // ✅ التأكد من تحميل نظام الصوت
+    if (typeof audioSystem === 'undefined') {
+        console.warn('⚠️ نظام الصوت غير محمل');
+    }
+    
+    // ✅ بدء التطبيق
+    window.quranApp = new QuranApp();
+}
+
+// عرض رسالة خطأ
+function showError(message) {
+    const app = document.getElementById('app');
+    if (app) {
+        app.innerHTML = `
+            <div class="error-container">
+                <div class="error-icon">⚠️</div>
+                <h2>خطأ في التحميل</h2>
+                <p>${message}</p>
+                <button onclick="location.reload()">إعادة المحاولة</button>
+                <a href="index.html">العودة للرئيسية</a>
+            </div>
+        `;
+    }
+}
+
+// فئة التطبيق الرئيسية
+class QuranApp {
+    constructor() {
+        this.currentSurah = 1;
+        this.currentPage = 'main';
+        this.init();
+    }
+
+    init() {
+        console.log('🚀 بدء تطبيق القرآن الكريم');
+        this.renderMainPage();
+        this.setupNavigation();
+    }
+
+    renderMainPage() {
+        const app = document.getElementById('app');
+        if (!app) return;
+
+        app.innerHTML = `
+            <!-- الهيدر -->
+            <header class="quran-header">
+                <div class="header-content">
+                    <a href="index.html" class="back-btn">
+                        <i class="fas fa-arrow-right"></i>
+                        الرئيسية
+                    </a>
+                    <h1>📖 القرآن الكريم</h1>
+                    <p>مصحف إلكتروني متكامل</p>
+                </div>
+            </header>
+
+            <!-- القائمة الرئيسية -->
+            <div class="quran-menu">
+                <div class="menu-grid">
+                    <div class="menu-card" onclick="quranApp.showSurahs()">
+                        <div class="menu-icon">📚</div>
+                        <h3>تصفح السور</h3>
+                        <p>استعرض جميع سور القرآن</p>
+                    </div>
+                    
+                    <div class="menu-card" onclick="quranApp.showReciters()">
+                        <div class="menu-icon">🎵</div>
+                        <h3>التلاوات</h3>
+                        <p>استمع لأشهر القراء</p>
+                    </div>
+                    
+                    <div class="menu-card" onclick="quranApp.showSearch()">
+                        <div class="menu-icon">🔍</div>
+                        <h3>البحث</h3>
+                        <p>ابحث في القرآن الكريم</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- المحتوى الديناميكي -->
+            <div id="quranContent"></div>
+        `;
+    }
+
+    showSurahs() {
+        const content = document.getElementById('quranContent');
+        if (!content) return;
+
+        let html = '<div class="surahs-container"><h2>سور القرآن الكريم</h2><div class="surahs-grid">';
+        
+        // ✅ استخدام البيانات من data.js
+        if (window.quranData && window.quranData.surahs) {
+            window.quranData.surahs.forEach(surah => {
+                html += `
+                    <div class="surah-card" onclick="quranApp.showSurah(${surah.number})">
+                        <div class="surah-number">${surah.number}</div>
+                        <div class="surah-info">
+                            <h3>${surah.name}</h3>
+                            <p>${surah.englishName} - ${surah.numberOfAyahs} آية</p>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            html += '<p>❌ تعذر تحميل قائمة السور</p>';
+        }
+        
+        html += '</div></div>';
+        content.innerHTML = html;
+    }
+
+    showSurah(surahNumber) {
+        const content = document.getElementById('quranContent');
+        if (!content) return;
+
+        // ✅ البحث عن السورة في البيانات
+        const surah = window.quranData.surahs.find(s => s.number === surahNumber);
+        if (!surah) {
+            content.innerHTML = '<p>❌ السورة غير موجودة</p>';
+            return;
+        }
+
+        let versesHtml = '';
+        surah.ayahs.forEach(ayah => {
+            versesHtml += `
+                <div class="verse">
+                    <span class="verse-text">${ayah.text}</span>
+                    <span class="verse-number">${ayah.numberInSurah}</span>
+                </div>
+            `;
+        });
+
+        content.innerHTML = `
+            <div class="surah-view">
+                <div class="surah-header">
+                    <button class="back-btn" onclick="quranApp.showSurahs()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <h2>سورة ${surah.name}</h2>
+                    <p>${surah.englishNameTranslation} - ${surah.numberOfAyahs} آية</p>
+                </div>
+                
+                <div class="verses-container">
+                    ${versesHtml}
+                </div>
+                
+                <!-- ✅ مشغل الصوت -->
+                <div class="audio-player">
+                    <h3>🎵 استماع للتلاوة</h3>
+                    <div class="player-controls">
+                        <button class="control-btn" onclick="quranApp.playSurah(${surah.number})">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" onclick="quranApp.pauseAudio()">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                    </div>
+                    <div class="reciter-select">
+                        <select onchange="quranApp.changeReciter(this.value)">
+                            <option value="alafasy">مشاري العفاسي</option>
+                            <option value="sudais">عبدالرحمن السديس</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ✅ وظائف الصوت
+    playSurah(surahNumber) {
+        if (window.audioSystem) {
+            window.audioSystem.playRecitation(surahNumber, 'alafasy');
+        } else {
+            alert('🎵 نظام الصوت غير متاح حالياً');
+        }
+    }
+
+    pauseAudio() {
+        if (window.audioSystem) {
+            window.audioSystem.pauseRecitation();
+        }
+    }
+
+    changeReciter(reciter) {
+        console.log('تغيير القارئ إلى:', reciter);
+    }
+
+    showReciters() {
+        const content = document.getElementById('quranContent');
+        content.innerHTML = `
+            <div class="reciters-container">
+                <h2>🎵 القراء</h2>
+                <p>سيتم إضافة قسم القراء قريباً إن شاء الله</p>
+            </div>
+        `;
+    }
+
+    showSearch() {
+        const content = document.getElementById('quranContent');
+        content.innerHTML = `
+            <div class="search-container">
+                <h2>🔍 البحث في القرآن</h2>
+                <p>سيتم إضافة خاصية البحث قريباً إن شاء الله</p>
+            </div>
+        `;
+    }
+
+    setupNavigation() {
+        console.log('✅ تم إعداد التنقل');
+    }
+}
+
+console.log('✅ تم تحميل تطبيق القرآن الكريم');// Quran Masterpiece - JavaScript الرئيسي
 class QuranApp {
     constructor() {
         this.currentSurah = 1;
