@@ -2446,3 +2446,623 @@ const samplePlan = memorizationSystem.createMemorizationPlan(
     3 // 3 آيات يومياً
 );
 </script>
+<script>
+// نظام العرض المصحفي المتقدم
+class MushafViewer {
+    constructor() {
+        this.currentPage = 1;
+        this.totalPages = 604; // إجمالي صفحات المصحف
+        this.viewMode = 'mushaf'; // 'mushaf' أو 'single'
+        this.fontSize = 2; // حجم الخط الأساسي (rem)
+        this.zoomLevel = 1; // مستوى التكبير
+        this.currentTafsirVerse = null;
+        
+        this.initializeMushaf();
+    }
+
+    initializeMushaf() {
+        this.createMushafInterface();
+        this.loadPage(this.currentPage);
+        this.setupEventListeners();
+    }
+
+    createMushafInterface() {
+        const mushafContainer = document.createElement('div');
+        mushafContainer.id = 'mushafViewer';
+        mushafContainer.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fef9e7, #faf3e0);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+        `;
+
+        mushafContainer.innerHTML = `
+            <!-- شريط التحكم العلوي -->
+            <div class="mushaf-controls" style="
+                background: linear-gradient(135deg, var(--primary), var(--accent));
+                padding: 1rem 2rem;
+                border-bottom: 3px solid var(--gold);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            ">
+                <div class="controls-left" style="display: flex; align-items: center; gap: 1rem;">
+                    <button onclick="mushafViewer.closeMushaf()" class="control-btn">
+                        <i class="fas fa-arrow-right"></i> رجوع
+                    </button>
+                    <div class="page-indicator" style="color: var(--gold); font-weight: bold;">
+                        الصفحة <span id="currentPageNum">1</span> من ${this.totalPages}
+                    </div>
+                </div>
+
+                <div class="controls-center" style="display: flex; gap: 1rem; align-items: center;">
+                    <button onclick="mushafViewer.previousPage()" class="control-btn">
+                        <i class="fas fa-chevron-right"></i> السابقة
+                    </button>
+                    
+                    <div class="page-input" style="display: flex; gap: 0.5rem;">
+                        <input type="number" id="pageJumpInput" 
+                               min="1" max="${this.totalPages}" 
+                               value="1" style="
+                               width: 80px;
+                               padding: 0.5rem;
+                               border: 2px solid var(--gold);
+                               border-radius: 8px;
+                               background: rgba(255,255,255,0.1);
+                               color: var(--text);
+                               text-align: center;
+                        ">
+                        <button onclick="mushafViewer.jumpToPage()" class="control-btn">
+                            انتقل
+                        </button>
+                    </div>
+
+                    <button onclick="mushafViewer.nextPage()" class="control-btn">
+                        التالية <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+
+                <div class="controls-right" style="display: flex; gap: 1rem; align-items: center;">
+                    <!-- تبديل وضع العرض -->
+                    <select id="viewModeSelect" onchange="mushafViewer.changeViewMode(this.value)" 
+                            style="background: rgba(212,175,55,0.2); border: 2px solid var(--gold); 
+                                   color: var(--gold); padding: 0.5rem; border-radius: 8px;">
+                        <option value="mushaf">عرض المصحف</option>
+                        <option value="single">عرض الصفحة الواحدة</option>
+                    </select>
+
+                    <!-- التحكم في حجم الخط -->
+                    <div class="font-controls" style="display: flex; gap: 0.5rem; align-items: center;">
+                        <button onclick="mushafViewer.decreaseFont()" class="control-btn">
+                            <i class="fas fa-search-minus"></i>
+                        </button>
+                        <span style="color: var(--gold); font-size: 0.9rem;">الحجم</span>
+                        <button onclick="mushafViewer.increaseFont()" class="control-btn">
+                            <i class="fas fa-search-plus"></i>
+                        </button>
+                    </div>
+
+                    <!-- التكبير والتصغير -->
+                    <div class="zoom-controls" style="display: flex; gap: 0.5rem; align-items: center;">
+                        <button onclick="mushafViewer.zoomOut()" class="control-btn">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span style="color: var(--gold); font-size: 0.9rem;" id="zoomLevel">100%</span>
+                        <button onclick="mushafViewer.zoomIn()" class="control-btn">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- منطقة عرض المصحف -->
+            <div class="mushaf-content" style="
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+                overflow: auto;
+                background: #fef9e7;
+            ">
+                <div class="mushaf-pages-container" style="
+                    display: flex;
+                    gap: 2rem;
+                    align-items: center;
+                    justify-content: center;
+                    max-width: 1400px;
+                    width: 100%;
+                ">
+                    <!-- الصفحة اليسرى -->
+                    <div class="mushaf-page left-page" style="
+                        background: white;
+                        border: 2px solid #d4af37;
+                        border-radius: 10px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        padding: 2rem;
+                        min-height: 800px;
+                        flex: 1;
+                        position: relative;
+                        transition: all 0.3s ease;
+                    ">
+                        <div class="page-content" id="leftPageContent" style="
+                            font-size: ${this.fontSize}rem;
+                            line-height: 2.5;
+                            text-align: right;
+                            color: #2c5530;
+                            transform: scale(${this.zoomLevel});
+                            transform-origin: top center;
+                        ">
+                            <!-- محتوى الصفحة اليسرى -->
+                        </div>
+                        <div class="page-number" style="
+                            position: absolute;
+                            bottom: 1rem;
+                            left: 1rem;
+                            color: #d4af37;
+                            font-weight: bold;
+                        " id="leftPageNumber"></div>
+                    </div>
+
+                    <!-- الصفحة اليمنى -->
+                    <div class="mushaf-page right-page" style="
+                        background: white;
+                        border: 2px solid #d4af37;
+                        border-radius: 10px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        padding: 2rem;
+                        min-height: 800px;
+                        flex: 1;
+                        position: relative;
+                        transition: all 0.3s ease;
+                    ">
+                        <div class="page-content" id="rightPageContent" style="
+                            font-size: ${this.fontSize}rem;
+                            line-height: 2.5;
+                            text-align: right;
+                            color: #2c5530;
+                            transform: scale(${this.zoomLevel});
+                            transform-origin: top center;
+                        ">
+                            <!-- محتوى الصفحة اليمنى -->
+                        </div>
+                        <div class="page-number" style="
+                            position: absolute;
+                            bottom: 1rem;
+                            right: 1rem;
+                            color: #d4af37;
+                            font-weight: bold;
+                        " id="rightPageNumber"></div>
+                    </div>
+                </div>
+
+                <!-- عرض الصفحة الواحدة -->
+                <div class="single-page-container" style="
+                    display: none;
+                    max-width: 1000px;
+                    width: 100%;
+                ">
+                    <div class="single-page" style="
+                        background: white;
+                        border: 2px solid #d4af37;
+                        border-radius: 10px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                        padding: 3rem;
+                        min-height: 800px;
+                    ">
+                        <div class="single-page-content" id="singlePageContent" style="
+                            font-size: ${this.fontSize}rem;
+                            line-height: 2.5;
+                            text-align: right;
+                            color: #2c5530;
+                            transform: scale(${this.zoomLevel});
+                            transform-origin: top center;
+                        ">
+                            <!-- محتوى الصفحة الواحدة -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- منطقة التفسير الجانبية -->
+            <div class="tafsir-panel" style="
+                position: fixed;
+                top: 80px;
+                left: -400px;
+                width: 400px;
+                height: calc(100% - 80px);
+                background: white;
+                border-right: 3px solid var(--gold);
+                box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+                transition: left 0.3s ease;
+                z-index: 10001;
+                overflow-y: auto;
+                padding: 1.5rem;
+            " id="tafsirPanel">
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+                    <h4 style="color: var(--primary); margin: 0;">تفسير الآية</h4>
+                    <button onclick="mushafViewer.hideTafsir()" style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="tafsirContent" style="line-height: 1.8; color: #333;">
+                    <!-- محتوى التفسير -->
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(mushafContainer);
+    }
+
+    loadPage(pageNumber) {
+        this.currentPage = Math.max(1, Math.min(pageNumber, this.totalPages));
+        
+        // تحديث واجهة المستخدم
+        document.getElementById('currentPageNum').textContent = this.currentPage;
+        document.getElementById('pageJumpInput').value = this.currentPage;
+
+        // في الوضع الحقيقي، سنقوم بتحميل محتوى الصفحات من قاعدة البيانات
+        // هنا سنستخدم بيانات تجريبية للعرض
+        this.loadPageContent(this.currentPage);
+    }
+
+    loadPageContent(pageNumber) {
+        // محاكاة تحميل محتوى الصفحات
+        // في التطبيق الحقيقي، سيتم جلب هذه البيانات من قاعدة بيانات الصفحات
+        
+        const pageContent = this.generatePageContent(pageNumber);
+        
+        if (this.viewMode === 'mushaf') {
+            // عرض صفحتين
+            document.getElementById('leftPageContent').innerHTML = pageContent.left;
+            document.getElementById('rightPageContent').innerHTML = pageContent.right;
+            document.getElementById('leftPageNumber').textContent = pageNumber;
+            document.getElementById('rightPageNumber').textContent = pageNumber + 1;
+            
+            document.querySelector('.mushaf-pages-container').style.display = 'flex';
+            document.querySelector('.single-page-container').style.display = 'none';
+        } else {
+            // عرض صفحة واحدة
+            document.getElementById('singlePageContent').innerHTML = pageContent.single;
+            document.querySelector('.mushaf-pages-container').style.display = 'none';
+            document.querySelector('.single-page-container').style.display = 'block';
+        }
+    }
+
+    generatePageContent(pageNumber) {
+        // هذه دالة تجريبية لتوليد محتوى الصفحات
+        // في التطبيق الحقيقي، سيكون لدينا قاعدة بيانات بصفحات المصحف كاملة
+        
+        const sampleVerses = [
+            "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+            "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+            "الرَّحْمَٰنِ الرَّحِيمِ",
+            "مَالِكِ يَوْمِ الدِّينِ",
+            "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+            "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+            "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"
+        ];
+
+        const leftContent = sampleVerses.map((verse, index) => `
+            <div class="verse" onclick="mushafViewer.showTafsir(${pageNumber}, ${index + 1})" 
+                 style="margin-bottom: 1.5rem; cursor: pointer; transition: all 0.3s ease;"
+                 onmouseover="this.style.backgroundColor='#f0f8f0'" 
+                 onmouseout="this.style.backgroundColor='transparent'">
+                <span class="verse-text">${verse}</span>
+                <span class="verse-number" style="
+                    background: #d4af37;
+                    color: white;
+                    padding: 0.2rem 0.5rem;
+                    border-radius: 50%;
+                    font-size: 0.8rem;
+                    margin-right: 0.5rem;
+                    display: inline-block;
+                    min-width: 25px;
+                    text-align: center;
+                ">${index + 1}</span>
+            </div>
+        `).join('');
+
+        const rightContent = sampleVerses.map((verse, index) => `
+            <div class="verse" onclick="mushafViewer.showTafsir(${pageNumber + 1}, ${index + 1})" 
+                 style="margin-bottom: 1.5rem; cursor: pointer; transition: all 0.3s ease;"
+                 onmouseover="this.style.backgroundColor='#f0f8f0'" 
+                 onmouseout="this.style.backgroundColor='transparent'">
+                <span class="verse-text">${verse}</span>
+                <span class="verse-number" style="
+                    background: #d4af37;
+                    color: white;
+                    padding: 0.2rem 0.5rem;
+                    border-radius: 50%;
+                    font-size: 0.8rem;
+                    margin-right: 0.5rem;
+                    display: inline-block;
+                    min-width: 25px;
+                    text-align: center;
+                ">${index + 1}</span>
+            </div>
+        `).join('');
+
+        const singleContent = [...sampleVerses, ...sampleVerses].map((verse, index) => `
+            <div class="verse" onclick="mushafViewer.showTafsir(${pageNumber}, ${index + 1})" 
+                 style="margin-bottom: 1.5rem; cursor: pointer; transition: all 0.3s ease;"
+                 onmouseover="this.style.backgroundColor='#f0f8f0'" 
+                 onmouseout="this.style.backgroundColor='transparent'">
+                <span class="verse-text">${verse}</span>
+                <span class="verse-number" style="
+                    background: #d4af37;
+                    color: white;
+                    padding: 0.2rem 0.5rem;
+                    border-radius: 50%;
+                    font-size: 0.8rem;
+                    margin-right: 0.5rem;
+                    display: inline-block;
+                    min-width: 25px;
+                    text-align: center;
+                ">${index + 1}</span>
+            </div>
+        `).join('');
+
+        return {
+            left: leftContent,
+            right: rightContent,
+            single: singleContent
+        };
+    }
+
+    setupEventListeners() {
+        // إضافة أحداث لوحة المفاتيح للتنقل
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('mushafViewer').style.display === 'flex') {
+                switch(e.key) {
+                    case 'ArrowRight':
+                        this.previousPage();
+                        break;
+                    case 'ArrowLeft':
+                        this.nextPage();
+                        break;
+                    case 'Escape':
+                        this.closeMushaf();
+                        break;
+                }
+            }
+        });
+
+        // إضافة إمكانية السحب للتنقل بين الصفحات
+        this.setupSwipeGestures();
+    }
+
+    setupSwipeGestures() {
+        let startX = 0;
+        const container = document.querySelector('.mushaf-content');
+
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        container.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+
+            if (Math.abs(diffX) > 50) { // حد السحب
+                if (diffX > 0) {
+                    this.nextPage(); // سحب لليسار -> الصفحة التالية
+                } else {
+                    this.previousPage(); // سحب لليمين -> الصفحة السابقة
+                }
+            }
+        });
+    }
+
+    // دوال التحكم الرئيسية
+    nextPage() {
+        if (this.currentPage < this.totalPages - 1) {
+            this.loadPage(this.currentPage + (this.viewMode === 'mushaf' ? 2 : 1));
+        }
+    }
+
+    previousPage() {
+        if (this.currentPage > 1) {
+            this.loadPage(this.currentPage - (this.viewMode === 'mushaf' ? 2 : 1));
+        }
+    }
+
+    jumpToPage() {
+        const pageInput = document.getElementById('pageJumpInput');
+        const pageNum = parseInt(pageInput.value);
+        if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= this.totalPages) {
+            this.loadPage(pageNum);
+        }
+    }
+
+    changeViewMode(mode) {
+        this.viewMode = mode;
+        this.loadPage(this.currentPage);
+        
+        // تحديث واجهة المستخدم حسب الوضع
+        if (mode === 'single') {
+            document.querySelector('.controls-center').style.display = 'none';
+        } else {
+            document.querySelector('.controls-center').style.display = 'flex';
+        }
+    }
+
+    increaseFont() {
+        this.fontSize = Math.min(3, this.fontSize + 0.1);
+        this.updateFontSize();
+    }
+
+    decreaseFont() {
+        this.fontSize = Math.max(1, this.fontSize - 0.1);
+        this.updateFontSize();
+    }
+
+    updateFontSize() {
+        const pages = document.querySelectorAll('.page-content, .single-page-content');
+        pages.forEach(page => {
+            page.style.fontSize = `${this.fontSize}rem`;
+        });
+    }
+
+    zoomIn() {
+        this.zoomLevel = Math.min(2, this.zoomLevel + 0.1);
+        this.updateZoom();
+    }
+
+    zoomOut() {
+        this.zoomLevel = Math.max(0.5, this.zoomLevel - 0.1);
+        this.updateZoom();
+    }
+
+    updateZoom() {
+        const pages = document.querySelectorAll('.page-content, .single-page-content');
+        pages.forEach(page => {
+            page.style.transform = `scale(${this.zoomLevel})`;
+        });
+        
+        document.getElementById('zoomLevel').textContent = `${Math.round(this.zoomLevel * 100)}%`;
+    }
+
+    showTafsir(pageNumber, verseNumber) {
+        this.currentTafsirVerse = { pageNumber, verseNumber };
+        
+        // محتوى تفسير تجريبي
+        const tafsirContent = `
+            <div style="margin-bottom: 2rem;">
+                <h5 style="color: var(--primary); margin-bottom: 1rem;">تفسير الآية ${verseNumber}</h5>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <p style="font-size: 1.2rem; line-height: 2; text-align: right; color: #2c5530;">
+                        ${this.getVerseText(pageNumber, verseNumber)}
+                    </p>
+                </div>
+                <div style="line-height: 1.8;">
+                    <h6 style="color: var(--accent); margin-bottom: 0.5rem;">تفسير ابن كثير:</h6>
+                    <p>هذا تفسير تجريبي للآية الكريمة. في التطبيق النهائي، سيتم تحميل التفسير الحقيقي من مصادر موثوقة مثل تفسير ابن كثير.</p>
+                    <p>سيشمل التفسير شرحًا وافيًا للآية مع ذكر أسباب النزول إن وجدت، والربط بالآيات الأخرى، والاستشهاد بالأحاديث النبوية الصحيحة.</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #eee; padding-top: 1rem;">
+                <small style="color: #666;">
+                    <i class="fas fa-book"></i> مصدر التفسير: تفسير ابن كثير - مصدر سني موثوق
+                </small>
+            </div>
+        `;
+        
+        document.getElementById('tafsirContent').innerHTML = tafsirContent;
+        document.getElementById('tafsirPanel').style.left = '0';
+    }
+
+    hideTafsir() {
+        document.getElementById('tafsirPanel').style.left = '-400px';
+    }
+
+    getVerseText(pageNumber, verseNumber) {
+        // دالة تجريبية - في التطبيق الحقيقي ستُرجع نص الآية الفعلي
+        const sampleVerses = [
+            "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+            "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+            "الرَّحْمَٰنِ الرَّحِيمِ",
+            "مَالِكِ يَوْمِ الدِّينِ",
+            "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+            "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+            "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"
+        ];
+        
+        return sampleVerses[(verseNumber - 1) % sampleVerses.length];
+    }
+
+    openMushaf() {
+        document.getElementById('mushafViewer').style.display = 'flex';
+        this.loadPage(1);
+    }
+
+    closeMushaf() {
+        document.getElementById('mushafViewer').style.display = 'none';
+        this.hideTafsir();
+    }
+}
+
+// تهيئة نظام العرض المصحفي
+const mushafViewer = new MushafViewer();
+
+// إضافة زر فتح المصحف إلى واجهة التحكم
+function addMushafButton() {
+    const headerControls = document.querySelector('.header-controls');
+    const mushafButton = document.createElement('button');
+    mushafButton.className = 'control-btn';
+    mushafButton.innerHTML = '<i class="fas fa-book-quran"></i> عرض المصحف';
+    mushafButton.onclick = () => mushafViewer.openMushaf();
+    headerControls.appendChild(mushafButton);
+}
+
+// تحديث التهيئة النهائية
+document.addEventListener('DOMContentLoaded', function() {
+    createStars();
+    loadSurahList();
+    loadRecitationSelector();
+    loadReaderSelector();
+    enhancedLoadSurah(1);
+    loadUserStats();
+    initializeSearch();
+    addDuasButton();
+    addMemorizationButton();
+    addMushafButton(); // إضافة زر فتح المصحف
+});
+
+// تحسينات إضافية للعرض المصحفي
+const mushafStyles = document.createElement('style');
+mushafStyles.textContent = `
+    @keyframes pageTurn {
+        0% { transform: rotateY(0deg); }
+        100% { transform: rotateY(-180deg); }
+    }
+    
+    .mushaf-page {
+        perspective: 1000px;
+    }
+    
+    .page-turn {
+        animation: pageTurn 0.6s ease-in-out;
+    }
+    
+    .verse:hover {
+        transform: translateX(-5px);
+    }
+    
+    @media (max-width: 1200px) {
+        .mushaf-pages-container {
+            flex-direction: column;
+        }
+        
+        .mushaf-page {
+            min-height: 600px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .mushaf-controls {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .controls-center, .controls-right {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .tafsir-panel {
+            width: 100%;
+            left: -100%;
+        }
+    }
+`;
+document.head.appendChild(mushafStyles);
+</script>
